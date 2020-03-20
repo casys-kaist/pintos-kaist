@@ -1,0 +1,504 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Virtual Address · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="debugging_tools.html" />
+    
+    
+    <link rel="prev" href="memory_allocation.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Introduction</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../introduction/getting_started.html">
+            
+                <a href="../introduction/getting_started.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../introduction/grading.html">
+            
+                <a href="../introduction/grading.html">
+            
+                    
+                    Grading
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../introduction/legal_and_ethical_issues.html">
+            
+                <a href="../introduction/legal_and_ethical_issues.html">
+            
+                    
+                    Legal and Ethical Issues
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project1: Threads</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project2: User Programs</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project3: Virtual Memory</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project4: File System</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Appendix</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="threads.html">
+            
+                <a href="threads.html">
+            
+                    
+                    Threads
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="synchronization.html">
+            
+                <a href="synchronization.html">
+            
+                    
+                    Synchronization
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="memory_allocation.html">
+            
+                <a href="memory_allocation.html">
+            
+                    
+                    Memory Allocation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="6.4" data-path="virtual_address.html">
+            
+                <a href="virtual_address.html">
+            
+                    
+                    Virtual Address
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.5" data-path="debugging_tools.html">
+            
+                <a href="debugging_tools.html">
+            
+                    
+                    Debugging Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.6" data-path="development_tools.html">
+            
+                <a href="development_tools.html">
+            
+                    
+                    Development Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Virtual Address</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="virtual-addresses">Virtual Addresses</h1>
+<p>A 64-bit virtual addresses are structured as follows:</p>
+<pre><code>63          48 47            39 38            30 29            21 20         12 11         0
++-------------+----------------+----------------+----------------+-------------+------------+
+| Sign Extend |    Page-Map    | Page-Directory | Page-directory |  Page-Table |  Physical  |
+|             | Level-4 Offset |    Pointer     |     Offset     |   Offset    |   Offset   |
++-------------+----------------+----------------+----------------+-------------+------------+
+              |                |                |                |             |            |
+              +------- 9 ------+------- 9 ------+------- 9 ------+----- 9 -----+---- 12 ----+
+                                          Virtual Address
+</code></pre><p>Header <code>include/threads/vaddr.h</code>, and <code>include/threads/mmu.h</code> define these
+functions and macros for working with virtual addresses:</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PGSHIFT { <span class="hljs-comment">/* Emit details */</span> }</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PGBITS { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>The bit index (0) and number of bits (12) of the offset part of a virtual
+address, respectively.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PGMASK { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>A bit mask with the bits in the page offset set to 1, the rest set to 0
+(0xfff).</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PGSIZE { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>The page size in bytes (4,096).</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pg_ofs(va) { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Extracts and returns the page offset in virtual address va.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pg_no(va) { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Extracts and returns the page number in virtual address va.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pg_round_down(va) { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Returns the start of the virtual page that va points within, that is, va
+with the page offset set to 0.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pg_round_up(va) { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Returns va rounded up to the nearest page boundary.</p>
+</blockquote>
+<p>Virtual memory in Pintos is divided into two regions: user virtual memory and
+kernel virtual memory (see <a href="../project2/introduction">Virtual Memory Layout</a>).</p>
+<p>The boundary between them is <code>KERN_BASE</code>:</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> KERN_BASE { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Base address of kernel virtual memory. It defaults to 0x8004000000.
+User virtual memory ranges from virtual address 0 up to <code>KERN_BASE</code>.
+Kernel virtual memory occupies the rest of the virtual address space.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_user_vaddr(vaddr) { <span class="hljs-comment">/* Emit details */</span> }</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_kernel_vaddr(vaddr) { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Returns true if va is a user or kernel virtual address, respectively, false
+otherwise.</p>
+</blockquote>
+<hr>
+<p>The x86-64 doesn&apos;t provide any way to directly access memory given
+a physical address. This ability is often necessary in an operating system
+kernel, so Pintos works around it by mapping kernel virtual memory
+one-to-one to physical memory. That is, virtual address &gt; <code>KERN_BASE</code>
+accesses physical address 0, virtual address <code>KERN_BASE + 0x1234</code> accesses
+physical address 0x1234, and so on up to the size of the machine&apos;s physical
+memory. Thus, adding <code>KERN_BASE</code> to a physical address obtains a kernel
+virtual address that accesses that address; conversely, subtracting
+<code>KERN_BASE</code> from a kernel virtual address obtains the corresponding physical
+address.</p>
+<p>Header <code>include/threads/vaddr.h</code> provides a pair of functions to do these
+translations:</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ptov(paddr) { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Returns the kernel virtual address corresponding to physical address pa, which
+should be between 0 and the number of bytes of physical memory.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> vtop(vaddr) { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Returns the physical address corresponding to va, which must be a kernel
+virtual address.</p>
+</blockquote>
+<p>Header <code>include/threads/mmu.h</code> provides operations on page table:</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_user_pte(pte) { <span class="hljs-comment">/* Emit details */</span> }</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_kern_pte(pte) { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Query whether the page table entry (PTE) is owned by user or kernel,
+respectively.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pte_for_each_func</span> <span class="hljs-params">(uint64_t *pte, <span class="hljs-keyword">void</span> *aux)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pml4_for_each</span> <span class="hljs-params">(uint64_t *pml4, pte_for_each_func *func, <span class="hljs-keyword">void</span> *aux)</span></span>;
+</code></pre>
+<blockquote>
+<p>For each valid entry in <em>pml4</em>, apply FUNC with auxillary value AUX.
+You may utilize this function to implement <code>fork</code> in lab2.</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="memory_allocation.html" class="navigation navigation-prev " aria-label="Previous page: Memory Allocation">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="debugging_tools.html" class="navigation navigation-next " aria-label="Next page: Debugging Tools">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Virtual Address","level":"6.4","depth":1,"next":{"title":"Debugging Tools","level":"6.5","depth":1,"path":"appendix/debugging_tools.md","ref":"appendix/debugging_tools.md","articles":[]},"previous":{"title":"Memory Allocation","level":"6.3","depth":1,"path":"appendix/memory_allocation.md","ref":"appendix/memory_allocation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/virtual_address.md","mtime":"2020-03-20T16:01:45.093Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-20T16:02:05.493Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,735 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Synchronization · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="memory_allocation.html" />
+    
+    
+    <link rel="prev" href="threads.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Introduction</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../introduction/getting_started.html">
+            
+                <a href="../introduction/getting_started.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../introduction/grading.html">
+            
+                <a href="../introduction/grading.html">
+            
+                    
+                    Grading
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../introduction/legal_and_ethical_issues.html">
+            
+                <a href="../introduction/legal_and_ethical_issues.html">
+            
+                    
+                    Legal and Ethical Issues
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project1: Threads</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project2: User Programs</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project3: Virtual Memory</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project4: File System</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Appendix</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="threads.html">
+            
+                <a href="threads.html">
+            
+                    
+                    Threads
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="6.2" data-path="synchronization.html">
+            
+                <a href="synchronization.html">
+            
+                    
+                    Synchronization
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="memory_allocation.html">
+            
+                <a href="memory_allocation.html">
+            
+                    
+                    Memory Allocation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4" data-path="virtual_address.html">
+            
+                <a href="virtual_address.html">
+            
+                    
+                    Virtual Address
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.5" data-path="debugging_tools.html">
+            
+                <a href="debugging_tools.html">
+            
+                    
+                    Debugging Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.6" data-path="development_tools.html">
+            
+                <a href="development_tools.html">
+            
+                    
+                    Development Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Synchronization</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="synchronization">Synchronization</h1>
+<p>If sharing of resources between threads is not handled in a careful,
+controlled fasion, the result is usually a big mess. This is especially the case
+in operating system kernels, where faulty sharing can crash the entire machine.
+Pintos provides several synchronization primitives to help out.</p>
+<h2 id="disabling-interrupts">Disabling Interrupts</h2>
+<p>The crudest way to do synchronization is to disable interrupts, that is, to
+temporarily prevent the CPU from responding to interrupts. If interrupts are
+off, no other thread will preempt the running thread, because thread preemption
+is driven by the timer interrupt. If interrupts are on, as they normally are,
+then the running thread may be preempted by another at any time, whether between
+two C statements or even within the execution of one.</p>
+<p>Incidentally, this means that Pintos is a &quot;preemptible kernel,&quot; that is, kernel
+threads can be preempted at any time. Traditional Unix systems are
+&quot;nonpreemptible,&quot; that is, kernel threads can only be preempted at points where
+they explicitly call into the scheduler. (User programs can be preempted at any
+time in both models.) As you might imagine, preemptible kernels require more
+explicit synchronization.</p>
+<p>You should have litthe need to set the interrupt state directly. Most of the
+time you should use the other synchronization primitives described in the
+following sections. The main reason to disable interrupts is to synchronize
+kernel threads with external interrupt handlers, which cannot sleep and thus
+cannot use most other forms of synchronization.</p>
+<p>Some external interrupts cannot be postponed, even by disabling interrupts.
+These interrupts, called <strong>non-maskable interrupts</strong> (NMIs), are supposed to be
+used only in emergencies, e.g. when the computer is on fire. Pintos does not
+handle non-maskable interrupts.</p>
+<p>Types and functions for disabling and enabling interrupts are in
+<code>include/threads/interrupt.h</code>.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">enum</span> intr_level;
+</code></pre>
+<blockquote>
+<p>One of INTR_OFF or INTR_ON, denoting that interrupts are disabled or
+enabled, resepectively.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">enum</span> intr_level <span class="hljs-title">intr_get_level</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span>
+</span></code></pre>
+<blockquote>
+<p>Returns the current interrupt state.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">enum</span> intr_level <span class="hljs-title">intr_set_level</span> <span class="hljs-params">(<span class="hljs-keyword">enum</span> intr_level level)</span></span>;
+</code></pre>
+<blockquote>
+<p>Turns interrupts on or off according to level. Returns the previous interrupt
+state.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">enum</span> intr_level <span class="hljs-title">intr_enable</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Turns interrupts on. Returns the previos interrupt state.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">enum</span> intr_level <span class="hljs-title">intr_disable</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Turns interrupts off. Returns the previous interrupt state.</p>
+</blockquote>
+<h2 id="semaphores">Semaphores</h2>
+<p>A semaphore is a nonnegative interger together with two operators that
+manipulate it atomically, which are:</p>
+<ul>
+<li>&quot;Down&quot; or &quot;P&quot; : wait for the value to become positive, then decrement it.</li>
+<li>&quot;UP&quot; or &quot;V&quot;: increment the value (and wake up one waiting thread, if any).</li>
+</ul>
+<p>A semaphore initialized to 0 may be used to wait for an event that will happen
+exactly once. For example, suppose thread A starts another thread B and wants to
+wait for B to signal that some activity is complete. A can create a semaphore
+initialized to 0, pass it to B as it starts it, and then &quot;down&quot; the semaphore.
+When B finishes its activity, it &quot;ups&quot; the semaphore. This works regardless of
+whether A &quot;downs&quot; the semaphore or B &quot;ups&quot; it first.</p>
+<p>A semaphore initialized to 1 is typically used for controlling access to a
+resource. Before a block of code starts using the resource, it &quot;downs&quot; the
+semaphore, then after it is done with the resource it &quot;ups&quot; the resource. In
+such a case a lock, described below, may be more appropriate.</p>
+<p>Semaphores can also be initialized to values larger than 1. These are rarely
+used. Semaphores were invented by Edsger Dijkstra and first used in the THE
+operating system. Pintos&apos; semaphore type and operations are declared in
+<code>include/threads/synch.h</code>.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">struct</span> semaphore;
+</code></pre>
+<blockquote>
+<p>Represents a semaphore.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sema_init</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> semaphore *sema, <span class="hljs-keyword">unsigned</span> value)</span></span>;
+</code></pre>
+<blockquote>
+<p>Initializes sema as a new semaphore with the given initial value.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sema_down</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> semaphore *sema)</span></span>;
+</code></pre>
+<p>Executes the &quot;down&quot; or &quot;P&quot; operation on sema, waiting for its value to become
+positive and then decrementing it by one.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">sema_try_down</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> semaphore *sema)</span></span>;
+</code></pre>
+<blockquote>
+<p>Tries to execute the &quot;down&quot; or &quot;P&quot; operation on sema, without waiting. Returns
+true if sema was successfully decremented, or false if it was already zero and
+thus could not be decremented without waiting. Calling this function in a
+tight loop wastes CPU time, so use <code>sema_down()</code> or find a different approach
+instead.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sema_up</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> semaphore *sema)</span></span>;
+</code></pre>
+<blockquote>
+<p>Executes the &quot;up&quot; or &quot;V&quot; operation on sema, incrementing its value. If any
+threads are waiting on sema, wakes one of them up. Unlike most synchronization
+primitives, <code>sema_up()</code> may be called inside an external interrupt handler.</p>
+</blockquote>
+<p>Semaphores are internally built out of disabling interrupt
+(see <a href="#Disabling%20Interrupts">Disabling Interrupts</a>) and thread blocking and
+unblocking (<code>thread_block()</code> and <code>thread_unblock()</code>). Each semaphore maintains
+a list of waiting threads, using the linked list implementation in
+<code>lib/kernel/list.c</code>.</p>
+<h2 id="locks">Locks</h2>
+<p>A lock is like a semaphore with an initial value of 1
+(see <a href="#Semaphores">Semaphores</a>). A lock&apos;s equivalent of &quot;up&quot; is called
+&quot;release&quot;, and the &quot;down&quot; operation is called &quot;acquire&quot;.</p>
+<p>Compared to a semaphore, a lock has one added restriction: only the trhead that
+acquires a lock, called the lock&apos;s &quot;owner&quot;, is allowed to release it. If this
+restriction is a problem, it&apos;s a good sign that a semaphore should be used,
+instead of a lock.</p>
+<p>Locks in Pintos are not &quot;recursive,&quot; that is, it is an error for the thread
+currently holding a lock to try to acquire that lock.
+Lock types and functions are declared in <code>include/threads/synch.h</code>.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">struct</span> lock;
+</code></pre>
+<blockquote>
+<p>Represents a lock.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">lock_init</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> lock *lock)</span></span>;
+</code></pre>
+<blockquote>
+<p>Initializes lock as a new lock. The lock is not initially owned by any thread.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">lock_acquire</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> lock *lock)</span></span>;
+</code></pre>
+<blockquote>
+<p>Acquires lock for the current thread, first waiting for any current owner to
+release it if necessary.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">lock_try_acquire</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> lock *lock)</span></span>;
+</code></pre>
+<blockquote>
+<p>Tries to acquire lock for use by the current thread, without waiting. Returns
+true if successful, false if the lock is already owned. Calling this function
+in a tight loop is a bad idea because it wastes CPU time, so use
+<code>lock_acquire()</code> instead.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">lock_release</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> lock *lock)</span></span>;
+</code></pre>
+<blockquote>
+<p>Releases lock, which the current thread must own.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C">bool lock_held_by_current_thread (const struct lock *lock):
+</code></pre>
+<blockquote>
+<p>Returns true if the running thread owns lock, false otherwise. There is no
+function to test whether an arbitrary thread owns a lock, because the answer
+could change before the caller could act on it.</p>
+</blockquote>
+<h2 id="monitors">Monitors</h2>
+<p>A monitor is a higher-level form of synchronization than a semaphore or a lock.
+A monitor consists of data being synchronized, plus a lock, called the monitor
+lock, and one or more condition variables. Before it accesses the protected
+data, a thread first acquires the monitor lock. It is then said to be
+&quot;in the monitor&quot;. While in the monitor, the thread has control over all the
+protected data, which it may freely examine or modify. When access to the
+protected data is complete, it releases the monitor lock.</p>
+<p>Condition variables allow code in the monitor to wait for a condition to become
+true. Each condition variable is associated with an abstract condition, e.g.
+&quot;some data has arrived for processing&quot; or &quot;over 10 seconds has passed since the
+user&apos;s last keystroke&quot;. When code in the monitor needs to wait for a condition
+to become true, it &quot;waits&quot; on the associated condition variable, which releases
+the lock and waits for the condition to be signaled. If, on the other hand, it
+has caused one of these conditions to become true, it &quot;signals&quot; the condition to
+wake up one waiter, or &quot;broadcasts&quot; the condition to wake all of them.</p>
+<p>The theoretical framework for monitors was laid out by C.A.R.Hoare. Their
+practical usage was later elaborated in a paper on the Mesa operation system.
+Condition variable types and functions are declared in
+<code>include/threads/synch.h</code>.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">struct</span> condition;
+</code></pre>
+<blockquote>
+<p>Represents a condition variable.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">cond_init</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> condition *cond)</span></span>;
+</code></pre>
+<blockquote>
+<p>Initializes cond as a new condition variable.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">cond_wait</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> condition *cond, <span class="hljs-keyword">struct</span> lock *lock)</span></span>;
+</code></pre>
+<blockquote>
+<p>Atomically releases lock (the monitor lock) and waits for cond to be signaled
+by some other piece of code. After cond is signaled, reacquires lock before
+returning. lock must be held before calling this function. Sending a signal
+and waking up from a wait are not an atomic operation. Thus, typically
+<code>cond_wait()</code>&apos;s caller must recheck the condition after the wait completes
+and, if necessary, wait again. See the next section for an example.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">cond_signal</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> condition *cond, <span class="hljs-keyword">struct</span> lock *lock)</span></span>;
+</code></pre>
+<blockquote>
+<p>If any threads are waiting on cond (protected by monitor lock lock), then this
+function wakes up one of them. If no threads are waiting, returns without
+performing any action. lock must be held before calling this function.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">cond_broadcast</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> condition *cond, <span class="hljs-keyword">struct</span> lock *lock)</span></span>;
+</code></pre>
+<blockquote>
+<p>Wakes up all threads, if any, waiting on cond (protected by monitor lock
+lock). lock must be held before calling this function.</p>
+</blockquote>
+<h3 id="monitor-example">Monitor Example</h3>
+<p>The classical example of a monitor is handling a buffer into which one or more
+&quot;producer&quot; threads write characters and out of which one or more &quot;consumer&quot;
+threads read characters. To implement this we need, besides the monitor lock,
+two condition variables which we will call <code>not_full</code> and <code>not_empty</code>:</p>
+<pre><code class="lang-C">    <span class="hljs-keyword">char</span> buf[BUF_SIZE];     <span class="hljs-comment">/* Buffer. */</span>
+    <span class="hljs-keyword">size_t</span> n = <span class="hljs-number">0</span>;         <span class="hljs-comment">/* 0 &lt;= n &lt;= BUF SIZE: # of characters in buffer. */</span>
+    <span class="hljs-keyword">size_t</span> head = <span class="hljs-number">0</span>;        <span class="hljs-comment">/* buf index of next char to write (mod BUF SIZE). */</span>
+    <span class="hljs-keyword">size_t</span> tail = <span class="hljs-number">0</span>;         <span class="hljs-comment">/* buf index of next char to read (mod BUF SIZE). */</span>
+    <span class="hljs-keyword">struct</span> lock lock;         <span class="hljs-comment">/* Monitor lock. */</span>
+    <span class="hljs-keyword">struct</span> condition not_empty; <span class="hljs-comment">/* Signaled when the buffer is not empty. */</span>
+    <span class="hljs-keyword">struct</span> condition not_full;     <span class="hljs-comment">/* Signaled when the buffer is not full. */</span>
+
+    ...initialize the locks and condition variables...
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">put</span> <span class="hljs-params">(<span class="hljs-keyword">char</span> ch)</span> </span>{
+      lock_acquire (&amp;lock);
+      <span class="hljs-keyword">while</span> (n == BUF_SIZE)    <span class="hljs-comment">/* Can&apos;t add to buf as long as it&apos;s full. */</span>
+        cond_wait (&amp;not_full, &amp;lock);
+      buf[head++ % BUF_SIZE] = ch;    <span class="hljs-comment">/* Add ch to buf. */</span>
+      n++;
+      cond_signal (&amp;not_empty, &amp;lock);    <span class="hljs-comment">/* buf can&apos;t be empty anymore. */</span>
+      lock_release (&amp;lock);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">char</span> <span class="hljs-title">get</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+      <span class="hljs-keyword">char</span> ch;
+      lock_acquire (&amp;lock);
+      <span class="hljs-keyword">while</span> (n == <span class="hljs-number">0</span>)        <span class="hljs-comment">/* Can&apos;t read buf as long as it&apos;s empty. */</span>
+        cond_wait (&amp;not_empty, &amp;lock);
+      ch = buf[tail++ % BUF_SIZE];    <span class="hljs-comment">/* Get ch from buf. */</span>
+      n--;
+      cond_signal (&amp;not_full, &amp;lock);    <span class="hljs-comment">/* buf can&apos;t be full anymore. */</span>
+      lock_release (&amp;lock);
+    }
+</code></pre>
+<p>Note that <code>BUF_SIZE</code> must divide evenly into <code>SIZE_MAX + 1</code> for the above code
+to be completely correct. Otherwise, it will fail the first time <code>head</code> wraps
+around to 0. In practice, <code>BUF_SIZE</code> would ordinarily be a power of 2.</p>
+<h2 id="optimization-barriers">Optimization Barriers</h2>
+<p>An optimization barrier is a special statement that prevents the compiler from
+making assumptions about the state of memory across the barrier. The compiler
+will not reorder reads or writes of variables across the barrier or assume that
+a variable&apos;s value is unmodified across the barrier, except for local variables
+whose address is never taken. In Pintos, <code>include/threads/synch.h</code> defines the
+<code>barrier()</code> macro as an optimization barrier.</p>
+<p>One reason to use an optimization barrier is when data can change
+asynchronously, without the compiler&apos;s knowledge, e.g. by another thread or an
+interrupt handler. The <code>too_many_loops()</code> function in <code>devices/timer.c</code> is an
+example. This function starts out by busy-waiting in a loop until a timer tick
+occurs:</p>
+<pre><code class="lang-C">    <span class="hljs-comment">/* Wait for a timer tick. */</span>
+    <span class="hljs-keyword">int64_t</span> start = ticks;
+    <span class="hljs-keyword">while</span> (ticks == start)
+        barrier();
+</code></pre>
+<p>Without an optimization barrier in the loop, the compiler could conclude that
+the loop would never terminate, because <code>start</code> and <code>ticks</code> start out equal and
+the loop itself never changes them. It could then &quot;optimize&quot; the function into
+an infinite loop, which would definitely be undesirable.</p>
+<p>Optimization barriers can be used to avoid other compiler optimizations. The
+<code>busy_wait()</code> function, also in <code>devices/timer.c</code>, is an example. It contains
+this loop:</p>
+<pre><code class="lang-C">    <span class="hljs-keyword">while</span> (loops-- &gt; <span class="hljs-number">0</span>)
+      barrier ();
+</code></pre>
+<p>The goal of this loop is to busy-wait by counting loops down from its original
+value to 0. Without the barrier, the compiler could delete the loop entirely,
+because it produces no useful output and has no side effects. The barrier forces
+the compiler to pretend that the loop body has an important effect.</p>
+<p>Finally, optimization barriers can be used to force the ordering of memory reads
+or writes. For example, suppose we add a &quot;feature&quot; that, whenever a timer
+interrupt occurs, the character in global variable <code>timer_put_char</code> is printed
+on the console, but only if global Boolean variable <code>timer_do_put</code> is true. The
+best way to set up <code>x</code> to be printed is then to use an optimization barrier,
+like this:</p>
+<pre><code class="lang-C">    timer_put_char = <span class="hljs-string">&apos;x&apos;</span>;
+    barrier ();
+    timer_do_put = <span class="hljs-literal">true</span>;
+</code></pre>
+<p>Without the barrier, the code is buggy because the compiler is free to reorder
+operations when it doesn&apos;t see a reason to keep them in the same order. In this
+case, the compiler doesn&apos;t know that the order of assignments is important, so
+its optimizer is permitted to exchange their order. There&apos;s no telling whether
+it will actually do this, and it is possible that passing the compiler different
+optimization flags or using a different version of the compiler will produce
+different behavior.</p>
+<p>Another solution is to disable interrupts around the assignments. This does not
+prevent reordering, but it prevents the interrupt handler from intervening
+between the assignments. It also has the extra runtime cost of disabling and
+re-enabling interrupts:</p>
+<pre><code class="lang-C">    <span class="hljs-keyword">enum</span> intr_level old_level = intr_disable ();
+    timer_put_char = <span class="hljs-string">&apos;x&apos;</span>;
+    timer_do_put = <span class="hljs-literal">true</span>;
+    intr_set_level (old_level);
+</code></pre>
+<p>A second solution is to mark the declarations of <code>timer_put_char</code> and
+<code>timer_do_put</code> as <code>volatile</code>. This keyword tells the compiler that the variables
+are externally observable and restricts its latitude for optimization. However,
+the semantics of <code>volatile</code> are not well defined, so it is not a good general
+solution. The base Pintos code does not use <code>volatile</code> at all.</p>
+<p>The following is not a solution, because locks neither prevent interrupts nor
+prevent the compiler from reordering the code within the region where the lock
+is held:</p>
+<pre><code class="lang-C">    lock_acquire (&amp;timer_lock);        <span class="hljs-comment">/* INCORRECT CODE */</span>
+    timer_put_char = <span class="hljs-string">&apos;x&apos;</span>;
+    timer_do_put = <span class="hljs-literal">true</span>;
+    lock_release (&amp;timer_lock);
+</code></pre>
+<p>The compiler treats invocation of any function defined externally, that is, in
+another source file, as a limited form of optimization barrier. Specifically,
+the compiler assumes that any externally defined function may access any
+statically or dynamically allocated data and any local variable whose address is
+taken. This often means that explicit barriers can be omitted. It is one reason
+that Pintos contains few explicit barriers.</p>
+<p>A function defined in the same source file, or in a header included by the
+source file, cannot be relied upon as a optimization barrier. This applies even
+to invocation of a function before its definition, because the compiler may read
+and parse the entire source file before performing optimization.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="threads.html" class="navigation navigation-prev " aria-label="Previous page: Threads">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="memory_allocation.html" class="navigation navigation-next " aria-label="Next page: Memory Allocation">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Synchronization","level":"6.2","depth":1,"next":{"title":"Memory Allocation","level":"6.3","depth":1,"path":"appendix/memory_allocation.md","ref":"appendix/memory_allocation.md","articles":[]},"previous":{"title":"Threads","level":"6.1","depth":1,"path":"appendix/threads.md","ref":"appendix/threads.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/synchronization.md","mtime":"2020-03-20T16:01:45.093Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-20T16:02:05.493Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

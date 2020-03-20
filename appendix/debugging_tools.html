@@ -1,0 +1,650 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Debugging Tools · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="development_tools.html" />
+    
+    
+    <link rel="prev" href="virtual_address.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Introduction</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../introduction/getting_started.html">
+            
+                <a href="../introduction/getting_started.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../introduction/grading.html">
+            
+                <a href="../introduction/grading.html">
+            
+                    
+                    Grading
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../introduction/legal_and_ethical_issues.html">
+            
+                <a href="../introduction/legal_and_ethical_issues.html">
+            
+                    
+                    Legal and Ethical Issues
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project1: Threads</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project2: User Programs</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project3: Virtual Memory</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project4: File System</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Appendix</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="threads.html">
+            
+                <a href="threads.html">
+            
+                    
+                    Threads
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="synchronization.html">
+            
+                <a href="synchronization.html">
+            
+                    
+                    Synchronization
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="memory_allocation.html">
+            
+                <a href="memory_allocation.html">
+            
+                    
+                    Memory Allocation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4" data-path="virtual_address.html">
+            
+                <a href="virtual_address.html">
+            
+                    
+                    Virtual Address
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="6.5" data-path="debugging_tools.html">
+            
+                <a href="debugging_tools.html">
+            
+                    
+                    Debugging Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.6" data-path="development_tools.html">
+            
+                <a href="development_tools.html">
+            
+                    
+                    Development Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Debugging Tools</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="debugging-tools">Debugging Tools</h1>
+<p>Many tools lie at your disposal for debugging Pintos. This appendix introduces
+you to a few of them.</p>
+<h2 id="printf"><code>printf()</code></h2>
+<p>Don&apos;t underestimate the value of <code>printf()</code>. The way <code>printf()</code> is implemented
+in Pintos, you can call it from practically anywhere in the kernel, whether it&apos;s
+in a kernel thread or an interrupt handler, almost regardless of what locks are
+held. <code>printf()</code> is useful for more than just examining data. It can also help
+figure out when and where something goes wrong, even when the kernel crashes or
+panics without a useful error message. The strategy is to sprinkle calls to
+<code>printf()</code> with different strings (e.g. &quot;<1>&quot;, &quot;<2>&quot;, . . . ) throughout the
+pieces of code you suspect are failing. If you don&apos;t even see <1> printed, then
+something bad happened before that point, if you see <1> but not <2>, then
+something bad happened between those two points, and so on. Based on what you
+learn, you can then insert more <code>printf()</code> calls in the new, smaller region of
+code you suspect. Eventually you can narrow the problem down to a single
+statement. See <a href="appendix/debugging_tools.md#tripple-faults">Triple Faults</a>,
+for a related technique.</2></1></1></2></1></p>
+<h2 id="assert">ASSERT</h2>
+<p>Assertions are useful because they can catch problems early, before they&apos;d
+otherwise be noticed. Ideally, each function should begin with a set of
+assertions that check its arguments for validity. (Initializers for functions&apos;
+local variables are evaluated before assertions are checked, so be careful not
+to assume that an argument is valid in an initializer.) You can also sprinkle
+assertions throughout the body of functions in places where you suspect things
+are likely to go wrong. They are especially useful for checking loop invariants.</p>
+<p>Pintos provides the <code>ASSERT</code> macro, defined in <code>&lt;debug.h&gt;</code>, for checking
+assertions.</p>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ASSERT(expression) { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<p>Tests the value of expression. If it evaluates to zero (false), the kernel
+panics. The panic message includes the expression that failed, its file and
+line number, and a backtrace, which should help you to find the problem. See
+<a href="#Backtraces">Backtraces</a> for more information.</p>
+<h2 id="function-and-parameter-attributes">Function and Parameter Attributes</h2>
+<p>These macros defined in <code>&lt;debug.h&gt;</code> tell the compiler special attributes of a
+function or function parameter. Their expansions are GCC-specific.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> UNUSED { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Appended to a function parameter to tell the compiler that the parameter might
+not be used within the function. It suppresses the warning that would
+otherwise appear.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> NO_RETURN { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Appended to a function prototype to tell the compiler that the function never
+returns. It allows the compiler to fine-tune its warnings and its code
+generation.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> NO_INLINE { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Appended to a function prototype to tell the compiler to never emit the
+function in-line. Occasionally useful to improve the quality of backtraces
+(see below).</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PRINTF_FORMAT(format, first) { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Appended to a function prototype to tell the compiler that the function takes
+a <code>printf()</code>-like format string as the argument numbered format (starting from
+1) and that the corresponding value arguments start at the argument numbered
+first. This lets the compiler tell you if you pass the wrong argument types.</p>
+</blockquote>
+<h2 id="backtraces">Backtraces</h2>
+<p>When the kernel panics, it prints a &quot;backtrace,&quot; that is, a summary of how your
+program got where it is, as a list of addresses inside the functions that were
+running at the time of the panic. You can also insert a call to
+<code>debug_backtrace()</code>, prototyped in <code>&lt;debug.h&gt;</code>, to print a backtrace at any
+point in your code. <code>debug_backtrace_all()</code>, also declared in <code>&lt;debug.h&gt;</code>,
+prints backtraces of all threads.</p>
+<p>The addresses in a backtrace are listed as raw hexadecimal numbers, which are
+difficult to interpret. We provide a tool called <code>backtrace</code> to translate these
+into function names and source file line numbers. Give it the name of your
+<code>kernel.o</code> as the first argument and the hexadecimal numbers composing the
+backtrace (including the <code>0x</code> prefixes) as the remaining arguments. It outputs
+the function name and source file line numbers that correspond to each address.</p>
+<p>If the translated form of a backtrace is garbled, or doesn&apos;t make sense (e.g.
+function A is listed above function B, but B doesn&apos;t call A), then it&apos;s a good
+sign that you&apos;re corrupting a kernel thread&apos;s stack, because the backtrace is
+extracted from the stack. Alternatively, it could be that the <code>kernel.o</code> you
+passed to backtrace is not the same kernel that produced the backtrace.</p>
+<p>Sometimes backtraces can be confusing without any corruption. Compiler
+optimizations can cause surprising behavior. When a function has called another
+function as its final action (a tail call), the calling function may not appear
+in a backtrace at all. Similarly, when function A calls another function B that
+never returns, the compiler may optimize such that an unrelated function C
+appears in the backtrace instead of A. Function C is simply the function that
+happens to be in memory just after A. In the threads project, this is commonly
+seen in backtraces for test failures.</p>
+<h3 id="example">Example</h3>
+<p>Here&apos;s an example. Suppose that Pintos printed out this following call stack,
+which is taken from an actual Pintos submission for the file system project:</p>
+<pre><code class="lang-bash">Call stack: 0x800426eff 0x8004202fb 0x80042dc22 0x80042cf67 0x800422319
+0x80042325a 0x40012c 0x400a96 0x400ac8.
+</code></pre>
+<p>You would then invoke the <code>backtrace</code> utility like shown below, cutting and
+pasting the backtrace information into the command line. This assumes that
+<code>kernel.o</code> is in the current directory. You would of course enter all of the
+following on a single shell command line, even though that would overflow our
+margins here:</p>
+<pre><code class="lang-bash">backtrace 0x800426eff 0x8004202fb 0x80042dc22 0x80042cf67 0x800422319
+0x80042325a 0x400012c 0x400a96 0x4000ac8
+</code></pre>
+<p>The backtrace output would then look something like this:</p>
+<pre><code class="lang-bash">0x0000000800426eff: debug_panic (lib/debug.c:86)
+0x00000008004202fb: file_seek (filesys/file.c:405)
+0x000000080042dc22: seek (userprog/syscall.c:744)
+0x000000080042cf67: syscall_handler (userprog/syscall.c:444)
+0x0000000800422319: intr_handler (threads/interrupt.c:334)
+0x000000080042325a: intr_entry (threads/intr-stubs.S:38)
+0x000000000040012c: (unknown)
+0x0000000000400a96: (unknown)
+0x0000000000400ac8: (unknown)
+</code></pre>
+<p>(You will probably not see exactly the same addresses if you run the command
+above on your own kernel binary, because the source code you compiled and the
+compiler you used are probably different.)
+The first line in the backtrace refers to <code>debug_panic()</code>, the function that
+implements kernel panics. Because backtraces commonly result from kernel panics,
+<code>debug_panic()</code> will often be the first function shown in a backtrace.
+The second line shows <code>file_seek()</code> as the function that panicked, in this case
+as the result of an assertion failure. In the source code tree used for this
+example, line 405 of <code>filesys/file.c</code> is the assertion</p>
+<pre><code>ASSERT (file_ofs &gt;= 0);
+</code></pre><p>(This line was also cited in the assertion failure message.) Thus, <code>file_seek()</code>
+panicked because it passed a negative file offset argument.
+The third line indicates that <code>seek()</code> called <code>file_seek()</code>, presumably without
+validating the offset argument. In this submission, <code>seek()</code> implements the seek
+system call. The fourth line shows that <code>syscall_handler()</code>, the system call
+handler, invoked <code>seek()</code>. The fifth and sixth lines are the interrupt handler
+entry path. The remaining lines are for addresses below <code>KERN_BASE</code>. This means
+that they refer to addresses in the user program, not in the kernel.</p>
+<h2 id="gdb">GDB</h2>
+<p>You can run Pintos under the supervision of the GDB debugger. First, start
+Pintos with the <code>--gdb</code> option, e.g. <code>pintos --gdb -- run mytest</code>. Second, open
+a second terminal on the same machine and use gdb to invoke GDB on &apos;kernel.o&apos;</p>
+<pre><code>gdb kernel.o
+</code></pre><p>and issue the following GDB command:</p>
+<pre><code>target remote localhost:1234
+</code></pre><p>Now GDB is connected to the simulator over a local network connection. You can
+now issue any normal GDB commands. If you issue the &apos;c&apos; command, the simulated
+BIOS will take control, load Pintos, and then Pintos will run in the usual way.
+You can pause the process at any point with Ctrl+C.</p>
+<h3 id="using-gdb">Using GDB</h3>
+<p>You can read the GDB manual by typing <code>info gdb</code> at a terminal command prompt.
+Here&apos;s a few commonly useful GDB commands:</p>
+<ul>
+<li>c [GDB Command]</li>
+</ul>
+<blockquote>
+<p>Continues execution until hCtrl+Ci or the next breakpoint.</p>
+</blockquote>
+<ul>
+<li><p>break <em>function</em> [GDB Command]</p>
+</li>
+<li><p>break <em>file:line</em> [GDB Command]</p>
+</li>
+<li><p>break <em>address</em> [GDB Command]</p>
+</li>
+</ul>
+<blockquote>
+<p>Sets a breakpoint at function, at line within file, or address. (Use a &apos;0x&apos;
+prefix to specify an address in hex.)
+Use break main to make GDB stop when Pintos starts running.</p>
+</blockquote>
+<ul>
+<li>p <em>expression</em> [GDB Command]</li>
+</ul>
+<blockquote>
+<p>Evaluates the given expression and prints its value. If the expression
+contains a function call, that function will actually be executed.</p>
+</blockquote>
+<ul>
+<li>l <em>address</em> [GDB Command]</li>
+</ul>
+<blockquote>
+<p>Lists a few lines of code around address. (Use a &apos;0x&apos; prefix to specify an
+address in hex.)</p>
+</blockquote>
+<ul>
+<li>bt [GDB Command]</li>
+</ul>
+<blockquote>
+<p>Prints a stack backtrace similar to that output by the backtrace program
+described above.</p>
+</blockquote>
+<ul>
+<li>p/a <em>address</em> [GDB Command]</li>
+</ul>
+<blockquote>
+<p>Prints the name of the function or variable that occupies address. (Use a
+&apos;0x&apos; prefix to specify an address in hex.)</p>
+</blockquote>
+<ul>
+<li>diassemble <em>function</em> [GDB Command]</li>
+</ul>
+<blockquote>
+<p>Disassembles function.</p>
+</blockquote>
+<p>Here&apos;s an extra tip for anyone who read this: install gdb script such as
+<a href="https://github.com/pwndbg/pwndbg" target="_blank">pwndbg</a>. This makes your life easier!</p>
+<h3 id="faq">FAQ</h3>
+<ul>
+<li>Can I use GDB inside Emacs?</li>
+</ul>
+<blockquote>
+<p>Yes, you can. Emacs has special support for running GDB as a subprocess.
+Type M-x gdb and enter your pintos-gdb command at the prompt. The Emacs
+manual has information on how to use its debugging features in a section
+titled &quot;Debuggers.&quot;</p>
+</blockquote>
+<ul>
+<li>GDB is doing something weird.</li>
+</ul>
+<blockquote>
+<p>If you notice strange behavior while using GDB, there are three possibilities:
+a bug in your modified Pintos, a bug in Bochs&apos;s interface to GDB or in GDB
+itself, or a bug in the original Pintos code. The first and second are quite
+likely, and you should seriously consider both. We hope that the third is less
+likely, but it is also possible.</p>
+</blockquote>
+<h2 id="triple-faults">Triple Faults</h2>
+<p>When a CPU exception handler, such as a page fault handler, cannot be invoked
+because it is missing or defective, the CPU will try to invoke the &quot;double
+fault&quot; handler. If the double fault handler is itself missing or defective,
+that&apos;s called a &quot;triple fault.&quot; A triple fault causes an immediate CPU reset.</p>
+<p>Thus, if you get yourself into a situation where the machine reboots in a loop,
+that&apos;s probably a &quot;triple fault.&quot; In a triple fault situation, you might not be
+able to use <code>printf()</code> for debugging, because the reboots might be happening
+even before everything needed for <code>printf()</code> is initialized.</p>
+<p>There exists way to debug triple faults.</p>
+<p>Pick a place in the Pintos code, insert the infinite loop <code>for (;;);</code> there, and
+recompile and run. There are two likely possibilities:</p>
+<ul>
+<li><p>The machine hangs without rebooting. If this happens, you know that the
+infinite loop is running. That means that whatever caused the reboot must be
+<em>after</em> the place you inserted the infinite loop. Now move the infinite loop
+later in the code sequence.</p>
+</li>
+<li><p>The machine reboots in a loop. If this happens, you know that the machine
+didn&apos;t make it to the infinite loop. Thus, whatever caused the reboot must be
+<em>before</em> the place you inserted the infinite loop. Now move the infinite loop
+earlier in the code sequence.</p>
+<p>If you move around the infinite loop in a &quot;binary search&quot; fashion, you can use
+this technique to pin down the exact spot that everything goes wrong. It
+should only take a few minutes at most.</p>
+</li>
+</ul>
+<h2 id="tips">Tips</h2>
+<p>The page allocator in <code>threads/palloc.c</code> and the block allocator in
+<code>threads/malloc.c</code> clear all the bytes in memory to &apos;0xcc&apos; at time of free.
+Thus, if you see an attempt to dereference a pointer like <code>0xcccccccc</code>, or some
+other reference to <code>0xcc</code>, there&apos;s a good chance you&apos;re trying to reuse a page
+that&apos;s already been freed. Also, byte 0xcc is the CPU opcode for &quot;invoke
+interrupt 3,&quot; so if you see an error like <code>Interrupt 0x03 (#BP Breakpoint
+Exception)</code>, then Pintos tried to execute code in a freed page or block. An
+assertion failure on the expression <code>sec_no &lt; d-&gt;capacity</code> indicates that Pintos
+tried to access a file through an inode that has been closed and freed. Freeing
+an inode clears its starting sector number to <code>0xcccccccc</code>, which is not a valid
+sector number for disks smaller than about 1.6 TB.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="virtual_address.html" class="navigation navigation-prev " aria-label="Previous page: Virtual Address">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="development_tools.html" class="navigation navigation-next " aria-label="Next page: Development Tools">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Debugging Tools","level":"6.5","depth":1,"next":{"title":"Development Tools","level":"6.6","depth":1,"path":"appendix/development_tools.md","ref":"appendix/development_tools.md","articles":[]},"previous":{"title":"Virtual Address","level":"6.4","depth":1,"path":"appendix/virtual_address.md","ref":"appendix/virtual_address.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/debugging_tools.md","mtime":"2020-03-20T16:01:45.093Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-20T16:02:05.493Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

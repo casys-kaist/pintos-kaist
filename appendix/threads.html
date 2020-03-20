@@ -1,0 +1,642 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Threads · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="synchronization.html" />
+    
+    
+    <link rel="prev" href="../introduction/legal_and_ethical_issues.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Introduction</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../introduction/getting_started.html">
+            
+                <a href="../introduction/getting_started.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../introduction/grading.html">
+            
+                <a href="../introduction/grading.html">
+            
+                    
+                    Grading
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../introduction/legal_and_ethical_issues.html">
+            
+                <a href="../introduction/legal_and_ethical_issues.html">
+            
+                    
+                    Legal and Ethical Issues
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project1: Threads</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project2: User Programs</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project3: Virtual Memory</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project4: File System</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Appendix</li>
+        
+        
+    
+        <li class="chapter active" data-level="6.1" data-path="threads.html">
+            
+                <a href="threads.html">
+            
+                    
+                    Threads
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="synchronization.html">
+            
+                <a href="synchronization.html">
+            
+                    
+                    Synchronization
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="memory_allocation.html">
+            
+                <a href="memory_allocation.html">
+            
+                    
+                    Memory Allocation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4" data-path="virtual_address.html">
+            
+                <a href="virtual_address.html">
+            
+                    
+                    Virtual Address
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.5" data-path="debugging_tools.html">
+            
+                <a href="debugging_tools.html">
+            
+                    
+                    Debugging Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.6" data-path="development_tools.html">
+            
+                <a href="development_tools.html">
+            
+                    
+                    Development Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Threads</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="threads">Threads</h1>
+<h2 id="struct-thread"><code>struct thread</code></h2>
+<p>The main Pintos data structure for threads is <code>struct thread</code>, declared in
+<code>threads/thread.h</code>.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">struct</span> thread;
+</code></pre>
+<p>Represents a thread or a user process. In the projects, you will have to add
+your own members to <code>struct thread</code>. You may also change or delete the
+definitions of existing members. Every <code>struct thread</code> occupies the beginning
+of its own page of memory. The rest of the page is used for the thread&apos;s
+stack, which grows downward from the end of the page. It looks like this:</p>
+<pre><code>                      4 kB +---------------------------------+
+                           |         kernel stack            |
+                           |               |                 |
+                           |               |                 |
+                           |               V                 |
+                           |        grows downward           |
+                           |                                 |
+                           |                                 |
+                           |                                 |
+                           |                                 |
+                           |                                 |
+                           |                                 |
+                           |                                 |
+                           |                                 |
+    sizeof (struct thread) +---------------------------------+
+                           |             magic               |
+                           |          intr_frame             |
+                           |               :                 |
+                           |               :                 |
+                           |             status              |
+                           |              tid                |
+                      0 kB +---------------------------------+
+</code></pre><p>This has two consequences. First, <code>struct thread</code> must not be allowed to grow
+too big. If it does, then there will not be enough room for the kernel stack.
+The base <code>struct thread</code> is only a few bytes in size. It probably should stay
+well under 1 kB. Second, kernel stacks must not be allowed to grow too large.
+If a stack overflows, it will corrupt the thread state. Thus, kernel functions
+should not allocate large structures or arrays as non-static local variables.
+Use dynamic allocation with <code>malloc()</code> or <code>palloc_get_page()</code> instead
+(see <a href="memoryAllocation.md">Memory Allocation</a>).</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">tid_t</span> tid;
+</code></pre>
+<blockquote>
+<p>The thread&apos;s thread identifier or tid. Every thread must have a tid that is
+unique over the entire lifetime of the kernel. By default, <code>tid_t</code> is a
+<code>typedef</code> for <code>int</code> and each new thread receives the numerically next higher
+tid, starting from 1 for the initial process. You can change the type and the
+numbering scheme if you like.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">enum</span> thread_status status;
+</code></pre>
+<blockquote>
+<p>The thread&apos;s state, one of the following:</p>
+<ul>
+<li><p><code>THREAD_RUNNING</code></p>
+<p>The thread is running. Exactly one thread is running at a given time.
+<code>thread_current()</code> returns the running thread.</p>
+</li>
+<li><p><code>THREAD_READY</code></p>
+<p>The thread is ready to run, but it&apos;s not running right now. The thread could
+be selected to run the next time the scheduler is invoked. Ready threads are
+kept in a doubly linked list called <code>ready_list</code>.</p>
+</li>
+<li><p><code>THREAD_BLOCKED</code></p>
+<p>The thread is waiting for something, e.g. a lock to become available, an
+interrupt to be invoked. The thread won&apos;t be scheduled again until it
+transitions to the <code>THREAD_READY</code>  state with a call to <code>thread_unblock()</code>.
+This is most conveniently done indirectly, using one of the Pintos
+synchronization primitives that block and unblock threads automatically
+(see <a href="synchronization.html">Synchronization</a>). There is no <em>a priori</em> way to
+tell what a blocked thread is waiting for, but a backtrace can help
+(see <a href="">Backtraces</a>).</p>
+</li>
+<li><p><code>THREAD_DYING</code></p>
+<p>The thread will be destroyed by the scheduler after switching to the next
+thread.</p>
+</li>
+</ul>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">char</span> name[<span class="hljs-number">16</span>];
+</code></pre>
+<blockquote>
+<p>The thread&apos;s name as a string, or at least the first few characters of it.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">struct</span> intr_frame tf;
+</code></pre>
+<blockquote>
+<p>Storing information for the context switching, which includes registers,
+and stack pointer.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">int</span> priority;
+</code></pre>
+<blockquote>
+<p>A thread priority, ranging from <code>PRI_MIN</code> (0) to <code>PRI_MAX</code> (63). Lower numbers
+correspond to lower priorities, so that priority 0 is the lowest priority and
+priority 63 is the highest. Pintos as provided ignores thread priorities, but
+you will implement priority scheduling in project 1
+(see <a href="../project1/priority_scheduling.md">Priority Scheduling</a>).</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">struct</span> list_elem elem;
+</code></pre>
+<blockquote>
+<p>A &quot;list element&quot; used to put the thread into doubly linked lists, either
+<code>ready_list</code> (the list of threads ready to run) or a list of threads waiting
+on a semaphore in <code>sema_down()</code>. It can do double duty because a thread
+waiting on a semaphore is not ready, and vice versa.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">uint64_t</span> *pml4e;
+</code></pre>
+<blockquote>
+<p>Only present in project 2 and later. See <a href="">Page Tables</a>.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">unsigned</span> magic
+</code></pre>
+<blockquote>
+<p>Always set to <code>THREAD_MAGIC</code>, which is just an arbitrary number defined in
+<code>threads/thread.c</code>, and used to detect stack overflow. <code>thread_current()</code>
+checks that the <code>magic</code> member of the running thread&apos;s <code>struct thread</code> is set
+to <code>THREAD_MAGIC</code>. Stack overflow tends to change this value, triggering the
+assertion. For greatest benefit, as you add members to <code>struct thread</code>, leave
+<code>magic</code> at the end.</p>
+</blockquote>
+<h2 id="thread-functions">Thread Functions</h2>
+<p><code>threads/thread.c</code> implements several public functions for thread support.
+Let&apos;s take a look at the most useful:</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">thread_init</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Called by <code>main()</code> to initialize the thread system. Its main purpose is to
+create a <code>struct thread</code> for Pintos&apos;s initial thread. This is possible because
+the Pintos loader puts the initial thread&apos;s stack at the top of a page, in the
+same position as any other Pintos thread.</p>
+<p>Before <code>thread_init()</code> runs, <code>thread_current()</code> will fail because the running
+thread&apos;s <code>magic</code> value is incorrect. Lots of functions call <code>thread_current()</code>
+directly or indirectly, including <code>lock_acquire()</code> for locking a lock, so
+<code>thread_init()</code> is called early in Pintos initialization.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">thread_start</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Called by <code>main()</code> to start the scheduler. Creates the idle thread, that is,
+the thread that is scheduled when no other thread is ready. Then enables
+interrupts, which as a side effect enables the scheduler because the scheduler
+runs on return from the timer interrupt, using <code>intr_yield_on_return()</code>.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">thread_tick</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Called by the timer interrupt at each timer tick. It keeps track of thread
+statistics and triggers the scheduler when a time slice expires.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">thread_print_stats</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Called during Pintos shutdown to print thread statistics.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">tid_t</span> thread_create (<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *name, <span class="hljs-keyword">int</span> priority, thread func *func, <span class="hljs-keyword">void</span> *aux);
+</code></pre>
+<blockquote>
+<p>Creates and starts a new thread named name with the given priority, returning
+the new thread&apos;s tid. The thread executes func, passing aux as the function&apos;s
+single argument.</p>
+<p><code>thread_create()</code> allocates a page for the thread&apos;s <code>struct thread</code> and stack
+and initializes its members, then it sets up a set of fake stack frames for
+it. The thread is initialized in the blocked state, then unblocked just before
+returning, which allows the new thread to be scheduled.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">thread_func</span> <span class="hljs-params">(<span class="hljs-keyword">void</span> *aux)</span></span>;
+</code></pre>
+<blockquote>
+<p>This is the type of the function passed to <code>thread_create()</code>, whose aux
+argument is passed along as the function&apos;s argument.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">thread_block</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Transitions the running thread from the running state to the blocked state.
+The thread will not run again until <code>thread_unblock()</code> is called on it, so
+you&apos;d better have some way arranged for that to happen. Because
+<code>thread_block()</code> is so low-level, you should prefer to use one of the
+synchronization primitives instead
+(see <a href="synchronization.html">Synchronization</a>).</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">thread_unblock</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> thread *thread)</span></span>;
+</code></pre>
+<blockquote>
+<p>Transitions thread, which must be in the blocked state, to the ready state,
+allowing it to resume running. This is called when the event that the thread
+is waiting for occurs, e.g. when the lock that the thread is waiting on
+becomes available.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> thread *<span class="hljs-title">thread_current</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Returns the running thread.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">tid_t</span> thread_tid (<span class="hljs-keyword">void</span>);
+</code></pre>
+<blockquote>
+<p>Returns the running thread&apos;s thread id.
+Equivalent to <code>thread_current ()-&gt;tid</code>.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *<span class="hljs-title">thread_name</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Returns the running thread&apos;s name. Equivalent to <code>thread_current ()-&gt;name</code>.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">thread_exit</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> NO_RETURN</span>;
+</code></pre>
+<blockquote>
+<p>Causes the current thread to exit. Never returns.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">thread_yield</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Yields the CPU to the scheduler, which picks a new thread to run. The new
+threadmight be the current thread, so you can&apos;t depend on this function to
+keep this thread from running for any particular length of time.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">thread_get_priority</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">thread_set_priority</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> new_priority)</span></span>;
+</code></pre>
+<blockquote>
+<p>Stub to set and get thread priority. See
+<a href="../project1/priority_scheduling">Priority Scheduling</a>.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">thread_get_nice</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">thread_set_nice</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> new_nice)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">thread_get_recent_cpu</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">thread_get_load_avg</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Stubs for the advanced scheduler.</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../introduction/legal_and_ethical_issues.html" class="navigation navigation-prev " aria-label="Previous page: Legal and Ethical Issues">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="synchronization.html" class="navigation navigation-next " aria-label="Next page: Synchronization">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Threads","level":"6.1","depth":1,"next":{"title":"Synchronization","level":"6.2","depth":1,"path":"appendix/synchronization.md","ref":"appendix/synchronization.md","articles":[]},"previous":{"title":"Legal and Ethical Issues","level":"1.4","depth":1,"path":"introduction/legal_and_ethical_issues.md","ref":"introduction/legal_and_ethical_issues.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/threads.md","mtime":"2020-03-20T16:01:45.093Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-20T16:02:05.493Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,508 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Memory Allocation · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="virtual_address.html" />
+    
+    
+    <link rel="prev" href="synchronization.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Introduction</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../introduction/getting_started.html">
+            
+                <a href="../introduction/getting_started.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../introduction/grading.html">
+            
+                <a href="../introduction/grading.html">
+            
+                    
+                    Grading
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../introduction/legal_and_ethical_issues.html">
+            
+                <a href="../introduction/legal_and_ethical_issues.html">
+            
+                    
+                    Legal and Ethical Issues
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project1: Threads</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project2: User Programs</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project3: Virtual Memory</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project4: File System</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Appendix</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="threads.html">
+            
+                <a href="threads.html">
+            
+                    
+                    Threads
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="synchronization.html">
+            
+                <a href="synchronization.html">
+            
+                    
+                    Synchronization
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="6.3" data-path="memory_allocation.html">
+            
+                <a href="memory_allocation.html">
+            
+                    
+                    Memory Allocation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4" data-path="virtual_address.html">
+            
+                <a href="virtual_address.html">
+            
+                    
+                    Virtual Address
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.5" data-path="debugging_tools.html">
+            
+                <a href="debugging_tools.html">
+            
+                    
+                    Debugging Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.6" data-path="development_tools.html">
+            
+                <a href="development_tools.html">
+            
+                    
+                    Development Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Memory Allocation</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="memory-allocation">Memory Allocation</h1>
+<p>Pintos contains two memory allocators, one that allocates memory in units of a
+page, and one that can allocate blocks of any size.</p>
+<h2 id="page-allocator">Page Allocator</h2>
+<p>The page allocator declared in <code>include/threads/palloc.h</code> allocates memory
+in units of a page. It is most often used to allocate memory one page at a time,
+but it can also allocate multiple contiguous pages at once.</p>
+<p>The page allocator divides the memory it allocates into two pools, called the
+kernel and user pools. By default, each pool gets half of system memory above
+1MB, but the division can be changed with the <strong>ul</strong> kernel command line option.
+An allocation request draws from one pool or the other. If one pool becomes
+empty, the other may still have free pages. The user pool should be used for
+allocating memory for user processes and the kernel pool for all other
+allocations. This will only become important starting with project 3. Until
+then, all allocations should be made from the kernel pool.</p>
+<p>Each pool&apos;s usage is tracked with a bitmap, one bit per page in the pool. A
+request to allocate n pages scans the bitmap for n consecutive bits set to
+false, indicating that those pages are free, and then sets those bits to true to
+mark them as used. This is a &quot;first fit&quot; allocation strategy.</p>
+<p>The page allocator is subject to fragmentation. That is, it may not be possible
+to allocate n contiguous pages even though n or more pages are free, because
+the free pages are separated by used pages. In fact, in pathological cases it
+may be impossible to allocate 2 contiguous pages even though half of the pool&apos;s
+pages are free. Single-page requests can&apos;t fail due to fragmentation, so
+requests for multiple contiguous pages should be limited as much as possible.</p>
+<p>Pages may not be allocated from interrupt context, but they may be freed.</p>
+<p>When a page is freed, all of its bytes are cleared to <strong>0xcc</strong>, as a debugging
+aid (see <a href="">Debugging Tips</a>).</p>
+<p>Page allocator types and functions are described below.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">palloc_get_page</span> <span class="hljs-params">(<span class="hljs-keyword">enum</span> palloc_flags flags)</span>
+<span class="hljs-keyword">void</span> *<span class="hljs-title">palloc_get_multiple</span> <span class="hljs-params">(<span class="hljs-keyword">enum</span> palloc_flags flags, size_t page_cnt)</span>
+</span></code></pre>
+<blockquote>
+<p>Obtains and returns one page, or <em>page_cnt</em> contiguous pages, respectively.
+Returns a null pointer if the pages cannot be allocated.</p>
+<p>The <em>flags</em> argument may be any combination of the following flags:</p>
+<ul>
+<li><p><code>PAL_ASSERT</code></p>
+<p> If the pages cannot be allocated, panic the kernel. This is only appropriate
+ during kernel initialization. User processes should never be permitted to
+ panic the kernel.</p>
+</li>
+<li><p><code>PAL_ZERO</code></p>
+<p> Zero all the bytes in the allocated pages before returning them.
+ If not set, the contents of newly allocated pages are unpredictable.</p>
+</li>
+<li><p><code>PAL_USER</code></p>
+<p> Obtain the pages from the user pool. If not set, pages are allocated from
+ the kernel pool.</p>
+</li>
+</ul>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">palloc_free_page</span> <span class="hljs-params">(<span class="hljs-keyword">void</span> *page)</span>
+<span class="hljs-keyword">void</span> <span class="hljs-title">palloc_free_multiple</span> <span class="hljs-params">(<span class="hljs-keyword">void</span> *pages, size_t page_cnt)</span>
+</span></code></pre>
+<blockquote>
+<p>Frees one page, or page cnt contiguous pages, respectively, starting at
+<em>pages</em>. All of the pages must have been obtained using <code>palloc_get_page()</code>
+or <code>palloc_get_multiple()</code>.</p>
+</blockquote>
+<h2 id="block-allocator">Block Allocator</h2>
+<p>The block allocator, declared in <code>threads/malloc.h</code>, can allocate blocks of any
+size. It is layered on top of the page allocator described in the previous
+section. Blocks returned by the block allocator are obtained from the kernel
+pool.</p>
+<p>The block allocator uses two different strategies for allocating memory. The
+first strategy applies to blocks that are 1 kB or smaller
+(one-fourth of the page size). These allocations are rounded up to the nearest
+power of 2, or 16 bytes, whichever is larger. Then they are grouped into a page
+used only for allocations of that size.</p>
+<p>The second strategy applies to blocks larger than 1 kB. These allocations
+(plus a small amount of overhead) are rounded up to the nearest page in size,
+and then the block allocator requests that number of contiguous pages from the
+page allocator.</p>
+<p>In either case, the difference between the allocation requested size and the
+actual block size is wasted. A real operating system would carefully tune its
+allocator to minimize this waste, but this is unimportant in an instructional
+system like Pintos.</p>
+<p>As long as a page can be obtained from the page allocator, small allocations
+always succeed. Most small allocations do not require a new page from the page
+allocator at all, because they are satisfied using part of a page already
+allocated. However, large allocations always require calling into the page
+allocator, and any allocation that needs more than one contiguous page can fail
+due to fragmentation, as already discussed in the previous section. Thus, you
+should minimize the number of large allocations in your code, especially those
+over approximately 4 kB each.</p>
+<p>When a block is freed, all of its bytes are cleared to <strong>0xcc</strong>, as a debugging
+aid (see <a href="">Debugging Tips</a>).</p>
+<p>The block allocator may not be called from interrupt context.</p>
+<p>The block allocator functions are described below. Their interfaces are the same
+as the standard C library functions of the same names.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">malloc</span> <span class="hljs-params">(size_t size)</span>
+</span></code></pre>
+<blockquote>
+<p>Obtains and returns a new block, from the kernel pool, at least <em>size</em> bytes long.
+Returns a null pointer if size is zero or if memory is not available.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">calloc</span> <span class="hljs-params">(size_t a, size_t b)</span>
+</span></code></pre>
+<blockquote>
+<p>Obtains a returns a new block, from the kernel pool, at least a * b bytes
+long. The block&apos;s contents will be cleared to zeros. Returns a null pointer if
+a or b is zero or if insufficient memory is available.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> *<span class="hljs-title">realloc</span> <span class="hljs-params">(<span class="hljs-keyword">void</span> *block, size_t new_size)</span>
+</span></code></pre>
+<blockquote>
+<p>Attempts to resize <em>block</em> to <em>new_size</em> bytes, possibly moving it in the
+process. If successful, returns the new block, in which case the old block
+must no longer be accessed. On failure, returns a null pointer, and the old
+block remains valid. A call with block null is equivalent to <code>malloc()</code>. A
+call with new size zero is equivalent to <code>free()</code>.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">free</span> <span class="hljs-params">(<span class="hljs-keyword">void</span> *block)</span>
+</span></code></pre>
+<blockquote>
+<p>Frees <em>block</em>, which must have been previously returned by <code>malloc()</code>,
+<code>calloc()</code>, or <code>realloc()</code> (and not yet freed).</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="synchronization.html" class="navigation navigation-prev " aria-label="Previous page: Synchronization">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="virtual_address.html" class="navigation navigation-next " aria-label="Next page: Virtual Address">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Memory Allocation","level":"6.3","depth":1,"next":{"title":"Virtual Address","level":"6.4","depth":1,"path":"appendix/virtual_address.md","ref":"appendix/virtual_address.md","articles":[]},"previous":{"title":"Synchronization","level":"6.2","depth":1,"path":"appendix/synchronization.md","ref":"appendix/synchronization.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/memory_allocation.md","mtime":"2020-03-20T16:01:45.093Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-20T16:02:05.493Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

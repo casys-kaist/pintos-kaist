@@ -1,0 +1,755 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Advanced Scheduler · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="FAQ.html" />
+    
+    
+    <link rel="prev" href="priority_scheduling.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Introduction</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../introduction/getting_started.html">
+            
+                <a href="../introduction/getting_started.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../introduction/grading.html">
+            
+                <a href="../introduction/grading.html">
+            
+                    
+                    Grading
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../introduction/legal_and_ethical_issues.html">
+            
+                <a href="../introduction/legal_and_ethical_issues.html">
+            
+                    
+                    Legal and Ethical Issues
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project1: Threads</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="introduction.html">
+            
+                <a href="introduction.html">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="alarm_clock.html">
+            
+                <a href="alarm_clock.html">
+            
+                    
+                    Alarm Clock
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="priority_scheduling.html">
+            
+                <a href="priority_scheduling.html">
+            
+                    
+                    Priority Scheduling
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.4" data-path="advanced_scheduler.html">
+            
+                <a href="advanced_scheduler.html">
+            
+                    
+                    Advanced Scheduler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="FAQ.html">
+            
+                <a href="FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project2: User Programs</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project3: Virtual Memory</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Project4: File System</li>
+        
+        
+    
+
+    
+        
+        <li class="header">Appendix</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="../appendix/threads.html">
+            
+                <a href="../appendix/threads.html">
+            
+                    
+                    Threads
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="../appendix/synchronization.html">
+            
+                <a href="../appendix/synchronization.html">
+            
+                    
+                    Synchronization
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="../appendix/memory_allocation.html">
+            
+                <a href="../appendix/memory_allocation.html">
+            
+                    
+                    Memory Allocation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4" data-path="../appendix/virtual_address.html">
+            
+                <a href="../appendix/virtual_address.html">
+            
+                    
+                    Virtual Address
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.5" data-path="../appendix/debugging_tools.html">
+            
+                <a href="../appendix/debugging_tools.html">
+            
+                    
+                    Debugging Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.6" data-path="../appendix/development_tools.html">
+            
+                <a href="../appendix/development_tools.html">
+            
+                    
+                    Development Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Advanced Scheduler</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h3 id="advanced-scheduler">Advanced Scheduler</h3>
+<p><strong>Implement a multilevel feedback queue scheduler similar to the
+<a href="#4.4BSD%20Scheduler">4.4BSD scheduler</a> to reduce the average response time for
+running jobs on your system.</strong></p>
+<p>Like the priority scheduler, the advanced scheduler chooses the thread to run
+based on priorities. However, the advanced scheduler does not do priority
+donation. Thus, we recommend that you have the priority scheduler working,
+except possibly for priority donation, before you start work on the advanced
+scheduler.</p>
+<p>You must write your code to allow us to choose a scheduling algorithm policy at
+Pintos startup time. By default, the priority scheduler must be active, but we
+must be able to choose the 4.4BSD scheduler with the <code>-mlfqs</code> kernel option.
+Passing this option sets <code>thread_mlfqs</code>, declared in <code>threads/thread.h</code>, to true
+when the options are parsed by <code>parse_options()</code>, which happens early in
+<code>main()</code>.</p>
+<p>When the 4.4BSD scheduler is enabled, threads no longer directly control their
+own priorities. The priority argument to <code>thread_create()</code> should be ignored,
+as well as any calls to <code>thread_set_priority()</code>, and <code>thread_get_priority()</code>
+should return the thread&apos;s current priority as set by the scheduler. The
+advanced scheduler is not used in any later project.</p>
+<h3 id="44bsd-scheduler">4.4BSD Scheduler</h3>
+<p>The goal of a general-purpose scheduler is to balance threads&apos; different
+scheduling needs. Threads that perform a lot of I/O require a fast response time
+to keep input and output devices busy, but need little CPU time. On the other
+hand, compute-bound threads need to receive a lot of CPU time to finish their
+work, but have no requirement for fast response time. Other threads lie
+somewhere in between, with periods of I/O punctuated by periods of computation,
+and thus have requirements that vary over time. A well-designed scheduler
+can often accommodate threads with all these requirements simultaneously.</p>
+<p>For project 1, you must implement the scheduler described in this appendix. Our
+scheduler resembles the one described in [McKusick], which is one example of a
+multilevel feedback queue scheduler. This type of scheduler maintains several
+queues of ready-to-run threads, where each queue holds threads with a different
+priority. At any given time, the scheduler chooses a thread from the
+highest-priority non-empty queue. If the highest-priority queue contains
+multiple threads, then they run in &quot;round robin&quot; order.</p>
+<p>Multiple facets of the scheduler require data to be updated after a certain
+number of timer ticks. In every case, these updates should occur before any
+ordinary kernel thread has a chance to run, so that there is no chance that a
+kernel thread could see a newly increased <code>timer_ticks()</code> value but old
+scheduler data values.</p>
+<p>The 4.4BSD scheduler does not include priority donation.</p>
+<h4 id="niceness">Niceness</h4>
+<p>Thread priority is dynamically determined by the scheduler using a formula given
+below. However, each thread also has an integer nice value that determines how
+&quot;nice&quot; the thread should be to other threads. A nice of zero does not affect
+thread priority. A positive nice, to the maximum of 20, decreases the priority
+of a thread and causes it to give up some CPU time it would otherwise receive.
+On the other hand, a negative nice, to the minimum of -20, tends to take away
+CPU time from other threads.</p>
+<p>The initial thread starts with a nice value of zero. Other threads start with a
+nice value inherited from their parent thread. You must implement the functions
+described below, which are for use by test programs. We have provided skeleton
+definitions for them in <code>threads/thread.c</code></p>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">thread_get_nice</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Returns the current thread&apos;s nice value.</p>
+</blockquote>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">thread_set_nice</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Sets the current thread&apos;s nice value to new nice and recalculates the thread&apos;s
+priority based on the new value
+(see <a href="#Calculating%20Priority">Calculating Priority</a>). If the running thread no
+longer has the highest priority, yields.</p>
+</blockquote>
+<h4 id="calculating-priority">Calculating Priority</h4>
+<p>Our scheduler has 64 priorities and thus 64 ready queues, numbered 0 <code>(PRI_MIN)</code>
+through <code>63 (PRI_MAX)</code>. Lower numbers correspond to lower priorities, so that
+priority 0 is the lowest priority and priority 63 is the highest. Thread
+priority is calculated initially at thread initialization. It is also
+recalculated once every fourth clock tick, for every thread. In either
+case, it is determined by the formula:</p>
+<blockquote>
+<p>priority = PRI_MAX - (recent_cpu / 4) - (nice * 2),</p>
+</blockquote>
+<p>where recent cpu is an estimate of the CPU time the thread has used recently
+(see below) and nice is the thread&apos;s nice value. The result should be rounded
+down to the nearest integer (truncated). The coefficients 1/4 and 2 on recent
+cpu and nice, respectively, have been found to work well in practice but lack
+deeper meaning. The calculated priority is always adjusted to lie in the valid
+range <code>PRI_MIN</code> to <code>PRI_MAX</code>.</p>
+<p>This formula gives a thread that has received CPU time recently lower priority
+for being reassigned the CPU the next time the scheduler runs. This is key to
+preventing starvation: a thread that has not received any CPU time recently will
+have a recent cpu of 0, which barring a high nice value should ensure that it
+receives CPU time soon.</p>
+<h4 id="calculating-recentcpu">Calculating <code>recent_cpu</code></h4>
+<p>We wish recent cpu to measure how much CPU time each process has received
+&quot;recently.&quot; Furthermore, as a refinement, more recent CPU time should be
+weighted more heavily than less recent CPU time. One approach would use an array
+of n elements to track the CPU time received in each of the last n seconds.
+However, this approach requires O(n) space per thread and O(n) time per
+calculation of a new weighted average.</p>
+<p>Instead, we use a exponentially weighted moving average, which takes this
+general form:</p>
+<blockquote>
+<p>x(0) = f(0),</p>
+<p>x(t) = ax(t &#x2212; 1) + (1 &#x2212; a)f(t),</p>
+<p>a = k/(k + 1),</p>
+</blockquote>
+<p>where <code>x(t)</code> is the moving average at integer time <code>t &#x2265; 0</code>, <code>f(t)</code> is the
+function being averaged, and <code>k &gt; 0</code> controls the rate of decay. We can iterate
+the formula over a few steps as follows:</p>
+<blockquote>
+<p>x(1) = f(1),</p>
+<p>x(2) = af(1) + f(2),</p>
+<p>...</p>
+<p>x(5) = a^4 * f(1) + a^3 * f(2) + a^2 * f(3) + a * f(4) + f(5).</p>
+</blockquote>
+<p>The value of <code>f(t)</code> has a weight of 1 at time <code>t</code>, a weight of <code>a</code> at time
+<code>t + 1</code>, <code>a^2</code> at time <code>t + 2</code>, and so on. We can also relate <code>x(t)</code> to <code>k</code>:
+<code>f(t)</code> has a weight of approximately <code>1/e</code> at time <code>t + k</code>, approximately
+<code>1/(e^2)</code> at time <code>t + 2k</code>, and so on. From the opposite direction, <code>f(t)</code>
+decays to weight <code>w</code> at time <code>t + log_a(w)</code>.</p>
+<p>The initial value of <code>recent_cpu</code> is 0 in the first thread created, or the
+parent&apos;s value in other new threads. Each time a timer interrupt occurs,
+<code>recent_cpu</code> is incremented by 1 for the running thread only, unless the idle
+thread is running. In addition, once per second the value of recent cpu is
+recalculated for every thread (whether running, ready, or blocked), using this
+formula:</p>
+<blockquote>
+<p>recent_cpu = (2 * load_avg)/(2 * load_avg + 1) * recent_cpu + nice</p>
+</blockquote>
+<p>where <code>load_avg</code> is a moving average of the number of threads ready to run (see
+below). If <code>load_avg</code> is 1, indicating that a single thread, on average, is
+competing for the CPU, then the current value of recent cpu decays to a weight
+of <code>.1</code> in <code>log_(2/3) .1 &#x2248; 6</code> seconds; if load avg is 2, then decay to a weight
+of <code>.1</code> takes <code>log_(3/4) .1 &#x2248; 8</code> seconds. The effect is that recent cpu
+estimates the amount of CPU time the thread has received &quot;recently,&quot; with the
+rate of decay inversely proportional to the number of threads competing for the
+CPU.</p>
+<p>Assumptions made by some of the tests require that these recalculations of
+recent cpu be made exactly when the system tick counter reaches a multiple of
+a second, that is, when <code>timer_ticks () % TIMER_FREQ == 0</code>, and not at any other
+time.</p>
+<p>The value of <code>recent_cpu</code> can be negative for a thread with a negative nice value.
+Do not clamp negative <code>recent_cpu</code> to 0.</p>
+<p>You may need to think about the order of calculations in this formula. We
+recommend computing the coefficient of recent cpu first, then multiplying. Some
+students have reported that multiplying <code>load_avg</code> by <code>recent_cpu</code> directly can
+cause overflow.</p>
+<p>You must implement <code>thread_get_recent_cpu()</code>, for which there is a skeleton in
+<code>threads/thread.c</code>.</p>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">thread_get_recent_cpu</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Returns 100 times the current thread&apos;s recent cpu value, rounded to the
+nearest integer</p>
+</blockquote>
+<h4 id="calculating-loadavg">Calculating <code>load_avg</code></h4>
+<p>Finally, load avg, often known as the system load average, estimates the average
+number of threads ready to run over the past minute. Like <code>recent_cpu</code>, it is an
+exponentially weighted moving average. Unlike priority and <code>recent_cpu</code>,
+<code>load_avg</code> is system-wide, not thread-specific. At system boot, it is
+initialized to 0. Once per second thereafter, it is updated according to the
+following formula:</p>
+<blockquote>
+<p>load_avg = (59/60) * load_avg + (1/60) * ready_threads,</p>
+</blockquote>
+<p>where ready threads is the number of threads that are either running or ready to
+run at time of update (not including the idle thread).</p>
+<p>Because of assumptions made by some of the tests, <code>load_avg</code> must be updated
+exactly when the system tick counter reaches a multiple of a second, that is,
+when <code>timer_ticks () % TIMER_FREQ == 0</code>, and not at any other time.
+You must implement <code>thread_get_load_avg()</code>, for which there is a skeleton in
+<code>threads/thread.c</code>.</p>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">thread_get_load_avg</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span>
+</span></code></pre>
+<blockquote>
+<p>Returns 100 times the current system load average, rounded to the nearest
+integer.</p>
+</blockquote>
+<h4 id="summary">Summary</h4>
+<p>The following formulas summarize the calculations required to implement the
+scheduler. They are not a complete description of scheduler requirements.</p>
+<p>Every thread has a nice value between -20 and 20 directly under its control.
+Each thread also has a priority, between 0 (<code>PRI_MIN</code>) through 63 (<code>PRI_MAX</code>),
+which is recalculated using the following formula every fourth tick:</p>
+<blockquote>
+<p>priority = PRI_MAX - (recent_cpu / 4) - (nice * 2)</p>
+</blockquote>
+<p><code>recent_cpu</code> measures the amount of CPU time a thread has received &quot;recently.&quot;
+On each timer tick, the running thread&apos;s recent cpu is incremented by 1. Once
+per second, every thread&apos;s recent cpu is updated this way:</p>
+<blockquote>
+<p>recent_cpu = (2 * load_avg) / (2 * load_avg + 1) * recent_cpu + nice</p>
+</blockquote>
+<p><code>load_avg</code> estimates the average number of threads ready to run over the past
+minute. It is initialized to 0 at boot and recalculated once per second as
+follows:</p>
+<blockquote>
+<p>load_avg = (59/60) * load_avg + (1/60) * ready_threads</p>
+</blockquote>
+<p>where <code>ready_threads</code> is the number of threads that are either running or ready
+to run at time of update (not including the idle thread).</p>
+<h4 id="fixed-point-real-arithmetic">Fixed-Point Real Arithmetic</h4>
+<p>In the formulas above, <code>priority</code>, <code>nice</code>, and <code>ready_threads</code> are integers, but
+<code>recent_cpu</code> and <code>load_avg</code> are real numbers. Unfortunately, Pintos does not
+support floating-point arithmetic in the kernel, because it would complicate and
+slow the kernel. Real kernels often have the same limitation, for the same
+reason. This means that calculations on real quantities must be simulated using
+integers. This is not difficult, but many students do not know how to do it.
+This section explains the basics.</p>
+<p>The fundamental idea is to treat the rightmost bits of an integer as
+representing a fraction. For example, we can designate the lowest 14 bits of a
+signed 32-bit integer as fractional bits, so that an integer x represents the
+real number <code>x/(2^14)</code>. This is called a 17.14 fixed-point number
+representation, because there are 17 bits before the decimal point, 14 bits
+after it, and one sign bit. A number in 17.14 format represents, at maximum, a
+value of <code>(231 &#x2212; 1)/(2^14) &#x2248; 131,071.999</code>.</p>
+<p>Suppose that we are using a <code>p.q</code> fixed-point format, and let <code>f = 2q</code>. By the
+definition above, we can convert an integer or real number into <code>p.q</code> format by
+multiplying with <code>f</code>. For example, in 17.14 format the fraction <code>59/60</code> used in
+the calculation of <code>load_avg</code>, above, is <code>(59/60)2^14 = 16,110</code>. To convert a
+fixed-point value back to an integer, divide by <code>f</code>. (The normal <code>/</code> operator in
+C rounds toward zero, that is, it rounds positive numbers down and negative
+numbers up. To round to nearest, add <code>f / 2</code> to a positive number, or subtract
+it from a negative number, before dividing.)</p>
+<p>Many operations on fixed-point numbers are straightforward. Let <code>x</code> and <code>y</code> be
+fixed-point numbers, and let <code>n</code> be an integer. Then the sum of <code>x</code> and <code>y</code> is
+<code>x + y</code> and their difference is <code>x - y</code>. The sum of <code>x</code> and <code>n</code> is <code>x + n * f</code>;
+difference, <code>x - n * f</code>; product, <code>x * n</code>; quotient, <code>x / n</code>.</p>
+<p>Multiplying two fixed-point values has two complications. First, the decimal
+point of the result is q bits too far to the left. Consider that
+<code>(59/60)(59/60)</code> should be slightly less than <code>1</code>, but
+<code>16,111 &#xD7; 16,111 = 259,564,321</code> is much greater than <code>2^14 = 16,384</code>.
+Shifting <code>q</code> bits right, we get <code>259,564,321/2^14 = 15,842</code>, or about <code>0.97</code>,
+the correct answer. Second, the multiplication can overflow even though the
+answer is representable. For example, <code>64</code> in 17.14 format is
+<code>64 &#xD7; 2^14 = 1,048,576</code> and its square <code>64^2 = 4,096</code> is well within the 17.14
+range, but <code>1,048,576^2 = 2^40</code>, greater than the maximum signed 32-bit integer
+value <code>2^31 &#x2212; 1</code>. An easy solution is to do the multiplication as a 64-bit
+operation. The product of x and y is then <code>((int64_t) x) * y / f</code>.</p>
+<p>Dividing two fixed-point values has opposite issues. The decimal point will be
+too far to the right, which we fix by shifting the dividend q bits to the left
+before the division. The left shift discards the top q bits of the dividend,
+which we can again fix by doing the division in 64 bits. Thus, the quotient when
+x is divided by y is <code>((int64_t) x) * f / y</code>.</p>
+<p>This section has consistently used multiplication or division by <code>f</code>, instead of
+q-bit shifts, for two reasons. First, multiplication and division do not have
+the surprising operator precedence of the C shift operators. Second,
+multiplication and division are well-defined on negative operands, but the C
+shift operators are not. Take care with these issues in your implementation.</p>
+<p>The following table summarizes how fixed-point arithmetic operations can be
+implemented in C. In the table, <code>x</code> and <code>y</code> are fixed-point numbers, <code>n</code> is an
+integer, fixed-point numbers are in signed <code>p.q</code> format where <code>p + q = 31</code>, and
+<code>f</code> is <code>1 &lt;&lt; q</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Arithmetic</th>
+<th>C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Convert <code>n</code> to fixed point</td>
+<td><code>n * f</code></td>
+</tr>
+<tr>
+<td>Convert <code>x</code> to integer (rounding toward zero)</td>
+<td><code>x / n</code></td>
+</tr>
+<tr>
+<td>Convert <code>x</code> to integer (rounding to nearest)</td>
+<td><code>(x + f / 2) / f</code> if <code>x &gt;= 0</code></td>
+</tr>
+<tr>
+<td></td>
+<td><code>(x - f / 2) / f</code> if <code>x &lt;= 0</code></td>
+</tr>
+<tr>
+<td>Add <code>x</code> and <code>y</code></td>
+<td><code>x + y</code></td>
+</tr>
+<tr>
+<td>Subtract <code>y</code> from <code>x</code></td>
+<td><code>x - y</code></td>
+</tr>
+<tr>
+<td>Add <code>x</code> and <code>n</code></td>
+<td><code>x + n * f</code></td>
+</tr>
+<tr>
+<td>Subtract <code>n</code> from <code>x</code></td>
+<td><code>x - n * f</code></td>
+</tr>
+<tr>
+<td>Multiply <code>x</code> by <code>y</code></td>
+<td><code>((int64_t) x) * y / f</code></td>
+</tr>
+<tr>
+<td>Multiply <code>x</code> by <code>n</code></td>
+<td><code>x * n</code></td>
+</tr>
+<tr>
+<td>Divide <code>x</code> by <code>y</code></td>
+<td><code>((int64_t) x) * f / y</code></td>
+</tr>
+<tr>
+<td>Divide <code>x</code> by <code>n</code></td>
+<td><code>x / n</code></td>
+</tr>
+</tbody>
+</table>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="priority_scheduling.html" class="navigation navigation-prev " aria-label="Previous page: Priority Scheduling">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="FAQ.html" class="navigation navigation-next " aria-label="Next page: FAQ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Advanced Scheduler","level":"2.4","depth":1,"next":{"title":"FAQ","level":"2.5","depth":1,"path":"project1/FAQ.md","ref":"project1/FAQ.md","articles":[]},"previous":{"title":"Priority Scheduling","level":"2.3","depth":1,"path":"project1/priority_scheduling.md","ref":"project1/priority_scheduling.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project1/advanced_scheduler.md","mtime":"2020-03-21T08:13:47.865Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-21T08:15:15.734Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

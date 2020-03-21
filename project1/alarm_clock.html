@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Grading · GitBook</title>
+        <title>Alarm Clock · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="legal_and_ethical_issues.html" />
+    <link rel="next" href="priority_scheduling.html" />
     
     
-    <link rel="prev" href="getting_started.html" />
+    <link rel="prev" href="introduction.html" />
     
 
     </head>
@@ -104,9 +104,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2" data-path="getting_started.html">
+        <li class="chapter " data-level="1.2" data-path="../introduction/getting_started.html">
             
-                <a href="getting_started.html">
+                <a href="../introduction/getting_started.html">
             
                     
                     Getting Started
@@ -117,9 +117,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="1.3" data-path="grading.html">
+        <li class="chapter " data-level="1.3" data-path="../introduction/grading.html">
             
-                <a href="grading.html">
+                <a href="../introduction/grading.html">
             
                     
                     Grading
@@ -130,9 +130,9 @@
             
         </li>
     
-        <li class="chapter " data-level="1.4" data-path="legal_and_ethical_issues.html">
+        <li class="chapter " data-level="1.4" data-path="../introduction/legal_and_ethical_issues.html">
             
-                <a href="legal_and_ethical_issues.html">
+                <a href="../introduction/legal_and_ethical_issues.html">
             
                     
                     Legal and Ethical Issues
@@ -150,9 +150,9 @@
         
         
     
-        <li class="chapter " data-level="2.1" data-path="../project1/introduction.html">
+        <li class="chapter " data-level="2.1" data-path="introduction.html">
             
-                <a href="../project1/introduction.html">
+                <a href="introduction.html">
             
                     
                     Introduction
@@ -163,9 +163,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.2" data-path="../project1/alarm_clock.html">
+        <li class="chapter active" data-level="2.2" data-path="alarm_clock.html">
             
-                <a href="../project1/alarm_clock.html">
+                <a href="alarm_clock.html">
             
                     
                     Alarm Clock
@@ -176,9 +176,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.3" data-path="../project1/priority_scheduling.html">
+        <li class="chapter " data-level="2.3" data-path="priority_scheduling.html">
             
-                <a href="../project1/priority_scheduling.html">
+                <a href="priority_scheduling.html">
             
                     
                     Priority Scheduling
@@ -189,9 +189,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.4" data-path="../project1/advanced_scheduler.html">
+        <li class="chapter " data-level="2.4" data-path="advanced_scheduler.html">
             
-                <a href="../project1/advanced_scheduler.html">
+                <a href="advanced_scheduler.html">
             
                     
                     Advanced Scheduler
@@ -202,9 +202,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.5" data-path="../project1/FAQ.html">
+        <li class="chapter " data-level="2.5" data-path="FAQ.html">
             
-                <a href="../project1/FAQ.html">
+                <a href="FAQ.html">
             
                     
                     FAQ
@@ -351,7 +351,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Grading</a>
+        <a href=".." >Alarm Clock</a>
     </h1>
 </div>
 
@@ -366,39 +366,32 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="grading">Grading</h1>
-<p>We will grade your assignments based on test results.</p>
-<h2 id="testing">Testing</h2>
-<p>Your test result grade will be based on our tests.
-Each project has several tests, each of which has a name beginning with <code>tests</code>.
-To completely test your submission, invoke make check from the project <code>build</code>
-directory. This will build and run each test and print a <code>pass</code> or <code>fail</code>
-message for each one. When a test fails, make check also prints some details
-of the reason for failure. After running all the tests, make check also prints a
-summary of the test results.
-You can also run individual tests one at a time. A given test <code>t</code> writes its
-output to <code>t.output</code>, then a script scores the output as <code>pass</code> or <code>fail</code> and
-writes the verdict to <code>t.result</code>. To run and grade a single test, make the
-<code>.result</code> file explicitly from the <code>build</code> directory, e.g.
-<code>make tests/threads/alarm-multiple.result</code>. If make says that the test result is
-up-to-date, but you want to re-run it anyway, either run make clean or delete
-the <code>.output</code> file by hand. By default, each test provides feedback only at
-completion, not during its run. If you prefer, you can observe the progress of
-each test by specifying <code>VERBOSE=1</code> on the make command line, as in make check
-<code>VERBOSE=1</code>.
-All of the tests and related files are in <code>pintos/src/tests</code>. Before we test
-your submission, we will replace the contents of that directory by a pristine,
-unmodified copy, to ensure that the correct tests are used. Thus, you can modify
-some of the tests if that helps in debugging, but we will run the originals.
-All software has bugs, so some of our tests may be flawed. If you think a test
-failure is a bug in the test, not a bug in your code, please point it out.
-We will look at it and fix it if necessary. Please don&apos;t try to take advantage
-of our generosity in giving out our test suite. Your code has to work properly
-in the general case, not just for the test cases we supply. For example, it
-would be unacceptable to explicitly base the kernel&apos;s behavior on the name of
-the running test case. Such attempts to side-step the test cases will receive
-no credit. If you think your solution may be in a gray area here,
-please ask us about it.</p>
+                                <h3 id="alarm-clock">Alarm Clock</h3>
+<p><strong>Reimplement <code>timer_sleep()</code>, defined in <code>devices/timer.c</code>.</strong></p>
+<p>Although a working implementation is provided, it <strong>busy waits</strong>, that is,
+it spins in a loop checking the current time and calling <code>thread_yield()</code> until
+enough time has gone by. Reimplement it to avoid busy waiting.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">timer_sleep</span> <span class="hljs-params">(int64_t ticks)</span></span>;
+</code></pre>
+<blockquote>
+<p>Suspends execution of the calling thread until time has advanced by at least x
+timer ticks. Unless the system is otherwise idle, the thread need not wake up
+after exactly x ticks. Just put it on the ready queue after they have waited
+for the right amount of time.</p>
+</blockquote>
+<p><code>timer_sleep()</code> is useful for threads that operate in real-time, e.g. for
+blinking the cursor once per second. The argument to <code>timer_sleep()</code> is
+expressed in timer ticks, not in milliseconds or any another unit. There are
+<code>TIMER_FREQ</code> timer ticks per second, where <code>TIMER_FREQ</code> is a macro defined in
+<code>devices/timer.h</code>. The default value is <code>100</code>. We don&apos;t recommend changing this
+value, because any change is likely to cause many of the tests to fail.</p>
+<p>Separate functions <code>timer_msleep()</code>, <code>timer_usleep()</code>, and <code>timer_nsleep()</code> do
+exist for sleeping a specific number of milliseconds, microseconds, or
+nanoseconds, respectively, but these will call <code>timer_sleep()</code> automatically
+when necessary. You do not need to modify them.
+The alarm clock implementation is not needed for later projects, although it
+could be useful for project 4.</p>
 
                                 
                                 </section>
@@ -426,12 +419,12 @@ please ask us about it.</p>
 
             
                 
-                <a href="getting_started.html" class="navigation navigation-prev " aria-label="Previous page: Getting Started">
+                <a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page: Introduction">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="legal_and_ethical_issues.html" class="navigation navigation-next " aria-label="Next page: Legal and Ethical Issues">
+                <a href="priority_scheduling.html" class="navigation navigation-next " aria-label="Next page: Priority Scheduling">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -442,7 +435,7 @@ please ask us about it.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Grading","level":"1.3","depth":1,"next":{"title":"Legal and Ethical Issues","level":"1.4","depth":1,"path":"introduction/legal_and_ethical_issues.md","ref":"introduction/legal_and_ethical_issues.md","articles":[]},"previous":{"title":"Getting Started","level":"1.2","depth":1,"path":"introduction/getting_started.md","ref":"introduction/getting_started.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"introduction/grading.md","mtime":"2020-03-21T08:13:47.865Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-21T08:15:15.734Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Alarm Clock","level":"2.2","depth":1,"next":{"title":"Priority Scheduling","level":"2.3","depth":1,"path":"project1/priority_scheduling.md","ref":"project1/priority_scheduling.md","articles":[]},"previous":{"title":"Introduction","level":"2.1","depth":1,"path":"project1/introduction.md","ref":"project1/introduction.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project1/alarm_clock.md","mtime":"2020-03-21T08:13:47.865Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-21T08:15:15.734Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

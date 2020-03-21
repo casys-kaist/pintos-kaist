@@ -1,0 +1,52 @@
+# -*- makefile -*-
+
+$(PROGS): CPPFLAGS += -I$(SRCDIR)/include/lib/user -I.
+$(PROGS): CFLAGS := -fno-stack-protector
+
+# Linker flags.
+$(PROGS): LDFLAGS = -nostdlib -static -Wl,-T,$(LDSCRIPT)
+$(PROGS): LDSCRIPT = $(SRCDIR)/lib/user/user.lds
+
+# Library code shared between kernel and user programs.
+lib_SRC  = lib/debug.c			# Debug code.
+lib_SRC += lib/random.c			# Pseudo-random numbers.
+lib_SRC += lib/stdio.c			# I/O library.
+lib_SRC += lib/stdlib.c			# Utility functions.
+lib_SRC += lib/string.c			# String functions.
+lib_SRC += lib/arithmetic.c
+
+# User level only library code.
+lib/user_SRC  = lib/user/debug.c	# Debug helpers.
+lib/user_SRC += lib/user/syscall.c	# System calls.
+lib/user_SRC += lib/user/console.c	# Console code.
+
+LIB_OBJ = $(patsubst %.c,%.o,$(patsubst %.S,%.o,$(lib_SRC) $(lib/user_SRC)))
+LIB_DEP = $(patsubst %.o,%.d,$(LIB_OBJ))
+LIB = lib/user/entry.o libc.a
+
+PROGS_SRC = $(foreach prog,$(PROGS),$($(prog)_SRC))
+PROGS_OBJ = $(patsubst %.c,%.o,$(patsubst %.S,%.o,$(PROGS_SRC)))
+PROGS_DEP = $(patsubst %.o,%.d,$(PROGS_OBJ))
+
+all: $(PROGS)
+
+define TEMPLATE
+$(1)_OBJ = $(patsubst %.c,%.o,$(patsubst %.S,%.o,$($(1)_SRC)))
+$(1): $$($(1)_OBJ) $$(LIB) $$(LDSCRIPT)
+	$$(CC) $$(CFLAGS) $$(LDFLAGS) $$($(1)_OBJ) $$(LIB) -o $$@
+endef
+
+$(foreach prog,$(PROGS),$(eval $(call TEMPLATE,$(prog))))
+
+libc.a: $(LIB_OBJ)
+	rm -f $@
+	ar r $@ $^
+	ranlib $@
+
+clean::
+	rm -f $(PROGS) $(PROGS_OBJ) $(PROGS_DEP)
+	rm -f $(LIB_DEP) $(LIB_OBJ) lib/user/entry.[do] libc.a 
+
+.PHONY: all clean
+
+-include $(LIB_DEP) $(PROGS_DEP)

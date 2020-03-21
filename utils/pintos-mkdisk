@@ -1,0 +1,37 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+use POSIX;
+use Getopt::Long;
+use Fcntl 'SEEK_SET';
+
+GetOptions ("h|help" => sub { usage (0); })
+  or exit 1;
+usage (1) if @ARGV != 2;
+
+my ($disk, $mb) = @ARGV;
+die "$disk: already exists\n" if -e $disk;
+die "\"$mb\" is not a valid size in megabytes\n"
+  if $mb <= 0 || $mb > 1024 || $mb !~ /^\d+(\.\d+)?|\.\d+/;
+
+my ($cyl_cnt) = ceil ($mb * 2);
+my ($cyl_bytes) = 512 * 16 * 63;
+my ($bytes) = $cyl_bytes * $cyl_cnt;
+
+open (DISK, '>', $disk) or die "$disk: create: $!\n";
+sysseek (DISK, $bytes - 1, SEEK_SET) or die "$disk: seek: $!\n";
+syswrite (DISK, "\0", 1) == 1 or die "$disk: write: $!\n";
+close (DISK) or die "$disk: close: $!\n";
+
+sub usage {
+    print <<'EOF';
+pintos-mkdisk, a utility for creating Pintos virtual disks
+Usage: pintos DISKFILE MB
+where DISKFILE is the file to use for the disk
+  and MB is the disk size in (approximate) megabytes.
+Options:
+  -h, --help        Display this help message.
+EOF
+    exit (@_);
+}

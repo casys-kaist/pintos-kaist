@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+import subprocess
+import os
+
+
+def usage(fname):
+    print('usage: {} addr ...'.format(fname))
+    exit(-1)
+
+
+def resolve_kernel():
+    for p in ['./kernel.o', './build/kernel.o']:
+        if os.path.exists(p):
+            return p
+    print('Neither "kernel.o" nor "build/kernel.o" exists')
+    exit(-1)
+
+
+def resolve_loc(addrs):
+    out = subprocess.check_output(
+            ['addr2line', '-e', resolve_kernel(), '-f'] + addrs)
+    lines = out.split('\n')[:-1]
+    for idx in range(0, len(lines), 2):
+        fname = lines[idx]
+        path = lines[idx+1].split("../")[-1]
+        if fname == '??':
+            print("0x{:016x}: (unknown)".format(
+                int(addrs[idx/2], 16), fname, path))
+        else:
+            print("0x{:016x}: {} ({})".format(
+                int(addrs[idx/2], 16), fname, path))
+
+
+def main(argv):
+    if len(argv) < 2 or "-h" in argv or "--help" in argv:
+        usage()
+    resolve_loc(argv[1:])
+
+
+if __name__ == '__main__':
+    import sys
+    main(sys.argv)

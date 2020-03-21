@@ -1,0 +1,76 @@
+# -*- makefile -*-
+
+include $(patsubst %,$(SRCDIR)/%/Make.tests,$(TEST_SUBDIRS))
+
+PROGS = $(foreach subdir,$(TEST_SUBDIRS),$($(subdir)_PROGS))
+TESTS = $(foreach subdir,$(TEST_SUBDIRS),$($(subdir)_TESTS))
+EXTRA_GRADES = $(foreach subdir,$(TEST_SUBDIRS),$($(subdir)_EXTRA_GRADES))
+
+OUTPUTS = $(addsuffix .output,$(TESTS) $(EXTRA_GRADES))
+ERRORS = $(addsuffix .errors,$(TESTS) $(EXTRA_GRADES))
+RESULTS = $(addsuffix .result,$(TESTS) $(EXTRA_GRADES))
+
+ifdef PROGS
+include ../../Makefile.userprog
+endif
+
+TIMEOUT = 60
+
+clean::
+	rm -f $(OUTPUTS) $(ERRORS) $(RESULTS) 
+
+grade:: results
+	$(SRCDIR)/tests/make-grade $(SRCDIR) $< $(GRADING_FILE) | tee $@
+
+check:: results
+	@cat $<
+	@COUNT="`egrep '^(pass|FAIL) ' $< | wc -l | sed 's/[ 	]//g;'`"; \
+	FAILURES="`egrep '^FAIL ' $< | wc -l | sed 's/[ 	]//g;'`"; \
+	if [ $$FAILURES = 0 ]; then					  \
+		echo "All $$COUNT tests passed.";			  \
+	else								  \
+		echo "$$FAILURES of $$COUNT tests failed.";		  \
+		exit 1;							  \
+	fi
+
+results: $(RESULTS)
+	@for d in $(TESTS) $(EXTRA_GRADES); do			\
+		if echo PASS | cmp -s $$d.result -; then	\
+			echo "pass $$d";			\
+		else						\
+			echo "FAIL $$d";			\
+		fi;						\
+	done > $@
+
+outputs:: $(OUTPUTS)
+
+$(foreach prog,$(PROGS),$(eval $(prog).output: $(prog)))
+$(foreach test,$(TESTS),$(eval $(test).output: $($(test)_PUTFILES)))
+$(foreach test,$(TESTS),$(eval $(test).output: TEST = $(test)))
+
+# Prevent an environment variable VERBOSE from surprising us.
+VERBOSE =
+
+TESTCMD = pintos -v -k -T $(TIMEOUT)
+TESTCMD += $(SIMULATOR)
+TESTCMD += $(PINTOSOPTS)
+ifeq ($(filter userprog, $(KERNEL_SUBDIRS)), userprog)
+TESTCMD += --fs-disk=$(FSDISK)
+TESTCMD += $(foreach file,$(PUTFILES),-p $(file):$(notdir $(file)))
+endif
+ifeq ($(filter vm, $(KERNEL_SUBDIRS)), vm)
+TESTCMD += --swap-disk=4
+endif
+TESTCMD += -- -q 
+TESTCMD += $(KERNELFLAGS)
+ifeq ($(filter userprog, $(KERNEL_SUBDIRS)), userprog)
+TESTCMD += -f
+endif
+TESTCMD += $(if $($(TEST)_ARGS),run '$(*F) $($(TEST)_ARGS)',run $(*F))
+TESTCMD += < /dev/null
+TESTCMD += 2> $(TEST).errors $(if $(VERBOSE),|tee,>) $(TEST).output
+%.output: os.dsk
+	$(TESTCMD)
+
+%.result: %.ck %.output
+	perl -I$(SRCDIR) $< $* $@

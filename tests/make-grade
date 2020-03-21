@@ -1,0 +1,152 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+
+@ARGV == 3 || die;
+my ($src_dir, $results_file, $grading_file) = @ARGV;
+
+# Read pass/file verdicts from $results_file.
+open (RESULTS, '<', $results_file) || die "$results_file: open: $!\n";
+my (%verdicts, %verdict_counts);
+while (<RESULTS>) {
+    my ($verdict, $test) = /^(pass|FAIL) (.*)$/ or die;
+    $verdicts{$test} = $verdict eq 'pass';
+}
+close RESULTS;
+
+my (@failures);
+my (@overall, @rubrics, @summary);
+my ($pct_actual, $pct_possible) = (0, 0);
+
+# Read grading file.
+my (@items);
+open (GRADING, '<', $grading_file) || die "$grading_file: open: $!\n";
+while (<GRADING>) {
+    s/#.*//;
+    next if /^\s*$/;
+    my ($max_pct, $rubric_suffix) = /^\s*(\d+(?:\.\d+)?)%\t(.*)/ or die;
+    my ($dir) = $rubric_suffix =~ /^(.*)\//;
+    my ($rubric_file) = "$src_dir/$rubric_suffix";
+    open (RUBRIC, '<', $rubric_file) or die "$rubric_file: open: $!\n";
+
+    # Rubric file must begin with title line.
+    my $title = <RUBRIC>;
+    chomp $title;
+    $title =~ s/:$// or die;
+    $title .= " ($rubric_suffix):";
+    push (@rubrics, $title);
+
+    my ($score, $possible) = (0, 0);
+    my ($cnt, $passed) = (0, 0);
+    my ($was_score) = 0;
+    while (<RUBRIC>) {
+	chomp;
+	push (@rubrics, "\t$_"), next if /^-/;
+	push (@rubrics, ""), next if /^\s*$/;
+	my ($poss, $name) = /^(\d+)\t(.*)$/ or die;
+	my ($test) = "$dir/$name";
+	my ($points) = 0;
+	if (!defined $verdicts{$test}) {
+	    push (@overall, "warning: $test not tested, assuming failure");
+	} elsif ($verdicts{$test}) {
+	    $points = $poss;
+	    $passed++;
+	}
+	push (@failures, $test) if !$points;
+	$verdict_counts{$test}++;
+	push (@rubrics, sprintf ("\t%4s%2d/%2d %s",
+				 $points ? '' : '**', $points, $poss, $test));
+	$score += $points;
+	$possible += $poss;
+	$cnt++;
+    }
+    close (RUBRIC);
+
+    push (@rubrics, "");
+    push (@rubrics, "\t- Section summary.");
+    push (@rubrics, sprintf ("\t%4s%3d/%3d %s",
+			     '', $passed, $cnt, 'tests passed'));
+    push (@rubrics, sprintf ("\t%4s%3d/%3d %s",
+			     '', $score, $possible, 'points subtotal'));
+    push (@rubrics, '');
+
+    my ($pct) = ($score / $possible) * $max_pct;
+    push (@summary, sprintf ("%-45s %3d/%3d %5.1f%%/%5.1f%%",
+			     $rubric_suffix,
+			     $score, $possible,
+			     $pct, $max_pct));
+    $pct_actual += $pct;
+    $pct_possible += $max_pct;
+}
+close GRADING;
+
+my ($sum_line)
+  = "--------------------------------------------- --- --- ------ ------";
+unshift (@summary,
+	 "SUMMARY BY TEST SET",
+	 '',
+	 sprintf ("%-45s %3s %3s %6s %6s",
+		  "Test Set", "Pts", "Max", "% Ttl", "% Max"),
+	 $sum_line);
+push (@summary,
+      $sum_line,
+      sprintf ("%-45s %3s %3s %5.1f%%/%5.1f%%",
+	       'Total', '', '', $pct_actual, $pct_possible));
+
+unshift (@rubrics,
+	 "SUMMARY OF INDIVIDUAL TESTS",
+	 '');
+
+foreach my $name (keys (%verdicts)) {
+    my ($count) = $verdict_counts{$name};
+    if (!defined ($count) || $count != 1) {
+	if (!defined ($count) || !$count) {
+	    push (@overall, "warning: test $name doesn't count for grading");
+	} else {
+	    push (@overall,
+		  "warning: test $name counted $count times in grading");
+	}
+    }
+}
+push (@overall, sprintf ("TOTAL TESTING SCORE: %.1f%%", $pct_actual));
+if (sprintf ("%.1f", $pct_actual) eq sprintf ("%.1f", $pct_possible)) {
+    push (@overall, "ALL TESTED PASSED -- PERFECT SCORE");
+}
+
+my (@divider) = ('', '- ' x 38, '');
+
+print map ("$_\n", @overall, @divider, @summary, @divider, @rubrics);
+
+for my $test (@failures) {
+    print map ("$_\n", @divider);
+    print "DETAILS OF $test FAILURE:\n\n";
+
+    if (open (RESULT, '<', "$test.result")) {
+	my $first_line = <RESULT>;
+	my ($cnt) = 0;
+	while (<RESULT>) {
+	    print;
+	    $cnt++;
+	}
+	close (RESULT);
+    }
+
+    if (open (OUTPUT, '<', "$test.output")) {
+	print "\nOUTPUT FROM $test:\n\n";
+    
+	my ($panics, $boots) = (0, 0);
+	while (<OUTPUT>) {
+	    if (/PANIC/ && ++$panics > 2) {
+		print "[...details of additional panic(s) omitted...]\n";
+		last;
+	    }
+	    print;
+	    if (/Pintos booting/ && ++$boots > 1) {
+		print "[...details of reboot(s) omitted...]\n";
+		last;
+	    }
+	}
+	close (OUTPUT);
+    }
+}

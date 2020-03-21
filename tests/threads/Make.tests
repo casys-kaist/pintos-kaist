@@ -1,0 +1,53 @@
+# -*- makefile -*-
+
+# Test names.
+tests/threads_TESTS = $(addprefix tests/threads/,alarm-single		\
+alarm-multiple alarm-simultaneous alarm-priority alarm-zero		\
+alarm-negative priority-change priority-donate-one			\
+priority-donate-multiple priority-donate-multiple2			\
+priority-donate-nest priority-donate-sema priority-donate-lower		\
+priority-fifo priority-preempt priority-sema priority-condvar		\
+priority-donate-chain                                                   \
+mlfqs-load-1 mlfqs-load-60 mlfqs-load-avg mlfqs-recent-1 mlfqs-fair-2	\
+mlfqs-fair-20 mlfqs-nice-2 mlfqs-nice-10 mlfqs-block)
+
+# Sources for tests.
+tests/threads_SRC  = tests/threads/tests.c
+tests/threads_SRC += tests/threads/alarm-wait.c
+tests/threads_SRC += tests/threads/alarm-simultaneous.c
+tests/threads_SRC += tests/threads/alarm-priority.c
+tests/threads_SRC += tests/threads/alarm-zero.c
+tests/threads_SRC += tests/threads/alarm-negative.c
+tests/threads_SRC += tests/threads/priority-change.c
+tests/threads_SRC += tests/threads/priority-donate-one.c
+tests/threads_SRC += tests/threads/priority-donate-multiple.c
+tests/threads_SRC += tests/threads/priority-donate-multiple2.c
+tests/threads_SRC += tests/threads/priority-donate-nest.c
+tests/threads_SRC += tests/threads/priority-donate-sema.c
+tests/threads_SRC += tests/threads/priority-donate-lower.c
+tests/threads_SRC += tests/threads/priority-fifo.c
+tests/threads_SRC += tests/threads/priority-preempt.c
+tests/threads_SRC += tests/threads/priority-sema.c
+tests/threads_SRC += tests/threads/priority-condvar.c
+tests/threads_SRC += tests/threads/priority-donate-chain.c
+tests/threads_SRC += tests/threads/mlfqs-load-1.c
+tests/threads_SRC += tests/threads/mlfqs-load-60.c
+tests/threads_SRC += tests/threads/mlfqs-load-avg.c
+tests/threads_SRC += tests/threads/mlfqs-recent-1.c
+tests/threads_SRC += tests/threads/mlfqs-fair.c
+tests/threads_SRC += tests/threads/mlfqs-block.c
+
+MLFQS_OUTPUTS = 				\
+tests/threads/mlfqs-load-1.output		\
+tests/threads/mlfqs-load-60.output		\
+tests/threads/mlfqs-load-avg.output		\
+tests/threads/mlfqs-recent-1.output		\
+tests/threads/mlfqs-fair-2.output		\
+tests/threads/mlfqs-fair-20.output		\
+tests/threads/mlfqs-nice-2.output		\
+tests/threads/mlfqs-nice-10.output		\
+tests/threads/mlfqs-block.output
+
+$(MLFQS_OUTPUTS): KERNELFLAGS += -mlfqs
+$(MLFQS_OUTPUTS): TIMEOUT = 480
+

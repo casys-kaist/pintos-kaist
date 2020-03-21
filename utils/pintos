@@ -1,0 +1,172 @@
+#!/usr/bin/env python3
+
+import struct
+import sys
+import os
+import tempfile
+import subprocess
+
+
+def die(errmsg):
+    print(errmsg)
+    exit(1)
+
+
+def align(s, size):
+    if len(s) % size != 0:
+        s += bytes('\0' * (size - len(s) % size), 'utf-8')
+    return s
+
+
+def get_temp_dsk_name():
+    with tempfile.NamedTemporaryFile(mode='wb') as disk_copy:
+        return disk_copy.name + '.dsk'
+
+
+class Pintos(object):
+    def __init__(self, no_vga=True, serial=False, args=[], hostfns=[],
+                 gdb=False, fs='fs.dsk', timeout=0):
+        self.mem = 256
+        self.no_vga = no_vga
+        self.args = args
+        self.gdb = gdb
+        self.proc = None
+        self.timeout = timeout
+        self.host_fns = hostfns
+        self.bdevs = {'os': 'os.dsk', 'fs': fs, 'swap': 'swap.dsk'}
+
+    def __scan_dir(self):
+        new = {}
+        for k, v in self.bdevs.items():
+            if not os.path.exists(v):
+                try:
+                    size = int(v)
+                    new[k] = get_temp_dsk_name()
+                    with open(new[k], 'wb') as f:
+                        f.write(bytes('\0' * (0xfc000 * size), 'utf-8'))
+                except Exception:
+                    if k == 'os':
+                        die('os.dsk cannot be temporal.')
+            else:
+                new[k] = v
+        return new
+
+    def __prepare_scratch_files(self):
+        puts = []
+        self.bdevs['scratch'] = get_temp_dsk_name()
+        disk = open(self.bdevs['scratch'], 'wb')
+        for fname in self.host_fns:
+            host = fname[0]
+            puts.append(fname[1] if len(fname) > 1 else host)
+            with open(host, 'rb') as hf:
+                data = align(hf.read(), 512)
+            disk.write(bytes("PUT\0", 'utf-8') +
+                       struct.pack("<I", len(data)) +
+                       bytes("\0" * 504, 'utf-8'))
+            disk.write(data)
+        disk.close()
+        return puts
+
+    def __prepare_kernel_argument(self, puts):
+        rem = []
+        args = []
+        for idx, arg in enumerate(self.args):
+            if arg[0] != '-':
+                rem = self.args[idx:]
+                break
+            else:
+                args.append(arg)
+
+        for put in puts:
+            args.extend(['put', put])
+
+        args.extend(rem)
+
+        cmd = ''.join('{}\0'.format(c) for c in args)
+        if len(cmd) > 128:
+            die("command line exceeds 128 bytes")
+
+        with tempfile.NamedTemporaryFile(mode='wb') as disk_copy:
+            name = disk_copy.name + '.dsk'
+
+        with open('os.dsk', 'rb') as f:
+            data = f.read()
+
+        with open(name, 'wb+') as f:
+            f.write(data[:0x17a] +
+                    struct.pack("<I", len(args)) +
+                    bytes(cmd.ljust(128, '\0'), 'utf-8') +
+                    data[0x1fe:])
+        return name
+
+    def __prepare_cmd(self):
+        cmd = ['qemu-system-x86_64']
+        if self.no_vga:
+            cmd.append('-nographic')
+        if self.gdb:
+            cmd.extend(['-s', '-S'])
+        for k, d in [('os', '-hda'),
+                     ('fs', '-hdb'),
+                     ('scratch', '-hdc'),
+                     ('swap', '-hdd')]:
+            if self.bdevs.get(k, None):
+                cmd.extend([d, self.bdevs[k]])
+        cmd.extend(['-cpu', 'qemu64'])
+        cmd.extend(['-m', str(self.mem)])
+        cmd.extend(['-no-reboot'])
+        # cmd.extend(['-enable-kvm']) # Sadly, kvm is not available on server.
+        cmd.extend(['-serial', 'mon:stdio'])
+        return cmd
+
+    def run(self):
+        self.bdevs = self.__scan_dir()
+        if self.host_fns:
+            puts = self.__prepare_scratch_files()
+        else:
+            puts = []
+        self.bdevs['os'] = self.__prepare_kernel_argument(puts)
+        cmd = self.__prepare_cmd()
+        args = {'stdin': sys.stdin, 'stdout': sys.stdout, 'stderr': sys.stderr}
+        if self.timeout != 0:
+            args['timeout'] = self.timeout
+        try:
+            subprocess.run(cmd, **args)
+        except subprocess.TimeoutExpired:
+            sys.stdout.write("TIMEOUT")
+
+
+if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser(
+            description='a utility for running Pintos in a simulator')
+    parser.add_argument('-v', '--no-vga', action='store_true', default=True,
+                        help='No VGA display or keyboard')
+    parser.add_argument('-k', '--kill-on-failure', action='store_true',
+                        help='Kill Pintos a few seconds after a kernel or user'
+                        'panic, test failure, or triple fault (deprecated)')
+    parser.add_argument('-T', '--timeout', type=int, default=0,
+                        help='Kill Pintos after N seconds CPU time')
+    parser.add_argument('--fs-disk', default='fs.dsk',
+                        help='Set FS disk file or size')
+    parser.add_argument('-p', '--put-file', dest='HOSTFNS', nargs='*',
+                        default=[],
+                        help='Copy HOSTFN into VM, splited by ":".'
+                             ' (e.g. tests/userprog/args-none:args-none')
+    parser.add_argument('-g', '--get-file', dest='GUESTFNS',
+                        help='Copy GUESTFN out of VM, '
+                             'by default under same name')
+    parser.add_argument('--gdb', action='store_true', default=False,
+                        help='Debug with gdb')
+
+    if '--' in sys.argv:
+        pintos_arg_index = sys.argv.index('--')
+        util_args = sys.argv[1: pintos_arg_index]
+        kern_args = sys.argv[pintos_arg_index + 1:]
+    else:
+        util_args = sys.argv[1:]
+        kern_args = []
+
+    args = parser.parse_args(util_args)
+    Pintos(no_vga=args.no_vga, args=kern_args, timeout=args.timeout,
+           fs=args.fs_disk, gdb=args.gdb,
+           hostfns=[f.split(':') for f in args.HOSTFNS]).run()

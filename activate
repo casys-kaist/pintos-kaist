@@ -1,6 +1,10 @@
 #!/bin/bash
+if [ "$BASH" != "" ]; then
+	SOURCE="${BASH_SOURCE[0]}";
+else
+	SOURCE="$0";
+fi;
 
-SOURCE="$0"
 while [ -h "$SOURCE" ]; do
   DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
   SOURCE="$(readlink "$SOURCE")"

@@ -19,16 +19,16 @@ def resolve_kernel():
 def resolve_loc(addrs):
     out = subprocess.check_output(
             ['addr2line', '-e', resolve_kernel(), '-f'] + addrs)
-    lines = out.split('\n')[:-1]
+    lines = out.decode('utf-8').split('\n')[:-1]
     for idx in range(0, len(lines), 2):
         fname = lines[idx]
         path = lines[idx+1].split("../")[-1]
         if fname == '??':
             print("0x{:016x}: (unknown)".format(
-                int(addrs[idx/2], 16), fname, path))
+                int(addrs[int(idx/2)], 16), fname, path))
         else:
             print("0x{:016x}: {} ({})".format(
-                int(addrs[idx/2], 16), fname, path))
+                int(addrs[int(idx/2)], 16), fname, path))
 
 
 def main(argv):

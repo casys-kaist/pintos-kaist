@@ -1,4 +1,5 @@
 BUILD_SUBDIRS = threads filesys
+TAR_PATH := team${TEAM}.tar.gz
 
 all::
 	@echo "Run 'make' in subdirectories: $(BUILD_SUBDIRS)."
@@ -9,6 +10,7 @@ CLEAN_SUBDIRS = $(BUILD_SUBDIRS) examples
 clean::
 	for d in $(CLEAN_SUBDIRS); do $(MAKE) -C $$d $@; done
 	rm -f TAGS tags
+	rm -f *.tar.gz
 
 distclean:: clean
 	find . -name '*~' -exec rm '{}' \;
@@ -27,3 +29,12 @@ cscope.files::
 
 cscope:: cscope.files
 	cscope -b -q -k
+
+archive:: clean
+ifeq ($(shell echo ${TEAM} | egrep "^[1-9]{1}[0-9]{0,2}$$"),)
+	@echo "Check your team number: $(TEAM)"
+else
+	@tar -zcf /tmp/${TAR_PATH} . && \
+		mv /tmp/${TAR_PATH} . && \
+		echo "Successfully arhived. Submit '${TAR_PATH}'."
+endif

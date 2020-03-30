@@ -59,11 +59,11 @@ class Pintos(object):
             host = fname[0]
             puts.append(fname[1] if len(fname) > 1 else host)
             with open(host, 'rb') as hf:
-                data = align(hf.read(), 512)
+                data = hf.read()
             disk.write(bytes("PUT\0", 'utf-8') +
                        struct.pack("<I", len(data)) +
                        bytes("\0" * 504, 'utf-8'))
-            disk.write(data)
+            disk.write(align(data, 512))
         disk.close()
         return puts
 
@@ -105,12 +105,12 @@ class Pintos(object):
             cmd.append('-nographic')
         if self.gdb:
             cmd.extend(['-s', '-S'])
-        for k, d in [('os', '-hda'),
-                     ('fs', '-hdb'),
-                     ('scratch', '-hdc'),
-                     ('swap', '-hdd')]:
-            if self.bdevs.get(k, None):
-                cmd.extend([d, self.bdevs[k]])
+
+        for idx, d in enumerate(['os', 'fs', 'scratch', 'swap']):
+            if self.bdevs.get(d, None):
+                cmd.extend(['-drive',
+                            'file={},format=raw,index={},media=disk'
+                            .format(self.bdevs[d], idx)])
         cmd.extend(['-cpu', 'qemu64'])
         cmd.extend(['-m', str(self.mem)])
         cmd.extend(['-no-reboot'])
@@ -148,8 +148,8 @@ if __name__ == '__main__':
                         help='Kill Pintos after N seconds CPU time')
     parser.add_argument('--fs-disk', default='fs.dsk',
                         help='Set FS disk file or size')
-    parser.add_argument('-p', '--put-file', dest='HOSTFNS', nargs='*',
-                        default=[],
+    parser.add_argument('-p', '--put-file', dest='HOSTFNS', nargs=1,
+                        action='append', default=[],
                         help='Copy HOSTFN into VM, splited by ":".'
                              ' (e.g. tests/userprog/args-none:args-none')
     parser.add_argument('-g', '--get-file', dest='GUESTFNS',
@@ -169,4 +169,4 @@ if __name__ == '__main__':
     args = parser.parse_args(util_args)
     Pintos(no_vga=args.no_vga, args=kern_args, timeout=args.timeout,
            fs=args.fs_disk, gdb=args.gdb,
-           hostfns=[f.split(':') for f in args.HOSTFNS]).run()
+           hostfns=[f[0].split(':') for f in args.HOSTFNS]).run()

@@ -3,26 +3,35 @@
 #include "../syscall-nr.h"
 
 __attribute__((always_inline))
-	static __inline int64_t syscall(int num, uint64_t a1, uint64_t a2,
-			uint64_t a3, uint64_t a4, uint64_t a5) {
-		int64_t ret;
-		__asm __volatile("syscall\n" : "=a" (ret) : "a" (num),
-				"d" (a1), "c" (a2), "b" (a3), "D" (a4),
-				"S" (a5) : "cc", "memory");
-		return ret;
-	}
+static __inline int64_t syscall(uint64_t num, uint64_t a1, uint64_t a2,
+		uint64_t a3, uint64_t a4, uint64_t a5, uint64_t a6) {
+	int64_t ret;
+	__asm __volatile(
+			"mov %1, %%rax\n"
+			"mov %2, %%rdi\n"
+			"mov %3, %%rsi\n"
+			"mov %4, %%rdx\n"
+			"mov %5, %%r10\n"
+			"mov %6, %%r8\n"
+			"mov %7, %%r9\n"
+			"syscall\n"
+			: "=a" (ret)
+			: "g" (num), "g" (a1), "g" (a2), "g" (a3), "g" (a4), "g" (a5), "g" (a6)
+			: "cc", "memory");
+	return ret;
+}
 
 /* Invokes syscall NUMBER, passing no arguments, and returns the
    return value as an `int'. */
-#define syscall0(NUMBER) (syscall((NUMBER), 0, 0, 0, 0, 0))
+#define syscall0(NUMBER) (syscall((NUMBER), 0, 0, 0, 0, 0, 0))
 
 /* Invokes syscall NUMBER, passing argument ARG0, and returns the
    return value as an `int'. */
-#define syscall1(NUMBER, ARG0) (syscall((NUMBER), (ARG0), 0, 0, 0, 0))
+#define syscall1(NUMBER, ARG0) (syscall((NUMBER), (ARG0), 0, 0, 0, 0, 0))
 /* Invokes syscall NUMBER, passing arguments ARG0 and ARG1, and
    returns the return value as an `int'. */
-#define syscall2(NUMBER, ARG0, ARG1) (syscall((NUMBER), (ARG0), (ARG1), 0, 0, 0))
-#define syscall3(NUMBER, ARG0, ARG1, ARG2) (syscall((NUMBER), (ARG0), (ARG1), (ARG2), 0, 0))
+#define syscall2(NUMBER, ARG0, ARG1) (syscall((NUMBER), (ARG0), (ARG1), 0, 0, 0, 0))
+#define syscall3(NUMBER, ARG0, ARG1, ARG2) (syscall((NUMBER), (ARG0), (ARG1), (ARG2), 0, 0, 0))
 
 void
 halt (void) {
@@ -37,8 +46,8 @@ exit (int status) {
 }
 
 pid_t
-fork (void) {
-	return (pid_t) syscall0 (SYS_FORK);
+fork (const char *name) {
+	return (pid_t) syscall1 (SYS_FORK, name);
 }
 
 int

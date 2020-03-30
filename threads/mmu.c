@@ -97,20 +97,39 @@ pml4_create (void) {
 }
 
 static void
-pgdir_for_each (uint64_t *pdp, pte_for_each_func *func, void *aux) {
+pt_for_each (uint64_t *pt, pte_for_each_func *func, void *aux,
+		unsigned pml4_index, unsigned pdp_index, unsigned pdx_index) {
 	for (unsigned i = 0; i < PGSIZE / sizeof(uint64_t *); i++) {
-		uint64_t *pte = ptov((uint64_t *) pdp[i]);
-		if (((uint64_t) pte) & PTE_P)
-			func (pte, aux);
+		uint64_t *pte = &pt[i];
+		if (((uint64_t) *pte) & PTE_P) {
+			void *va = (void *) (((uint64_t) pml4_index << PML4SHIFT) |
+								 ((uint64_t) pdp_index << PDPESHIFT) |
+								 ((uint64_t) pdx_index << PDXSHIFT) |
+								 ((uint64_t) i << PTXSHIFT));
+			func (pte, va, aux);
+		}
 	}
 }
 
 static void
-pdpe_for_each (uint64_t *pdpe, pte_for_each_func *func, void *aux) {
+pgdir_for_each (uint64_t *pdp, pte_for_each_func *func, void *aux,
+		unsigned pml4_index, unsigned pdp_index) {
 	for (unsigned i = 0; i < PGSIZE / sizeof(uint64_t *); i++) {
-		uint64_t *pde = ptov((uint64_t *) pdpe[i]);
+		uint64_t *pte = ptov((uint64_t *) pdp[i]);
+		if (((uint64_t) pte) & PTE_P)
+			pt_for_each ((uint64_t *) PTE_ADDR (pte), func, aux,
+					pml4_index, pdp_index, i);
+	}
+}
+
+static void
+pdp_for_each (uint64_t *pdp,
+		pte_for_each_func *func, void *aux, unsigned pml4_index) {
+	for (unsigned i = 0; i < PGSIZE / sizeof(uint64_t *); i++) {
+		uint64_t *pde = ptov((uint64_t *) pdp[i]);
 		if (((uint64_t) pde) & PTE_P)
-			pgdir_for_each ((uint64_t *) PTE_ADDR (pde), func, aux);
+			pgdir_for_each ((uint64_t *) PTE_ADDR (pde), func,
+					aux, pml4_index, i);
 	}
 }
 
@@ -119,7 +138,7 @@ void pml4_for_each (uint64_t *pml4, pte_for_each_func *func, void *aux) {
 	for (unsigned i = 0; i < PGSIZE / sizeof(uint64_t *); i++) {
 		uint64_t *pdpe = ptov((uint64_t *) pml4[i]);
 		if (((uint64_t) pdpe) & PTE_P)
-			pdpe_for_each ((uint64_t *) PTE_ADDR (pdpe), func, aux);
+			pdp_for_each ((uint64_t *) PTE_ADDR (pdpe), func, aux, i);
 	}
 }
 

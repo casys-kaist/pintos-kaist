@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Alarm Clock · GitBook</title>
+        <title>FAQ · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,10 +57,10 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="priority_scheduling.html" />
+    <link rel="next" href="../project3/introduction.md" />
     
     
-    <link rel="prev" href="introduction.html" />
+    <link rel="prev" href="dup.html" />
     
 
     </head>
@@ -150,9 +150,9 @@
         
         
     
-        <li class="chapter " data-level="2.1" data-path="introduction.html">
+        <li class="chapter " data-level="2.1" data-path="../project1/introduction.html">
             
-                <a href="introduction.html">
+                <a href="../project1/introduction.html">
             
                     
                     Introduction
@@ -163,9 +163,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="2.2" data-path="alarm_clock.html">
+        <li class="chapter " data-level="2.2" data-path="../project1/alarm_clock.html">
             
-                <a href="alarm_clock.html">
+                <a href="../project1/alarm_clock.html">
             
                     
                     Alarm Clock
@@ -176,9 +176,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.3" data-path="priority_scheduling.html">
+        <li class="chapter " data-level="2.3" data-path="../project1/priority_scheduling.html">
             
-                <a href="priority_scheduling.html">
+                <a href="../project1/priority_scheduling.html">
             
                     
                     Priority Scheduling
@@ -189,9 +189,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.4" data-path="advanced_scheduler.html">
+        <li class="chapter " data-level="2.4" data-path="../project1/advanced_scheduler.html">
             
-                <a href="advanced_scheduler.html">
+                <a href="../project1/advanced_scheduler.html">
             
                     
                     Advanced Scheduler
@@ -202,9 +202,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.5" data-path="FAQ.html">
+        <li class="chapter " data-level="2.5" data-path="../project1/FAQ.html">
             
-                <a href="FAQ.html">
+                <a href="../project1/FAQ.html">
             
                     
                     FAQ
@@ -222,9 +222,9 @@
         
         
     
-        <li class="chapter " data-level="3.1" data-path="../project2/introduction.html">
+        <li class="chapter " data-level="3.1" data-path="introduction.html">
             
-                <a href="../project2/introduction.html">
+                <a href="introduction.html">
             
                     
                     Introduction
@@ -235,9 +235,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.2" data-path="../project2/argument_passing.html">
+        <li class="chapter " data-level="3.2" data-path="argument_passing.html">
             
-                <a href="../project2/argument_passing.html">
+                <a href="argument_passing.html">
             
                     
                     Argument Passing
@@ -248,9 +248,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.3" data-path="../project2/user_memory.html">
+        <li class="chapter " data-level="3.3" data-path="user_memory.html">
             
-                <a href="../project2/user_memory.html">
+                <a href="user_memory.html">
             
                     
                     User Memory
@@ -261,9 +261,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.4" data-path="../project2/system_call.html">
+        <li class="chapter " data-level="3.4" data-path="system_call.html">
             
-                <a href="../project2/system_call.html">
+                <a href="system_call.html">
             
                     
                     System Calls
@@ -274,9 +274,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.5" data-path="../project2/process_termination.html">
+        <li class="chapter " data-level="3.5" data-path="process_termination.html">
             
-                <a href="../project2/process_termination.html">
+                <a href="process_termination.html">
             
                     
                     Process Termination Messages
@@ -287,9 +287,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="../project2/deny_write.html">
+        <li class="chapter " data-level="3.6" data-path="deny_write.html">
             
-                <a href="../project2/deny_write.html">
+                <a href="deny_write.html">
             
                     
                     Denying Writes to Executables
@@ -300,9 +300,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.7" data-path="../project2/dup.html">
+        <li class="chapter " data-level="3.7" data-path="dup.html">
             
-                <a href="../project2/dup.html">
+                <a href="dup.html">
             
                     
                     Extend File Descriptor (Extra)
@@ -313,9 +313,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.8" data-path="../project2/FAQ.html">
+        <li class="chapter active" data-level="3.8" data-path="FAQ.html">
             
-                <a href="../project2/FAQ.html">
+                <a href="FAQ.html">
             
                     
                     FAQ
@@ -663,7 +663,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Alarm Clock</a>
+        <a href=".." >FAQ</a>
     </h1>
 </div>
 
@@ -678,32 +678,98 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h3 id="alarm-clock">Alarm Clock</h3>
-<p><strong>Reimplement <code>timer_sleep()</code>, defined in <code>devices/timer.c</code>.</strong></p>
-<p>Although a working implementation is provided, it <strong>busy waits</strong>, that is,
-it spins in a loop checking the current time and calling <code>thread_yield()</code> until
-enough time has gone by. Reimplement it to avoid busy waiting.</p>
-<hr>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">timer_sleep</span> <span class="hljs-params">(int64_t ticks)</span></span>;
-</code></pre>
-<blockquote>
-<p>Suspends execution of the calling thread until time has advanced by at least x
-timer ticks. Unless the system is otherwise idle, the thread need not wake up
-after exactly x ticks. Just put it on the ready queue after they have waited
-for the right amount of time.</p>
-</blockquote>
-<p><code>timer_sleep()</code> is useful for threads that operate in real-time, e.g. for
-blinking the cursor once per second. The argument to <code>timer_sleep()</code> is
-expressed in timer ticks, not in milliseconds or any another unit. There are
-<code>TIMER_FREQ</code> timer ticks per second, where <code>TIMER_FREQ</code> is a macro defined in
-<code>devices/timer.h</code>. The default value is <code>100</code>. We don&apos;t recommend changing this
-value, because any change is likely to cause many of the tests to fail.</p>
-<p>Separate functions <code>timer_msleep()</code>, <code>timer_usleep()</code>, and <code>timer_nsleep()</code> do
-exist for sleeping a specific number of milliseconds, microseconds, or
-nanoseconds, respectively, but these will call <code>timer_sleep()</code> automatically
-when necessary. You do not need to modify them.
-The alarm clock implementation is not needed for later projects, although it
-could be useful for project 4.</p>
+                                <h1 id="faq">FAQ</h1>
+<h3 id="how-much-code-will-i-need-to-write">How much code will I need to write?</h3>
+<p>Here&apos;s a summary of our reference solution, produced by the <code>git diff --stat</code>.
+The final row gives total lines inserted and deleted; a changed line counts as
+both an insertion and a deletion.
+The reference solution represents just one possible solution. Many other
+solutions are also possible and many of those differ greatly from the reference
+solution. Some excellent solutions may not modify all the files modified by the
+reference solution, and some may modify files not modified by the reference
+solution. Also, this includes implementation of extra requirement. FYI, ~150
+lines are related to the extra.</p>
+<pre><code>src/include/threads/thread.h   |  23 ++
+src/include/userprog/syscall.h |   3 +
+src/threads/thread.c           |   5 +
+src/userprog/exception.c       |   4 +
+src/userprog/process.c         | 355 +++++++++++++++++++++++++++++++++++++++++-
+src/userprog/syscall.c         | 429 ++++++++++++++++++++++++++++++++++++++++++-
+6 files changed, 782 insertions(+), 37 deletions(-)
+</code></pre><h3 id="the-kernel-always-panics-when-i-run-pintos--p-file-----q">The kernel always panics when I run <code>pintos -p file -- -q</code>.</h3>
+<p>Did you format the file system (with <code>pintos -f</code>)?</p>
+<p>Is your file name too long? The file system limits file names to 14 characters.</p>
+<p>A command like <code>pintos -p ../../examples/echo -- -q</code> will exceed the limit.</p>
+<p>Use <code>pintos -p ../../examples/echo:echo -- -q</code> to put the file under the
+name <code>echo</code> instead.</p>
+<p>Is the file system full?</p>
+<p>Does the file system already contain 16 files? The base Pintos file system has
+a 16-file limit.</p>
+<p>The file system may be so fragmented that there&apos;s not enough contiguous space
+for your file.</p>
+<h3 id="when-i-run-pintos--p-file----file-isnt-copied">When I run <code>pintos -p ../file --</code>, &apos;file&apos; isn&apos;t copied.</h3>
+<p>Files are written under the name you refer to them, by default, so in this case
+the file copied in would be named &apos;../file&apos;. You probably want to run <code>pintos
+-p ../file:file --</code> instead.</p>
+<h3 id="all-my-user-programs-die-with-page-faults">All my user programs die with page faults.</h3>
+<p>This will happen if you haven&apos;t implemented argument passing (or haven&apos;t done
+so correctly). The basic C library for user programs tries to read argv off the
+stack. If the stack or registers aren&apos;t properly set up, this causes a
+page fault.</p>
+<h3 id="all-my-user-programs-die-with-system-call">All my user programs die with <code>system call!</code></h3>
+<p>You&apos;ll have to implement system calls before you see anything else. Every
+reasonable program tries to make at least one system call (<code>exit()</code>) and most
+programs make more than that. Notably, <code>printf()</code> invokes the write system
+call. The default system call handler just prints <code>system call!</code> and terminates
+the program. Until then, you can use <code>hex_dump()</code> to convince yourself that
+argument passing is implemented correctly.</p>
+<h3 id="how-can-i-disassemble-user-programs">How can I disassemble user programs?</h3>
+<p>The objdump utility can disassemble entire user programs or object files. Invoke
+it as objdump -d file. You can use GDB&apos;s disassemble command to disassemble
+individual functions.</p>
+<h3 id="why-do-many-c-include-files-not-work-in-pintos-programs">Why do many C include files not work in Pintos programs?</h3>
+<h3 id="can-i-use-libfoo-in-my-pintos-programs">Can I use libfoo in my Pintos programs?</h3>
+<p>The C library we provide is very limited. It does not include many of the
+features that are expected of a real operating system&apos;s C library. The C library
+must be built specifically for the operating system (and architecture), since it
+must make system calls for I/O and memory allocation. (Not all functions do,
+of course, but usually the library is compiled as a unit.)</p>
+<p>The chances are good that the library you want uses parts of the C library that
+Pintos doesn&apos;t implement. It will probably take at least some porting effort to
+make it work under Pintos. Notably, the Pintos user program C library does
+not have a <code>malloc()</code> implementation.</p>
+<h3 id="how-do-i-compile-new-user-programs">How do I compile new user programs?</h3>
+<p>Modify <code>src/examples/Makefile</code>, then run <code>make</code>.</p>
+<h3 id="can-i-run-user-programs-under-a-debugger">Can I run user programs under a debugger?</h3>
+<p>Yes, with some limitations. See <a href="">GDB</a>.</p>
+<h3 id="whats-the-difference-between-tidt-and-pidt">What&apos;s the difference between tid_t and pid_t?</h3>
+<p>A tid_t identifies a kernel thread, which may have a user process running
+in it (if created with <code>process_fork()</code>) or not (if created with
+<code>thread_create()</code>). It is a data type used only in the kernel.
+A pid_t identifies a user process. It is used by user processes and the kernel
+in the exec and wait system calls. You can choose whatever suitable types you
+like for tid_t and pid_t. By default, they&apos;re both int. You can make them a
+one-to-one mapping, so that the same values in both identify the same process,
+or you can use a more complex mapping. It&apos;s up to you.</p>
+<h3 id="can-i-just-cast-a-struct-file--to-get-a-file-descriptor">Can I just cast a <code>struct file *</code> to get a file descriptor?</h3>
+<h3 id="can-i-just-cast-a-struct-thread--to-a-pidt">Can I just cast a <code>struct thread *</code> to a <code>pid_t</code>?</h3>
+<p>No. You can directly cast them since <code>pid_t</code> and <code>file descriptor</code> are smaller
+than the pointer type.</p>
+<h3 id="can-i-set-a-maximum-number-of-open-files-per-process">Can I set a maximum number of open files per process?</h3>
+<p>It is better not to set an arbitrary limit. You may impose a limit of 128 open
+files per process, if necessary. But if you want to implement extra
+requirements, there should be no limitation.</p>
+<h3 id="what-happens-when-an-open-file-is-removed">What happens when an open file is removed?</h3>
+<p>You should implement the standard Unix semantics for files. That is, when a
+file is removed any process which has a file descriptor for that file may
+continue to use that descriptor. This means that they can read and write from
+the file. The file will not have a name, and no other processes will be able to
+open it, but it will continue to exist until all file descriptors referring to
+the file are closed or the machine shuts down.</p>
+<h3 id="how-can-i-run-user-programs-that-need-more-than-4-kb-stack-space">How can I run user programs that need more than 4 kB stack space?</h3>
+<p>You may modify the stack setup code to allocate more than one page of stack
+space for each process. In the next project, you will implement a better
+solution.</p>
 
                                 
                                 </section>
@@ -731,12 +797,12 @@ could be useful for project 4.</p>
 
             
                 
-                <a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                <a href="dup.html" class="navigation navigation-prev " aria-label="Previous page: Extend File Descriptor (Extra)">
                     <i class="fa fa-angle-left"></i>
                 </a>
                 
                 
-                <a href="priority_scheduling.html" class="navigation navigation-next " aria-label="Next page: Priority Scheduling">
+                <a href="../project3/introduction.md" class="navigation navigation-next " aria-label="Next page: Introduction">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -747,7 +813,7 @@ could be useful for project 4.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Alarm Clock","level":"2.2","depth":1,"next":{"title":"Priority Scheduling","level":"2.3","depth":1,"path":"project1/priority_scheduling.md","ref":"project1/priority_scheduling.md","articles":[]},"previous":{"title":"Introduction","level":"2.1","depth":1,"path":"project1/introduction.md","ref":"project1/introduction.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project1/alarm_clock.md","mtime":"2020-04-02T13:14:29.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:14:43.835Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"FAQ","level":"3.8","depth":1,"next":{"title":"Introduction","level":"4.1","depth":1,"path":"project3/introduction.md","ref":"project3/introduction.md","articles":[]},"previous":{"title":"Extend File Descriptor (Extra)","level":"3.7","depth":1,"path":"project2/dup.md","ref":"project2/dup.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project2/FAQ.md","mtime":"2020-04-02T13:14:29.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:14:43.835Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

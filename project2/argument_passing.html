@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <title>Alarm Clock · GitBook</title>
+        <title>Argument Passing · GitBook</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="description" content="">
         <meta name="generator" content="GitBook 3.2.3">
@@ -57,7 +57,7 @@
     <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
 
     
-    <link rel="next" href="priority_scheduling.html" />
+    <link rel="next" href="user_memory.html" />
     
     
     <link rel="prev" href="introduction.html" />
@@ -150,9 +150,9 @@
         
         
     
-        <li class="chapter " data-level="2.1" data-path="introduction.html">
+        <li class="chapter " data-level="2.1" data-path="../project1/introduction.html">
             
-                <a href="introduction.html">
+                <a href="../project1/introduction.html">
             
                     
                     Introduction
@@ -163,9 +163,9 @@
             
         </li>
     
-        <li class="chapter active" data-level="2.2" data-path="alarm_clock.html">
+        <li class="chapter " data-level="2.2" data-path="../project1/alarm_clock.html">
             
-                <a href="alarm_clock.html">
+                <a href="../project1/alarm_clock.html">
             
                     
                     Alarm Clock
@@ -176,9 +176,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.3" data-path="priority_scheduling.html">
+        <li class="chapter " data-level="2.3" data-path="../project1/priority_scheduling.html">
             
-                <a href="priority_scheduling.html">
+                <a href="../project1/priority_scheduling.html">
             
                     
                     Priority Scheduling
@@ -189,9 +189,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.4" data-path="advanced_scheduler.html">
+        <li class="chapter " data-level="2.4" data-path="../project1/advanced_scheduler.html">
             
-                <a href="advanced_scheduler.html">
+                <a href="../project1/advanced_scheduler.html">
             
                     
                     Advanced Scheduler
@@ -202,9 +202,9 @@
             
         </li>
     
-        <li class="chapter " data-level="2.5" data-path="FAQ.html">
+        <li class="chapter " data-level="2.5" data-path="../project1/FAQ.html">
             
-                <a href="FAQ.html">
+                <a href="../project1/FAQ.html">
             
                     
                     FAQ
@@ -222,9 +222,9 @@
         
         
     
-        <li class="chapter " data-level="3.1" data-path="../project2/introduction.html">
+        <li class="chapter " data-level="3.1" data-path="introduction.html">
             
-                <a href="../project2/introduction.html">
+                <a href="introduction.html">
             
                     
                     Introduction
@@ -235,9 +235,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.2" data-path="../project2/argument_passing.html">
+        <li class="chapter active" data-level="3.2" data-path="argument_passing.html">
             
-                <a href="../project2/argument_passing.html">
+                <a href="argument_passing.html">
             
                     
                     Argument Passing
@@ -248,9 +248,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.3" data-path="../project2/user_memory.html">
+        <li class="chapter " data-level="3.3" data-path="user_memory.html">
             
-                <a href="../project2/user_memory.html">
+                <a href="user_memory.html">
             
                     
                     User Memory
@@ -261,9 +261,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.4" data-path="../project2/system_call.html">
+        <li class="chapter " data-level="3.4" data-path="system_call.html">
             
-                <a href="../project2/system_call.html">
+                <a href="system_call.html">
             
                     
                     System Calls
@@ -274,9 +274,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.5" data-path="../project2/process_termination.html">
+        <li class="chapter " data-level="3.5" data-path="process_termination.html">
             
-                <a href="../project2/process_termination.html">
+                <a href="process_termination.html">
             
                     
                     Process Termination Messages
@@ -287,9 +287,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="../project2/deny_write.html">
+        <li class="chapter " data-level="3.6" data-path="deny_write.html">
             
-                <a href="../project2/deny_write.html">
+                <a href="deny_write.html">
             
                     
                     Denying Writes to Executables
@@ -300,9 +300,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.7" data-path="../project2/dup.html">
+        <li class="chapter " data-level="3.7" data-path="dup.html">
             
-                <a href="../project2/dup.html">
+                <a href="dup.html">
             
                     
                     Extend File Descriptor (Extra)
@@ -313,9 +313,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.8" data-path="../project2/FAQ.html">
+        <li class="chapter " data-level="3.8" data-path="FAQ.html">
             
-                <a href="../project2/FAQ.html">
+                <a href="FAQ.html">
             
                     
                     FAQ
@@ -663,7 +663,7 @@
     <!-- Title -->
     <h1>
         <i class="fa fa-circle-o-notch fa-spin"></i>
-        <a href=".." >Alarm Clock</a>
+        <a href=".." >Argument Passing</a>
     </h1>
 </div>
 
@@ -678,32 +678,173 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h3 id="alarm-clock">Alarm Clock</h3>
-<p><strong>Reimplement <code>timer_sleep()</code>, defined in <code>devices/timer.c</code>.</strong></p>
-<p>Although a working implementation is provided, it <strong>busy waits</strong>, that is,
-it spins in a loop checking the current time and calling <code>thread_yield()</code> until
-enough time has gone by. Reimplement it to avoid busy waiting.</p>
-<hr>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">timer_sleep</span> <span class="hljs-params">(int64_t ticks)</span></span>;
+                                <h3 id="argument-passing">Argument Passing</h3>
+<p><strong>Setup the argument for user program in <code>process_switch()</code></strong></p>
+<h4 id="x86-64-calling-convention">x86-64 Calling Convention</h4>
+<p>This section summarizes important points of the convention used for normal
+function calls on 64-bit x86-64 implementations of Unix. Some details are
+omitted for brevity. For more detail, you can refer
+<a href="https://en.wikipedia.org/wiki/X86_calling_conventions#System_V_AMD64_ABI" target="_blank">System V AMD64 ABI</a>.</p>
+<p>The calling convention works like this:</p>
+<ol>
+<li>User-level applications use as integer registers for passing the sequence
+<code>%rdi</code>, <code>%rsi</code>, <code>%rdx</code>, <code>%rcx</code>, <code>%r8</code> and <code>%r9</code>.</li>
+<li>The caller pushes the address of its next instruction (the return address) on
+the stack and jumps to the first instruction of the callee. A single x86-64
+instruction, <code>CALL</code>, does both.</li>
+<li>The callee executes.</li>
+<li>If the callee has a return value, it stores it into register RAX.</li>
+<li>The callee returns by popping the return address from the stack and jumping
+to the location it specifies, using the x86-64 <code>RET</code> instruction.</li>
+</ol>
+<p>Consider a function <code>f()</code> that takes three int arguments. This diagram shows a
+sample stack frame and register state as seen by the callee at the beginning of
+step 3 above, supposing that <code>f()</code> is invoked as <code>f(1, 2, 3)</code>.
+The initial stack address is arbitrary:</p>
+<pre><code>                             +----------------+
+stack pointer --&gt; 0x4747fe70 | return address |
+                             +----------------+
+RDI: 0x0000000000000001 | RSI: 0x0000000000000002 | RDX: 0x0000000000000003
+</code></pre><h4 id="program-startup-details">Program Startup Details</h4>
+<p>The Pintos C library for user programs designates <code>_start()</code>, in
+<code>lib/user/entry.c</code>, as the entry point for user programs. This function is a
+wrapper around <code>main()</code> that calls <code>exit()</code> if <code>main()</code> returns:</p>
+<pre><code class="lang-C"><span class="hljs-keyword">void</span>
+_start (<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> *argv[]) {
+    <span class="hljs-built_in">exit</span> (main (argc, argv));
+}
 </code></pre>
+<p>The kernel must put the arguments for the initial function on the register
+before it allows the user program to begin executing. The arguments are passed
+in the same way as the normal calling convention.</p>
+<p>Consider how to handle arguments for the following example command:
+<code>/bin/ls -l foo bar</code>.</p>
+<ol>
+<li><p>Break the command into words: <code>/bin/ls</code>, <code>-l</code>, <code>foo</code>, <code>bar</code>.</p>
+</li>
+<li><p>Place the words at the top of the stack. Order doesn&apos;t matter,
+because they will be referenced through pointers.</p>
+</li>
+<li><p>Push the address of each string plus a null pointer sentinel, on the
+stack, in right-to-left order. These are the elements of argv. The null pointer
+sentinel ensures that <code>argv[argc]</code> is a null pointer, as required by the C
+standard. The order ensures that <code>argv[0]</code> is at the lowest virtual address.
+Word-aligned accesses are faster than unaligned accesses, so for best
+performance round the stack pointer down to a multiple of 8 before the first
+push.</p>
+</li>
+<li><p>Point <code>%rsi</code> to <code>argv</code> (the address of <code>argv[0]</code>) and set <code>%rdi</code> to <code>argc</code>.</p>
+</li>
+<li><p>Finally, push a fake &quot;return address&quot;: although the entry function will never
+return, its stack frame must have the same structure as any other.</p>
+</li>
+</ol>
+<p>The table below shows the state of the stack and the relevant registers right
+before the beginning of the user program.
+Note that the stack grows down.</p>
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>Name</th>
+<th>Data</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x4747fffc</td>
+<td>argv[3][...]</td>
+<td>&apos;bar\0&apos;</td>
+<td>char[4]</td>
+</tr>
+<tr>
+<td>0x4747fff8</td>
+<td>argv[2][...]</td>
+<td>&apos;foo\0&apos;</td>
+<td>char[4]</td>
+</tr>
+<tr>
+<td>0x4747fff5</td>
+<td>argv[1][...]</td>
+<td>&apos;-l\0&apos;</td>
+<td>char[3]</td>
+</tr>
+<tr>
+<td>0x4747ffed</td>
+<td>argv[0][...]</td>
+<td>&apos;/bin/ls\0&apos;</td>
+<td>char[8]</td>
+</tr>
+<tr>
+<td>0x4747ffe0</td>
+<td>word-align</td>
+<td>0</td>
+<td>uint8_t</td>
+</tr>
+<tr>
+<td>0x4747ffd8</td>
+<td>argv[4]</td>
+<td>0</td>
+<td>char *</td>
+</tr>
+<tr>
+<td>0x4747ffd0</td>
+<td>argv[3]</td>
+<td>0x4747fffc</td>
+<td>char *</td>
+</tr>
+<tr>
+<td>0x4747ffc8</td>
+<td>argv[2]</td>
+<td>0x4747fff8</td>
+<td>char *</td>
+</tr>
+<tr>
+<td>0x4747ffc0</td>
+<td>argv[1]</td>
+<td>0x4747fff5</td>
+<td>char *</td>
+</tr>
+<tr>
+<td>0x4747ffb8</td>
+<td>argv[0]</td>
+<td>0x4747ffed</td>
+<td>char *</td>
+</tr>
+<tr>
+<td>0x4747ffb0</td>
+<td>return address</td>
+<td>0</td>
+<td>void (*) ()</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
-<p>Suspends execution of the calling thread until time has advanced by at least x
-timer ticks. Unless the system is otherwise idle, the thread need not wake up
-after exactly x ticks. Just put it on the ready queue after they have waited
-for the right amount of time.</p>
+<p>RDI: 4 | RSI: 0x4747ffb8</p>
 </blockquote>
-<p><code>timer_sleep()</code> is useful for threads that operate in real-time, e.g. for
-blinking the cursor once per second. The argument to <code>timer_sleep()</code> is
-expressed in timer ticks, not in milliseconds or any another unit. There are
-<code>TIMER_FREQ</code> timer ticks per second, where <code>TIMER_FREQ</code> is a macro defined in
-<code>devices/timer.h</code>. The default value is <code>100</code>. We don&apos;t recommend changing this
-value, because any change is likely to cause many of the tests to fail.</p>
-<p>Separate functions <code>timer_msleep()</code>, <code>timer_usleep()</code>, and <code>timer_nsleep()</code> do
-exist for sleeping a specific number of milliseconds, microseconds, or
-nanoseconds, respectively, but these will call <code>timer_sleep()</code> automatically
-when necessary. You do not need to modify them.
-The alarm clock implementation is not needed for later projects, although it
-could be useful for project 4.</p>
+<p>In this example, the stack pointer would be initialized to <code>0x4747ffb0</code>
+As shown above, your code should start the stack at the <code>USER_STACK</code>, which is
+defined in <code>include/threads/vaddr.h</code>.</p>
+<p>You may find the non-standard <code>hex_dump()</code> function, declared in <code>&lt;stdio.h&gt;</code>,
+useful for debugging your argument passing code.</p>
+<h4 id="implement-the-argument-passing">Implement the argument passing.</h4>
+<p>Currently, <code>process_exec()</code> does not support passing arguments to new
+processes. Implement this functionality, by extending <code>process_exec()</code> so
+that instead of simply taking a program file name as its argument, it divides it
+into words at spaces. The first word is the program name, the second word is the
+first argument, and so on. That is, <code>process_exec(&quot;grep foo bar&quot;)</code> should run
+grep passing two arguments foo and bar.</p>
+<p>Within a command line, multiple spaces are equivalent to a single space, so that
+<code>process_exec(&quot;grep foo bar&quot;)</code> is equivalent to our original example. You can
+impose a reasonable limit on the length of the command line arguments. For
+example, you could limit the arguments to those that will fit in a single page
+(4 kB). (There is an unrelated limit of 128 bytes on command-line arguments that
+the pintos utility can pass to the kernel.)</p>
+<p>You can parse argument strings any way you like. If you&apos;re lost, look at
+<code>strtok_r()</code>, prototyped in <code>include/lib/string.h</code> and implemented with thorough
+comments in <code>lib/string.c</code>. You can find more about it by looking at the man
+page (run <code>man strtok_r</code> at the prompt).</p>
 
                                 
                                 </section>
@@ -736,7 +877,7 @@ could be useful for project 4.</p>
                 </a>
                 
                 
-                <a href="priority_scheduling.html" class="navigation navigation-next " aria-label="Next page: Priority Scheduling">
+                <a href="user_memory.html" class="navigation navigation-next " aria-label="Next page: User Memory">
                     <i class="fa fa-angle-right"></i>
                 </a>
                 
@@ -747,7 +888,7 @@ could be useful for project 4.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Alarm Clock","level":"2.2","depth":1,"next":{"title":"Priority Scheduling","level":"2.3","depth":1,"path":"project1/priority_scheduling.md","ref":"project1/priority_scheduling.md","articles":[]},"previous":{"title":"Introduction","level":"2.1","depth":1,"path":"project1/introduction.md","ref":"project1/introduction.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project1/alarm_clock.md","mtime":"2020-04-02T13:14:29.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:14:43.835Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Argument Passing","level":"3.2","depth":1,"next":{"title":"User Memory","level":"3.3","depth":1,"path":"project2/user_memory.md","ref":"project2/user_memory.md","articles":[]},"previous":{"title":"Introduction","level":"3.1","depth":1,"path":"project2/introduction.md","ref":"project2/introduction.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project2/argument_passing.md","mtime":"2020-04-02T13:14:29.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:14:43.835Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -222,9 +222,9 @@
         
         
     
-        <li class="chapter " data-level="3.1" data-path="../project2/introduction.md">
+        <li class="chapter " data-level="3.1" data-path="../project2/introduction.html">
             
-                <span>
+                <a href="../project2/introduction.html">
             
                     
                     Introduction
@@ -235,9 +235,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.2" data-path="../project2/argument_passing.md">
+        <li class="chapter " data-level="3.2" data-path="../project2/argument_passing.html">
             
-                <span>
+                <a href="../project2/argument_passing.html">
             
                     
                     Argument Passing
@@ -248,9 +248,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.3" data-path="../project2/user_memory.md">
+        <li class="chapter " data-level="3.3" data-path="../project2/user_memory.html">
             
-                <span>
+                <a href="../project2/user_memory.html">
             
                     
                     User Memory
@@ -261,9 +261,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.4" data-path="../project2/system_call.md">
+        <li class="chapter " data-level="3.4" data-path="../project2/system_call.html">
             
-                <span>
+                <a href="../project2/system_call.html">
             
                     
                     System Calls
@@ -274,9 +274,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.5" data-path="../project2/process_termination.md">
+        <li class="chapter " data-level="3.5" data-path="../project2/process_termination.html">
             
-                <span>
+                <a href="../project2/process_termination.html">
             
                     
                     Process Termination Messages
@@ -287,9 +287,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="../project2/deny_write.md">
+        <li class="chapter " data-level="3.6" data-path="../project2/deny_write.html">
             
-                <span>
+                <a href="../project2/deny_write.html">
             
                     
                     Denying Writes to Executables
@@ -300,9 +300,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.7" data-path="../project2/dup.md">
+        <li class="chapter " data-level="3.7" data-path="../project2/dup.html">
             
-                <span>
+                <a href="../project2/dup.html">
             
                     
                     Extend File Descriptor (Extra)
@@ -313,9 +313,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.8" data-path="../project2/FAQ.md">
+        <li class="chapter " data-level="3.8" data-path="../project2/FAQ.html">
             
-                <span>
+                <a href="../project2/FAQ.html">
             
                     
                     FAQ
@@ -752,6 +752,28 @@ wait for B to signal that some activity is complete. A can create a semaphore
 initialized to 0, pass it to B as it starts it, and then &quot;down&quot; the semaphore.
 When B finishes its activity, it &quot;ups&quot; the semaphore. This works regardless of
 whether A &quot;downs&quot; the semaphore or B &quot;ups&quot; it first.</p>
+<p>For example:</p>
+<pre><code class="lang-C"><span class="hljs-keyword">struct</span> semaphore sema;
+
+<span class="hljs-comment">/* Thread A */</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">threadA</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+    sema_down (&amp;sema);
+}
+
+<span class="hljs-comment">/* Thread B */</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">threadB</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+    sema_up (&amp;sema);
+}
+
+<span class="hljs-comment">/* main function */</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">main</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span> </span>{
+    sema_init (&amp;sema, <span class="hljs-number">0</span>);
+    thread_create (<span class="hljs-string">&quot;threadA&quot;</span>, PRI_MIN, threadA, <span class="hljs-literal">NULL</span>);
+    thread_create (<span class="hljs-string">&quot;threadB&quot;</span>, PRI_MIN, threadB, <span class="hljs-literal">NULL</span>);
+}
+</code></pre>
+<p>In this example, threadA stops execution at <code>sema_down ()</code> until threadB called
+<code>sema_up ()</code>.</p>
 <p>A semaphore initialized to 1 is typically used for controlling access to a
 resource. Before a block of code starts using the resource, it &quot;downs&quot; the
 semaphore, then after it is done with the resource it &quot;ups&quot; the resource. In
@@ -1073,7 +1095,7 @@ and parse the entire source file before performing optimization.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Synchronization","level":"6.2","depth":1,"next":{"title":"Memory Allocation","level":"6.3","depth":1,"path":"appendix/memory_allocation.md","ref":"appendix/memory_allocation.md","articles":[]},"previous":{"title":"Threads","level":"6.1","depth":1,"path":"appendix/threads.md","ref":"appendix/threads.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/synchronization.md","mtime":"2020-03-30T13:22:26.869Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-30T13:24:36.308Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Synchronization","level":"6.2","depth":1,"next":{"title":"Memory Allocation","level":"6.3","depth":1,"path":"appendix/memory_allocation.md","ref":"appendix/memory_allocation.md","articles":[]},"previous":{"title":"Threads","level":"6.1","depth":1,"path":"appendix/threads.md","ref":"appendix/threads.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/synchronization.md","mtime":"2020-04-02T13:14:29.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:14:43.835Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

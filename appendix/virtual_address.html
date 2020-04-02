@@ -222,9 +222,9 @@
         
         
     
-        <li class="chapter " data-level="3.1" data-path="../project2/introduction.md">
+        <li class="chapter " data-level="3.1" data-path="../project2/introduction.html">
             
-                <span>
+                <a href="../project2/introduction.html">
             
                     
                     Introduction
@@ -235,9 +235,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.2" data-path="../project2/argument_passing.md">
+        <li class="chapter " data-level="3.2" data-path="../project2/argument_passing.html">
             
-                <span>
+                <a href="../project2/argument_passing.html">
             
                     
                     Argument Passing
@@ -248,9 +248,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.3" data-path="../project2/user_memory.md">
+        <li class="chapter " data-level="3.3" data-path="../project2/user_memory.html">
             
-                <span>
+                <a href="../project2/user_memory.html">
             
                     
                     User Memory
@@ -261,9 +261,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.4" data-path="../project2/system_call.md">
+        <li class="chapter " data-level="3.4" data-path="../project2/system_call.html">
             
-                <span>
+                <a href="../project2/system_call.html">
             
                     
                     System Calls
@@ -274,9 +274,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.5" data-path="../project2/process_termination.md">
+        <li class="chapter " data-level="3.5" data-path="../project2/process_termination.html">
             
-                <span>
+                <a href="../project2/process_termination.html">
             
                     
                     Process Termination Messages
@@ -287,9 +287,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="../project2/deny_write.md">
+        <li class="chapter " data-level="3.6" data-path="../project2/deny_write.html">
             
-                <span>
+                <a href="../project2/deny_write.html">
             
                     
                     Denying Writes to Executables
@@ -300,9 +300,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.7" data-path="../project2/dup.md">
+        <li class="chapter " data-level="3.7" data-path="../project2/dup.html">
             
-                <span>
+                <a href="../project2/dup.html">
             
                     
                     Extend File Descriptor (Extra)
@@ -313,9 +313,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.8" data-path="../project2/FAQ.md">
+        <li class="chapter " data-level="3.8" data-path="../project2/FAQ.html">
             
-                <span>
+                <a href="../project2/FAQ.html">
             
                     
                     FAQ
@@ -792,13 +792,29 @@ virtual address.</p>
 respectively.</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pte_for_each_func</span> <span class="hljs-params">(uint64_t *pte, <span class="hljs-keyword">void</span> *aux)</span></span>;
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_writable(pte) { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
+<blockquote>
+<p>Query whether virtual address pointed by the page table entry (PTE) is
+wriatable or not.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pte_for_each_func</span> <span class="hljs-params">(uint64_t *pte, <span class="hljs-keyword">void</span> *va, <span class="hljs-keyword">void</span> *aux)</span></span>;
 <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pml4_for_each</span> <span class="hljs-params">(uint64_t *pml4, pte_for_each_func *func, <span class="hljs-keyword">void</span> *aux)</span></span>;
 </code></pre>
 <blockquote>
-<p>For each valid entry in <em>pml4</em>, apply FUNC with auxillary value AUX.
-You may utilize this function to implement <code>fork</code> in lab2.</p>
+<p>For each valid entry under PML4, apply FUNC with auxillary value AUX.
+VA represents the virtual address of the entry.</p>
 </blockquote>
+<p>Below shows example usage of pml4_for_each:</p>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span>
+<span class="hljs-title">stat_page</span><span class="hljs-params">(uint64_t *pte, <span class="hljs-keyword">void</span> *va,  <span class="hljs-keyword">void</span> *aux)</span> </span>{
+        <span class="hljs-keyword">if</span> (is_user_vaddr (va))
+                <span class="hljs-built_in">printf</span> (<span class="hljs-string">&quot;user page: %llx\n&quot;</span>, va);
+        <span class="hljs-keyword">if</span> (is_writable (va))
+                <span class="hljs-built_in">printf</span> (<span class="hljs-string">&quot;writable page: %llx\n&quot;</span>, va);
+}
+</code></pre>
 
                                 
                                 </section>
@@ -842,7 +858,7 @@ You may utilize this function to implement <code>fork</code> in lab2.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Virtual Address","level":"6.4","depth":1,"next":{"title":"Debugging Tools","level":"6.5","depth":1,"path":"appendix/debugging_tools.md","ref":"appendix/debugging_tools.md","articles":[]},"previous":{"title":"Memory Allocation","level":"6.3","depth":1,"path":"appendix/memory_allocation.md","ref":"appendix/memory_allocation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/virtual_address.md","mtime":"2020-03-30T13:22:26.869Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-30T13:24:36.308Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Virtual Address","level":"6.4","depth":1,"next":{"title":"Debugging Tools","level":"6.5","depth":1,"path":"appendix/debugging_tools.md","ref":"appendix/debugging_tools.md","articles":[]},"previous":{"title":"Memory Allocation","level":"6.3","depth":1,"path":"appendix/memory_allocation.md","ref":"appendix/memory_allocation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/virtual_address.md","mtime":"2020-04-02T13:14:29.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:14:43.835Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

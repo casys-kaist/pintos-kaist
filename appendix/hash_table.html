@@ -220,9 +220,9 @@
         
         
     
-        <li class="chapter " data-level="3.1" data-path="../project2/introduction.md">
+        <li class="chapter " data-level="3.1" data-path="../project2/introduction.html">
             
-                <span>
+                <a href="../project2/introduction.html">
             
                     
                     Introduction
@@ -233,9 +233,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.2" data-path="../project2/argument_passing.md">
+        <li class="chapter " data-level="3.2" data-path="../project2/argument_passing.html">
             
-                <span>
+                <a href="../project2/argument_passing.html">
             
                     
                     Argument Passing
@@ -246,9 +246,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.3" data-path="../project2/user_memory.md">
+        <li class="chapter " data-level="3.3" data-path="../project2/user_memory.html">
             
-                <span>
+                <a href="../project2/user_memory.html">
             
                     
                     User Memory
@@ -259,9 +259,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.4" data-path="../project2/system_call.md">
+        <li class="chapter " data-level="3.4" data-path="../project2/system_call.html">
             
-                <span>
+                <a href="../project2/system_call.html">
             
                     
                     System Calls
@@ -272,9 +272,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.5" data-path="../project2/process_termination.md">
+        <li class="chapter " data-level="3.5" data-path="../project2/process_termination.html">
             
-                <span>
+                <a href="../project2/process_termination.html">
             
                     
                     Process Termination Messages
@@ -285,9 +285,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.6" data-path="../project2/deny_write.md">
+        <li class="chapter " data-level="3.6" data-path="../project2/deny_write.html">
             
-                <span>
+                <a href="../project2/deny_write.html">
             
                     
                     Denying Writes to Executables
@@ -298,9 +298,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.7" data-path="../project2/dup.md">
+        <li class="chapter " data-level="3.7" data-path="../project2/dup.html">
             
-                <span>
+                <a href="../project2/dup.html">
             
                     
                     Extend File Descriptor (Extra)
@@ -311,9 +311,9 @@
             
         </li>
     
-        <li class="chapter " data-level="3.8" data-path="../project2/FAQ.md">
+        <li class="chapter " data-level="3.8" data-path="../project2/FAQ.html">
             
-                <span>
+                <a href="../project2/FAQ.html">
             
                     
                     FAQ
@@ -677,62 +677,74 @@
                                 <section class="normal markdown-section">
                                 
                                 <h1 id="hash-table">Hash Table</h1>
-<p>Pintos provides a hash table data structure in &#x2018;<code>lib/kernel/hash.c</code>&#x2019;. To use it you will
-need to include its header file, &#x2018;<code>lib/kernel/hash.h</code>&#x2019;, with <code>#include &lt;hash.h&gt;</code>. No code
-provided with Pintos uses the hash table, which means that you are free to use it as is,
-modify its implementation for your own purposes, or ignore it, as you wish.</p>
-<p>Most implementations of the virtual memory project use a hash table to translate pages
-to frames. You may find other uses for hash tables as well.</p>
+<p>Pintos provides a hash table data structure in <code>lib/kernel/hash.c</code>. To use it
+you will need to include its header file, &apos;<code>lib/kernel/hash.h</code>&apos;, with
+<code>#include &lt;hash.h&gt;</code>. No code provided with Pintos uses the hash table, which
+means that you are free to use it as is, modify its implementation for your own
+purposes, or ignore it, as you wish.</p>
+<p>Most implementations of the virtual memory project use a hash table to translate
+pages to frames. You may find other uses for hash tables as well.</p>
 <h2 id="data-types">Data Types</h2>
 <p>A hash table is represented by struct hash.</p>
-<pre><code class="lang-C"><span class="hljs-keyword">struct</span> hash
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">struct</span> hash;
 </code></pre>
 <blockquote>
-<p>Represents an entire hash table. The actual members of <code>struct hash</code> are &#x201C;opaque.&#x201D;
-That is, code that uses a hash table should not access <code>struct hash</code> members directly,
-nor should it need to. Instead, use hash table functions and macros.</p>
+<p>Represents an entire hash table. The actual members of <code>struct hash</code> are
+&quot;opaque.&quot; That is, code that uses a hash table should not access <code>struct hash</code>
+members directly, nor should it need to. Instead, use hash table functions
+and macros.</p>
 </blockquote>
 <p>The hash table operates on elements of type <code>struct hash_elem</code>.</p>
-<pre><code class="lang-C"><span class="hljs-keyword">struct</span> hash_elem
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">struct</span> hash_elem;
 </code></pre>
 <blockquote>
-<p>Embed a <code>struct hash_elem</code> member in the structure you want to include in a hash
-table. Like <code>struct hash</code>, <code>struct hash_elem</code> is opaque. All functions for operating
-on hash table elements actually take and return pointers to <code>struct hash_elem</code>, not
-pointers to your hash table&#x2019;s real element type.</p>
+<p>Embed a <code>struct hash_elem</code> member in the structure you want to include in a
+hash table. Like <code>struct hash</code>, <code>struct hash_elem</code> is opaque. All functions
+for operating on hash table elements actually take and return pointers to
+<code>struct hash_elem</code>, not pointers to your hash table&apos;s real element type.</p>
 </blockquote>
-<p>You will often need to obtain a <code>struct hash_elem</code> given a real element of the hash table,
-and vice versa. Given a real element of the hash table, you may use the &#x2018;<code>&amp;</code>&#x2019; operator to
-obtain a pointer to its <code>struct hash_elem</code>. Use the <code>hash_entry()</code> macro to go the other direction.</p>
-<pre><code class="lang-C"><span class="hljs-function">type * <span class="hljs-title">hash_entry</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash elem *elem, type, member)</span>
-</span></code></pre>
+<p>You will often need to obtain a <code>struct hash_elem</code> given a real element of the
+hash table, and vice versa. Given a real element of the hash table, you may use
+the <code>&amp;</code> operator to obtain a pointer to its <code>struct hash_elem</code>. Use the
+<code>hash_entry()</code> macro to go the other direction.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> hash_entry (elem, type, member) { <span class="hljs-comment">/* Emit details */</span> }</span>
+</code></pre>
 <blockquote>
-<p>Returns a pointer to the structure that elem, a pointer to a <code>struct hash_elem</code>, is
-embedded within. You must provide type, the name of the structure that elem is
-inside, and member, the name of the member in type that elem points to.</p>
-<p>For example, suppose <code>h</code> is a <code>struct hash_elem *</code> variable that points to a struct
-thread member (of type <code>struct hash_elem</code>) named <code>h_elem</code>. Then, <code>hash_entry</code> (<code>h, struct thread, h_elem</code>) yields the address of the <code>struct thread</code> that <code>h</code> points within.</p>
+<p>Returns a pointer to the structure that elem, a pointer to a
+<code>struct hash_elem</code>, is embedded within. You must provide type, the name of the
+structure that elem is inside, and member, the name of the member in type that
+elem points to.</p>
+<p>For example, suppose <code>h</code> is a <code>struct hash_elem *</code> variable that points to a
+struct thread member (of type <code>struct hash_elem</code>) named <code>h_elem</code>. Then,
+<code>hash_entry</code> (<code>h, struct thread, h_elem</code>) yields the address of the
+<code>struct thread</code> that <code>h</code> points within.</p>
 </blockquote>
-<p>See Section [Hash Table Example], for an example.</p>
-<p>Each hash table element must contain a key, that is, data that identifies and distinguishes
-elements, which must be unique among elements in the hash table. (Elements may also
-contain non-key data that need not be unique.) While an element is in a hash table, its key
-data must not be changed. Instead, if need be, remove the element from the hash table,
-modify its key, then reinsert the element.</p>
-<p>For each hash table, you must write two functions that act on keys: a hash function and
-a comparison function. These functions must match the following prototypes:</p>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> <span class="hljs-title">hash_hash_func</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> hash_elem *element, <span class="hljs-keyword">void</span> *aux)</span>
-</span></code></pre>
+<p>Each hash table element must contain a key, that is, data that identifies and
+distinguishes elements, which must be unique among elements in the hash table.
+(Elements may also contain non-key data that need not be unique.) While an
+element is in a hash table, its key data must not be changed. Instead, if need
+be, remove the element from the hash table, modify its key, then reinsert the
+element.</p>
+<p>For each hash table, you must write two functions that act on keys: a hash
+function and a comparison function. These functions must match the following
+prototypes:</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-title">hash_hash_func</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> hash_elem *e, <span class="hljs-keyword">void</span> *aux)</span></span>;
+</code></pre>
 <blockquote>
-<p>Returns a hash of element&#x2019;s data, as a value anywhere in the range of unsigned int.
-The hash of an element should be a pseudo-random function of the element&#x2019;s key. It
-must not depend on non-key data in the element or on any non-constant data other
-than the key. Pintos provides the following functions as a suitable basis for hash
-functions.</p>
+<p>Returns a hash of element&apos;s data, as a value anywhere in the range of unsigned
+int. The hash of an element should be a pseudo-random function of the
+element&apos;s key. It must not depend on non-key data in the element or on any
+non-constant data other than the key. Pintos provides the following functions
+as a suitable basis for hash functions.</p>
 <p><code>unsigned hash_bytes (const void *buf, size t *size)</code></p>
 <blockquote>
 <p>Returns a hash of the size bytes starting at buf. The implementation is the
-general-purpose Fowler-Noll-Vo hash (<code>http://en.wikipedia.org/wiki/Fowler_Noll_Vo_hash</code>) for 32-bit words.</p>
+general-purpose Fowler-Noll-Vo hash
+(<code>http://en.wikipedia.org/wiki/Fowler_Noll_Vo_hash</code>) for 32-bit words.</p>
 </blockquote>
 <p><code>unsigned hash_string (const char *s)</code></p>
 <blockquote>
@@ -742,17 +754,19 @@ general-purpose Fowler-Noll-Vo hash (<code>http://en.wikipedia.org/wiki/Fowler_N
 <blockquote>
 <p>Returns a hash of integer i.</p>
 </blockquote>
-<p>If your key is a single piece of data of an appropriate type, it is sensible for your hash
-function to directly return the output of one of these functions. For multiple pieces
-of data, you may wish to combine the output of more than one call to them using,
-e.g., the &#x2018;^&#x2019; (exclusive or) operator. Finally, you may entirely ignore these functions
-and write your own hash function from scratch, but remember that your goal is to
-build an operating system kernel, not to design a hash function.
-See Section [Hash Auxiliary Data], for an explanation of aux.</p>
-<p><code>bool hash_less_func (const struct hash_elem *a, const struct hash_elem *b, void *aux)</code></p>
+<p>If your key is a single piece of data of an appropriate type, it is sensible
+for your hash function to directly return the output of one of these
+functions. For multiple pieces of data, you may wish to combine the output of
+more than one call to them using, e.g., the &apos;^&apos; (exclusive or) operator.
+Finally, you may entirely ignore these functions and write your own hash
+function from scratch, but remember that your goal is to build an operating
+system kernel, not to design a hash function. See Section
+[Hash Auxiliary Data], for an explanation of aux.</p>
+<p><code>bool hash_less_func (const struct hash_elem *a, const struct hash_elem *b,
+                       void *aux)</code></p>
 <blockquote>
-<p>Compares the keys stored in elements a and b. Returns true if a is less than b, false
-if a is greater than or equal to b.
+<p>Compares the keys stored in elements a and b. Returns true if a is less than
+b, false if a is greater than or equal to b.
 If two elements compare equal, then they must hash to equal values.</p>
 </blockquote>
 <p>See Section [Hash Auxiliary Data], for an explanation of aux.
@@ -766,57 +780,70 @@ See Section [Hash Auxiliary Data], for an explanation of aux.</p>
 </blockquote>
 <h2 id="basic-functions">Basic Functions</h2>
 <p>These functions create, destroy, and inspect hash tables.</p>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">hash_init</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, hash hash func *hash_func,  hash less func *less_func, <span class="hljs-keyword">void</span> *aux)</span>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">hash_init</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, hash_hash_func *hash_func,
+                    hash_less_func *less_func, <span class="hljs-keyword">void</span> *aux)</span>
 </span></code></pre>
 <blockquote>
-<p>Initializes hash as a hash table with hash func as hash function, less func as comparison function, and aux as auxiliary data. Returns true if successful, false on failure.
-<code>hash_init()</code> calls <code>malloc()</code> and fails if memory cannot be allocated.
-See Section A.8.6 [Hash Auxiliary Data], for an explanation of aux, which is
+<p>Initializes hash as a hash table with hash func as hash function, less func as
+comparison function, and aux as auxiliary data. Returns true if successful,
+false on failure. <code>hash_init()</code> calls <code>malloc()</code> and fails if memory cannot be
+allocated. See Hash Auxiliary Data, for an explanation of aux, which is
 most often a null pointer.</p>
 </blockquote>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">hash_clear</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, hash action func *action)</span>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">hash_clear</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, hash_action_func *action)</span>
 </span></code></pre>
 <blockquote>
-<p>Removes all the elements from hash, which must have been previously initialized with
-<code>hash_init()</code>.
-If action is non-null, then it is called once for each element in the hash table, which
-gives the caller an opportunity to deallocate any memory or other resources used
-by the element. For example, if the hash table elements are dynamically allocated
-using <code>malloc()</code>, then action could <code>free()</code> the element. This is safe because hash_
-<code>clear()</code> will not access the memory in a given hash element after calling action on
-it. However, action must not call any function that may modify the hash table, such
-as <code>hash_insert()</code> or <code>hash_delete()</code>.</p>
+<p>Removes all the elements from hash, which must have been previously
+initialized with <code>hash_init()</code>.
+If action is non-null, then it is called once for each element in the hash
+table, which gives the caller an opportunity to deallocate any memory or other
+resources used by the element. For example, if the hash table elements are
+dynamically allocated using <code>malloc()</code>, then action could <code>free()</code> the
+element. This is safe because <code>hash_clear()</code> will not access the memory in a
+given hash element after calling action on it. However, action must not call
+any function that may modify the hash table, such as <code>hash_insert()</code> or
+<code>hash_delete()</code>.</p>
 </blockquote>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">hash_destroy</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, hash action func *action)</span>
-</span></code></pre>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">hash_destroy</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, hash_action_func *action)</span></span>;
+</code></pre>
 <blockquote>
-<p>If action is non-null, calls it for each element in the hash, with the same semantics as
-a call to <code>hash_clear()</code>. Then, frees the memory held by hash. Afterward, hash must
-not be passed to any hash table function, absent an intervening call to hash_init().</p>
+<p>If action is non-null, calls it for each element in the hash, with the same
+semantics as a call to <code>hash_clear()</code>. Then, frees the memory held by hash.
+Afterward, hash must not be passed to any hash table function, absent an
+intervening call to hash_init().</p>
 </blockquote>
-<pre><code class="lang-C"><span class="hljs-keyword">size_t</span> hash_size (<span class="hljs-keyword">struct</span> hash *hash)
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">size_t</span> hash_size (<span class="hljs-keyword">struct</span> hash *hash);
 </code></pre>
 <blockquote>
 <p>Returns the number of elements currently stored in hash.</p>
 </blockquote>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">hash_empty</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash)</span>
-</span></code></pre>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">hash_empty</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash)</span></span>;
+</code></pre>
 <blockquote>
-<p>Returns true if hash currently contains no elements, false if hash contains at least one element.</p>
+<p>Returns true if hash currently contains no elements, false if hash contains at
+least one element.</p>
 </blockquote>
 <h2 id="search-functions">Search Functions</h2>
-<p>Each of these functions searches a hash table for an element that compares equal to one
-provided. Based on the success of the search, they perform some action, such as inserting
-a new element into the hash table, or simply return the result of the search.</p>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> hash_elem * <span class="hljs-title">hash_insert</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, <span class="hljs-keyword">struct</span> hash elem *element)</span>
-</span></code></pre>
+<p>Each of these functions searches a hash table for an element that compares equal
+to one provided. Based on the success of the search, they perform some action,
+such as inserting a new element into the hash table, or simply return the result
+of the search.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> hash_elem *<span class="hljs-title">hash_insert</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, <span class="hljs-keyword">struct</span> hash elem *element)</span></span>;
+</code></pre>
 <blockquote>
-<p>Searches hash for an element equal to element. If none is found, inserts element into
-hash and returns a null pointer. If the table already contains an element equal to
-element, it is returned without modifying hash.</p>
+<p>Searches hash for an element equal to element. If none is found, inserts
+element into hash and returns a null pointer. If the table already contains an
+element equal to element, it is returned without modifying hash.</p>
 </blockquote>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> hash_elem * <span class="hljs-title">hash_replace</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, <span class="hljs-keyword">struct</span> hash elem *element)</span>
-</span></code></pre>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> hash_elem *<span class="hljs-title">hash_replace</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, <span class="hljs-keyword">struct</span> hash elem *element)</span></span>;
+</code></pre>
 <blockquote>
 <p>Inserts element into hash. Any element equal to element already in hash is removed.
 Returns the element removed, or a null pointer if hash did not contain an element
@@ -826,122 +853,136 @@ element, as appropriate. For example, if the hash table elements are dynamically
 allocated using <code>malloc()</code>, then the caller must <code>free()</code> the element after it is no
 longer needed.</p>
 </blockquote>
-<p>The element passed to the following functions is only used for hashing and comparison
-purposes. It is never actually inserted into the hash table. Thus, only key data in the
-element needs to be initialized, and other data in the element will not be used. It often
-makes sense to declare an instance of the element type as a local variable, initialize the
-key data, and then pass the address of its <code>struct hash_elem</code> to <code>hash_find()</code> or <code>hash_delete()</code>. See Section [Hash Table Example], for an example. (Large
-structures should not be allocated as local variables. See Section A.2.1 <a href="">struct thread</a>, for more information.)</p>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> hash_elem * <span class="hljs-title">hash_find</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, <span class="hljs-keyword">struct</span> hash elem *element)</span>
-</span></code></pre>
+<p>The element passed to the following functions is only used for hashing and
+comparison purposes. It is never actually inserted into the hash table. Thus,
+only key data in the element needs to be initialized, and other data in the
+element will not be used. It often makes sense to declare an instance of the
+element type as a local variable, initialize the key data, and then pass the
+address of its <code>struct hash_elem</code> to <code>hash_find()</code> or <code>hash_delete()</code>. See
+Hash Table Example, for an example. (Large
+structures should not be allocated as local variables. See
+<a href="threads.html">struct thread</a>, for more information.)</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> hash_elem *<span class="hljs-title">hash_find</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, <span class="hljs-keyword">struct</span> hash elem *element)</span></span>;
+</code></pre>
 <blockquote>
-<p>Searches hash for an element equal to element. Returns the element found, if any, or
-a null pointer otherwise.</p>
+<p>Searches hash for an element equal to element. Returns the element found,
+if any, or a null pointer otherwise.</p>
 </blockquote>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> hash_elem * <span class="hljs-title">hash_delete</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, <span class="hljs-keyword">struct</span> hash elem *element)</span>
-</span></code></pre>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> hash_elem *<span class="hljs-title">hash_delete</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, <span class="hljs-keyword">struct</span> hash elem *element)</span></span>;
+</code></pre>
 <blockquote>
-<p>Searches hash for an element equal to element. If one is found, it is removed from
-hash and returned. Otherwise, a null pointer is returned and hash is unchanged.</p>
-<p>The caller is responsible for deallocating any resources associated with the returned
-element, as appropriate. For example, if the hash table elements are dynamically
-allocated using <code>malloc()</code>, then the caller must <code>free()</code> the element after it is no longer needed.</p>
+<p>Searches hash for an element equal to element. If one is found, it is removed
+from hash and returned. Otherwise, a null pointer is returned and hash is
+unchanged.</p>
+<p>The caller is responsible for deallocating any resources associated with the
+returned element, as appropriate. For example, if the hash table elements are
+dynamically allocated using <code>malloc()</code>, then the caller must <code>free()</code> the
+element after it is no longer needed.</p>
 </blockquote>
 <h2 id="iteration-functions">Iteration Functions</h2>
-<p>These functions allow iterating through the elements in a hash table. Two interfaces are
-supplied. The first requires writing and supplying a hash action func to act on each element
-(see Section [Hash Data Types]).</p>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">hash_apply</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, hash action func *action)</span>
-</span></code></pre>
+<p>These functions allow iterating through the elements in a hash table. Two
+interfaces are supplied. The first requires writing and supplying a
+hash_action_func to act on each element.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">hash_apply</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash *hash, hash action func *action)</span></span>;
+</code></pre>
 <blockquote>
-<p>Calls action once for each element in hash, in arbitrary order. action must not call any
-function that may modify the hash table, such as <code>hash_insert()</code> or <code>hash_delete()</code>.
-action must not modify key data in elements, although it may modify any other data.</p>
+<p>Calls action once for each element in hash, in arbitrary order. action must
+not call any function that may modify the hash table, such as <code>hash_insert()</code>
+or <code>hash_delete()</code>. action must not modify key data in elements, although it
+may modify any other data.</p>
 </blockquote>
-<p>The second interface is based on an &#x201C;iterator&#x201D; data type. Idiomatically, iterators are used as follows:</p>
+<p>The second interface is based on an &quot;iterator&quot; data type. Idiomatically,
+iterators are used as follows:</p>
+<hr>
 <pre><code class="lang-C"><span class="hljs-keyword">struct</span> hash_iterator i;
 hash_first (&amp;i, h);
-<span class="hljs-keyword">while</span> (hash_next (&amp;i))
-  {
+<span class="hljs-keyword">while</span> (hash_next (&amp;i)) {
     <span class="hljs-keyword">struct</span> foo *f = hash_entry (hash_cur (&amp;i), <span class="hljs-keyword">struct</span> foo, elem);
     . . . <span class="hljs-keyword">do</span> something with f . . .
-  }
+}
 </code></pre>
-<pre><code class="lang-C"><span class="hljs-keyword">struct</span> hash_iterator
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">struct</span> hash_iterator;
 </code></pre>
 <blockquote>
-<p>Represents a position within a hash table. Calling any function that may modify a
-hash table, such as <code>hash_insert()</code> or <code>hash_delete()</code>, invalidates all iterators within
-that hash table.</p>
+<p>Represents a position within a hash table. Calling any function that may
+modify a hash table, such as <code>hash_insert()</code> or <code>hash_delete()</code>, invalidates
+all iterators within that hash table.</p>
 <p>Like struct hash and struct hash_elem, struct hash_elem is opaque.</p>
 </blockquote>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">hash_first</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash iterator *iterator, <span class="hljs-keyword">struct</span> hash *hash)</span>
-</span></code></pre>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">hash_first</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash iterator *iterator, <span class="hljs-keyword">struct</span> hash *hash)</span></span>;
+</code></pre>
 <blockquote>
 <p>Initializes iterator to just before the first element in hash.</p>
 </blockquote>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> hash_elem * <span class="hljs-title">hash_next</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash iterator *iterator)</span>
-</span></code></pre>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> hash_elem *<span class="hljs-title">hash_next</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash iterator *iterator)</span></span>;
+</code></pre>
 <blockquote>
-<p>Advances iterator to the next element in hash, and returns that element. Returns
-a null pointer if no elements remain. After <code>hash_next()</code> returns null for iterator,
-calling it again yields undefined behavior.</p>
+<p>Advances iterator to the next element in hash, and returns that element.
+Returns a null pointer if no elements remain. After <code>hash_next()</code> returns null
+for iterator, calling it again yields undefined behavior.</p>
 </blockquote>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> hash_elem * <span class="hljs-title">hash_cur</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash iterator *iterator)</span>
-</span></code></pre>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> hash_elem *<span class="hljs-title">hash_cur</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> hash iterator *iterator)</span></span>;
+</code></pre>
 <blockquote>
-<p>Returns the value most recently returned by <code>hash_next()</code> for iterator. Yields undefined behavior after <code>hash_first()</code> has been called on iterator but before hash_
-<code>next()</code> has been called for the first time.</p>
+<p>Returns the value most recently returned by <code>hash_next()</code> for iterator. Yields
+undefined behavior after <code>hash_first()</code> has been called on iterator but before
+<code>hash_next()</code> has been called for the first time.</p>
 </blockquote>
 <h2 id="hash-table-example">Hash Table Example</h2>
-<p>Suppose you have a structure, called <code>struct page</code>, that you want to put into a hash table.
-First, define <code>struct page</code> to include a <code>struct hash_elem</code> member:</p>
-<pre><code class="lang-C"><span class="hljs-keyword">struct</span> page
-  {
+<p>Suppose you have a structure, called <code>struct page</code>, that you want to put into a
+hash table. First, define <code>struct page</code> to include a <code>struct hash_elem</code> member:</p>
+<pre><code class="lang-C"><span class="hljs-keyword">struct</span> page {
     <span class="hljs-keyword">struct</span> hash_elem hash_elem; <span class="hljs-comment">/* Hash table element. */</span>
     <span class="hljs-keyword">void</span> *addr; <span class="hljs-comment">/* Virtual address. */</span>
     <span class="hljs-comment">/* . . . other members. . . */</span>
-    };
+};
 </code></pre>
-<p>We write a hash function and a comparison function using addr as the key. A pointer
-can be hashed based on its bytes, and the &#x2018;&lt;&#x2019; operator works fine for comparing pointers:</p>
+<p>We write a hash function and a comparison function using addr as the key. A
+pointer can be hashed based on its bytes, and the <code>&lt;</code> operator works fine for
+comparing pointers:</p>
 <pre><code class="lang-C"><span class="hljs-comment">/* Returns a hash value for page p. */</span>
 <span class="hljs-function"><span class="hljs-keyword">unsigned</span>
-<span class="hljs-title">page_hash</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> hash_elem *p_, <span class="hljs-keyword">void</span> *aux UNUSED)</span>
-</span>{
+<span class="hljs-title">page_hash</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> hash_elem *p_, <span class="hljs-keyword">void</span> *aux UNUSED)</span> </span>{
   <span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> page *p = hash_entry (p_, <span class="hljs-keyword">struct</span> page, hash_elem);
   <span class="hljs-keyword">return</span> hash_bytes (&amp;p-&gt;addr, <span class="hljs-keyword">sizeof</span> p-&gt;addr);
 }
-
-<span class="hljs-comment">/* Returns true if page a precedes page b. */</span>
+</code></pre>
+<pre><code class="lang-C"><span class="hljs-comment">/* Returns true if page a precedes page b. */</span>
 <span class="hljs-function"><span class="hljs-keyword">bool</span>
-<span class="hljs-title">page_less</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> hash_elem *a_, <span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> hash_elem *b_, <span class="hljs-keyword">void</span> *aux UNUSED)</span>
-</span>{
+<span class="hljs-title">page_less</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> hash_elem *a_,
+           <span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> hash_elem *b_, <span class="hljs-keyword">void</span> *aux UNUSED)</span> </span>{
   <span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> page *a = hash_entry (a_, <span class="hljs-keyword">struct</span> page, hash_elem);
   <span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> page *b = hash_entry (b_, <span class="hljs-keyword">struct</span> page, hash_elem);
 
   <span class="hljs-keyword">return</span> a-&gt;addr &lt; b-&gt;addr;
 }
 </code></pre>
-<p>(The use of <code>UNUSED</code> in these functions&#x2019; prototypes suppresses a warning that aux is unused. See Section E.3 [Function and Parameter Attributes], for information
-about <code>UNUSED</code>. See Section [Hash Auxiliary Data], for an explanation of aux.)</p>
+<p>(The use of <code>UNUSED</code> in these functions&apos; prototypes suppresses a warning that
+aux is unused. See Function and Parameter Attributes, for information
+about <code>UNUSED</code>. See Hash Auxiliary Data, for an explanation of aux.)</p>
 <p>Then, we can create a hash table like this:</p>
 <pre><code class="lang-C"><span class="hljs-keyword">struct</span> hash pages;
 hash_init (&amp;pages, page_hash, page_less, <span class="hljs-literal">NULL</span>);
 </code></pre>
-<p>Now we can manipulate the hash table we&#x2019;ve created. If <code>p</code> is a pointer to a <code>struct page</code>,
-we can insert it into the hash table with:</p>
+<p>Now we can manipulate the hash table we&apos;ve created. If <code>p</code> is a pointer to a
+<code>struct page</code>, we can insert it into the hash table with:</p>
 <pre><code class="lang-C">hash_insert (&amp;pages, &amp;p-&gt;hash_elem);
 </code></pre>
-<p>If there&#x2019;s a chance that pages might already contain a page with the same addr, then we
-should check <code>hash_insert()&#x2019;</code>s return value.</p>
-<p>to search for an element in the hash table, use <code>hash_find()</code>. This takes a little setup,
-because <code>hash_find()</code> takes an element to compare against. Here&#x2019;s a function that will find
-and return a page based on a virtual address, assuming that pages is defined at file scope:</p>
+<p>If there&apos;s a chance that pages might already contain a page with the same addr,
+then we should check <code>hash_insert()&apos;</code>s return value.</p>
+<p>To search for an element in the hash table, use <code>hash_find()</code>. This takes a
+little setup, because <code>hash_find()</code> takes an element to compare against. Here&apos;s
+a function that will find and return a page based on a virtual address, assuming
+that pages is defined at file scope:</p>
 <pre><code class="lang-C"><span class="hljs-comment">/* Returns the page containing the given virtual address, or a null pointer if no such page exists. */</span>
 <span class="hljs-function"><span class="hljs-keyword">struct</span> page *
-<span class="hljs-title">page_lookup</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *address)</span>
-</span>{
+<span class="hljs-title">page_lookup</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *address)</span> </span>{
   <span class="hljs-keyword">struct</span> page p;
   <span class="hljs-keyword">struct</span> hash_elem *e;
 
@@ -950,29 +991,31 @@ and return a page based on a virtual address, assuming that pages is defined at 
   <span class="hljs-keyword">return</span> e != <span class="hljs-literal">NULL</span> ? hash_entry (e, <span class="hljs-keyword">struct</span> page, hash_elem) : <span class="hljs-literal">NULL</span>;
 }
 </code></pre>
-<p><code>struct page</code> is allocated as a local variable here on the assumption that it is fairly small.
-Large structures should not be allocated as local variables. See Section A.2.1 [struct thread], for more information.</p>
+<p><code>struct page</code> is allocated as a local variable here on the assumption that it is
+fairly small. Large structures should not be allocated as local variables.</p>
 <p>A similar function could delete a page by address using <code>hash_delete()</code>.</p>
 <h2 id="auxiliary-data">Auxiliary Data</h2>
-<p>In simple cases like the example above, there&#x2019;s no need for the aux parameters. In these
-cases, just pass a null pointer to <code>hash_init()</code> for aux and ignore the values passed to the
-hash function and comparison functions. (You&#x2019;ll get a compiler warning if you don&#x2019;t use the
-aux parameter, but you can turn that off with the <code>UNUSED</code> macro, as shown in the example,
-or you can just ignore it.)</p>
-<p><strong><em>aux</em></strong> is useful when you have some property of the data in the hash table is both constant
-and needed for hashing or comparison, but not stored in the data items themselves. For
-example, if the items in a hash table are fixed-length strings, but the items themselves don&#x2019;t
-indicate what that fixed length is, you could pass the length as an aux parameter.</p>
+<p>In simple cases like the example above, there&apos;s no need for the aux parameters.
+In these cases, just pass a null pointer to <code>hash_init()</code> for aux and ignore the
+values passed to the hash function and comparison functions. (You&apos;ll get a
+compiler warning if you don&apos;t use the aux parameter, but you can turn that off
+with the <code>UNUSED</code> macro, as shown in the example, or you can just ignore it.)</p>
+<p><strong><em>aux</em></strong> is useful when you have some property of the data in the hash table is
+both constant and needed for hashing or comparison, but not stored in the data
+items themselves. For example, if the items in a hash table are fixed-length
+strings, but the items themselves don&apos;t indicate what that fixed length is, you
+could pass the length as an aux parameter.</p>
 <h2 id="synchronization">Synchronization</h2>
-<p>The hash table does not do any internal synchronization. It is the caller&#x2019;s responsibility to
-synchronize calls to hash table functions. In general, any number of functions that examine
-but do not modify the hash table, such as <code>hash_find()</code> or <code>hash_next()</code>, may execute
-simultaneously. However, these function cannot safely execute at the same time as any
-function that may modify a given hash table, such as <code>hash_insert()</code> or <code>hash_delete()</code>,
-nor may more than one function that can modify a given hash table execute safely at once.</p>
-<p>It is also the caller&#x2019;s responsibility to synchronize access to data in hash table elements.
-How to synchronize access to this data depends on how it is designed and organized, as
-with any other data structure.</p>
+<p>The hash table does not do any internal synchronization. It is the caller&apos;s
+responsibility to synchronize calls to hash table functions. In general, any
+number of functions that examine but do not modify the hash table, such as
+<code>hash_find()</code> or <code>hash_next()</code>, may execute simultaneously. However, these
+function cannot safely execute at the same time as any function that may modify
+a given hash table, such as <code>hash_insert()</code> or <code>hash_delete()</code>, nor may more
+than one function that can modify a given hash table execute safely at once.</p>
+<p>It is also the caller&apos;s responsibility to synchronize access to data in hash
+table elements. How to synchronize access to this data depends on how it is
+designed and organized, as with any other data structure.</p>
 
                                 
                                 </section>
@@ -1012,7 +1055,7 @@ with any other data structure.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Hash Table","level":"6.7","depth":1,"previous":{"title":"Development Tools","level":"6.6","depth":1,"path":"appendix/development_tools.md","ref":"appendix/development_tools.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/hash_table.md","mtime":"2020-03-30T13:22:26.869Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-03-30T13:24:36.308Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Hash Table","level":"6.7","depth":1,"previous":{"title":"Development Tools","level":"6.6","depth":1,"path":"appendix/development_tools.md","ref":"appendix/development_tools.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/hash_table.md","mtime":"2020-04-02T13:14:29.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:14:43.835Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

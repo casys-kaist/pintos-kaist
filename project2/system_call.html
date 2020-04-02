@@ -1,0 +1,1005 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>System Calls · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="process_termination.html" />
+    
+    
+    <link rel="prev" href="user_memory.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Introduction</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../introduction/getting_started.html">
+            
+                <a href="../introduction/getting_started.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../introduction/grading.html">
+            
+                <a href="../introduction/grading.html">
+            
+                    
+                    Grading
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../introduction/legal_and_ethical_issues.html">
+            
+                <a href="../introduction/legal_and_ethical_issues.html">
+            
+                    
+                    Legal and Ethical Issues
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project1: Threads</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../project1/introduction.html">
+            
+                <a href="../project1/introduction.html">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../project1/alarm_clock.html">
+            
+                <a href="../project1/alarm_clock.html">
+            
+                    
+                    Alarm Clock
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../project1/priority_scheduling.html">
+            
+                <a href="../project1/priority_scheduling.html">
+            
+                    
+                    Priority Scheduling
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../project1/advanced_scheduler.html">
+            
+                <a href="../project1/advanced_scheduler.html">
+            
+                    
+                    Advanced Scheduler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="../project1/FAQ.html">
+            
+                <a href="../project1/FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project2: User Programs</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="introduction.html">
+            
+                <a href="introduction.html">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="argument_passing.html">
+            
+                <a href="argument_passing.html">
+            
+                    
+                    Argument Passing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="user_memory.html">
+            
+                <a href="user_memory.html">
+            
+                    
+                    User Memory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="3.4" data-path="system_call.html">
+            
+                <a href="system_call.html">
+            
+                    
+                    System Calls
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5" data-path="process_termination.html">
+            
+                <a href="process_termination.html">
+            
+                    
+                    Process Termination Messages
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.6" data-path="deny_write.html">
+            
+                <a href="deny_write.html">
+            
+                    
+                    Denying Writes to Executables
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.7" data-path="dup.html">
+            
+                <a href="dup.html">
+            
+                    
+                    Extend File Descriptor (Extra)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.8" data-path="FAQ.html">
+            
+                <a href="FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project3: Virtual Memory</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="../project3/introduction.md">
+            
+                <span>
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.2" data-path="../project3/paging.md">
+            
+                <span>
+            
+                    
+                    Paging
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3" data-path="../project3/stack_growth.md">
+            
+                <span>
+            
+                    
+                    Stack Growth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4" data-path="../project3/memory_mapped_files.md">
+            
+                <span>
+            
+                    
+                    Memory Mapped Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.5" >
+            
+                <span>
+            
+                    
+                    Inter-Process Memory Sharing
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.6" data-path="../project3/accessing_user_memory.md">
+            
+                <span>
+            
+                    
+                    Accessing User Memory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.7" >
+            
+                <span>
+            
+                    
+                    Copy-on-Write (Extra)
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.8" data-path="../project3/FAQ.md">
+            
+                <span>
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project4: File System</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../project4/introduction.md">
+            
+                <span>
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="../project4/indexed_and_extensible_files.md">
+            
+                <span>
+            
+                    
+                    Indexed and Extensible Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.3" data-path="../project4/subdirectories.md">
+            
+                <span>
+            
+                    
+                    Subdirectories and Soft Links
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4" data-path="../project4/buffer_cache.md">
+            
+                <span>
+            
+                    
+                    Buffer Cache
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5" data-path="../project4/synchronization.md">
+            
+                <span>
+            
+                    
+                    Synchronization
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6" >
+            
+                <span>
+            
+                    
+                    Filesystem Journaling (Extra)
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.7" data-path="../project4/FAQ.md">
+            
+                <span>
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Appendix</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="../appendix/threads.html">
+            
+                <a href="../appendix/threads.html">
+            
+                    
+                    Threads
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="../appendix/synchronization.html">
+            
+                <a href="../appendix/synchronization.html">
+            
+                    
+                    Synchronization
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="../appendix/memory_allocation.html">
+            
+                <a href="../appendix/memory_allocation.html">
+            
+                    
+                    Memory Allocation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4" data-path="../appendix/virtual_address.html">
+            
+                <a href="../appendix/virtual_address.html">
+            
+                    
+                    Virtual Address
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.5" data-path="../appendix/debugging_tools.html">
+            
+                <a href="../appendix/debugging_tools.html">
+            
+                    
+                    Debugging Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.6" data-path="../appendix/development_tools.html">
+            
+                <a href="../appendix/development_tools.html">
+            
+                    
+                    Development Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.7" data-path="../appendix/hash_table.html">
+            
+                <a href="../appendix/hash_table.html">
+            
+                    
+                    Hash Table
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >System Calls</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h3 id="system-calls">System Calls</h3>
+<p><strong>Implement system call infrastructure.</strong></p>
+<p>Implement the system call handler in <code>userprog/syscall.c</code>. The skeleton
+implementation we provide &quot;handles&quot; system calls by terminating the process. It
+will need to retrieve the system call number, then any system call arguments,
+and carry out appropriate actions.</p>
+<h4 id="system-call-details">System Call Details</h4>
+<p>The first project already dealt with one way that the operating system can
+regain control from a user program: interrupts from timers and I/O devices.
+These are &quot;external&quot; interrupts, because they are caused by entities outside
+the CPU.</p>
+<p>The operating system also deals with software exceptions, which are events that
+occur in program code. These can be errors such as a page fault or division by
+zero. Exceptions are also the means by which a user program can request services
+(&quot;system calls&quot;) from the operating system.</p>
+<p>In traditional x86 architecture, the system call was handled as same as other
+software exceptions. However, in x86-64, manufacturers introduce special
+instruction for the system calls, <code>syscall</code>. This provides fast way to call the
+system call handler.</p>
+<p>Nowaday, the <code>syscall</code> instruction is the most commonly used means for invoking
+system calls in x86-64. In Pintos, user programs invoke <code>syscall</code> to make a
+system call. The system call number and any additional arguments are expected to
+be set to the registers in the normal fashion before invoking the <code>syscall</code>
+instruction except two points:</p>
+<ul>
+<li><code>%rax</code> is the system call number.</li>
+<li>The fourth argument is <code>%r10</code>, not <code>%rcx</code>.</li>
+</ul>
+<p>Thus, when the system call handler <code>syscall_handler()</code> gets control, the system
+call number is in the rax, and arguments are passed with the order %rdi, %rsi,
+%rdx, %r10, %r8, and %r9.</p>
+<p>The caller&apos;s registers are accessible to <code>struct intr_frame</code> passed to it.
+(<code>struct intr_frame</code> is on the kernel stack.)</p>
+<p>The x86-64 convention for function return values is to place them in the RAX
+register. System calls that return a value can do so by modifying the <code>rax</code>
+member of <code>struct intr_frame</code>.</p>
+<h4 id="implement-the-following-system-calls">Implement the following system calls.</h4>
+<p>The prototypes listed are those seen by a user program that includes
+<code>include/lib/user/syscall.h</code> (This header, and all others in <code>include/lib/user</code>,
+are for use by user programs only). System call numbers for each system call are
+defined in <code>include/lib/syscall-nr.h</code>:</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">halt</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Terminates Pintos by calling <code>power_off()</code> (declared in
+<code>src/include/threads/init.h</code>). This should be seldom used, because you lose
+some information about possible deadlock situations, etc.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">exit</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> status)</span></span>;
+</code></pre>
+<blockquote>
+<p>Terminates the current user program, returning <code>status</code> to the kernel. If the
+process&apos;s parent <code>wait</code>s for it (see below), this is the status that will be
+returned. Conventionally, a <code>status</code> of <code>0</code> indicates success and nonzero
+values indicate errors.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-keyword">pid_t</span> fork (<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *thread_name);
+</code></pre>
+<blockquote>
+<p>Create new process which is the clone of current process with the name
+THREAD_NAME. You don&apos;t need to clone the value of the registers except <code>%RBX</code>,
+<code>%RBP</code>, and <code>%R12</code> - <code>%R15</code>, which are callee-saved registers.
+Must return pid of the child process, otherwise shouldn&apos;t be a valid pid. In
+child process, the return value should be <code>0</code>. The child
+should have <strong>DUPLICATED</strong> resources including file descriptor and virtual
+memory space. Parent process should never return from the fork until it knows
+whether the child process successfully cloned. That is, if the child process
+fail to duplicate the resource, the fork () call of parent should return the
+TID_ERROR.</p>
+<p>The template utilizes the <code>pml4_for_each()</code> in <code>threads/mmu.c</code> to
+copy entire user memory space, including corresponding pagetable structures,
+but you need to fill missing parts of passed <code>pte_for_each_func</code>
+(See <a href="../appendix/virtual_address.html">virtual address</a>).</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">exec</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *cmd_line)</span></span>;
+</code></pre>
+<blockquote>
+<p>Change current process to the executable whose name is given in <code>cmd_line</code>,
+passing any given arguments. This never returns if successful. Otherwise the
+process <em>terminates</em> with exit state <code>-1</code>, if the program cannot load or run
+for any reason. This function does not change the name of the thread that
+called <code>exec</code>. Please note that file descriptors remain open across an <code>exec</code>
+call.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">wait</span> <span class="hljs-params">(pid_t pid)</span></span>;
+</code></pre>
+<blockquote>
+<p>Waits for a child process <code>pid</code> and retrieves the child&apos;s exit status. If
+<code>pid</code> is still alive, waits until it terminates. Then, returns the status that
+<code>pid</code> passed to exit. If <code>pid</code> did not call <code>exit()</code>, but was terminated by the
+kernel (e.g. killed due to an exception), <code>wait(pid)</code> must return <code>-1</code>. It is
+perfectly legal for a parent process to wait for child processes that have
+already terminated by the time the parent calls wait, but the kernel must
+still allow the parent to retrieve its child&#x2019;s exit status, or learn that the
+child was terminated by the kernel.</p>
+<p><code>wait</code> must fail and return <code>-1</code> immediately if any of the following
+conditions is true:</p>
+<ul>
+<li><code>pid</code> does not refer to a direct child of the calling process. <code>pid</code> is a
+direct child of the calling process if and only if the calling process
+received <code>pid</code> as a return value from a successful call to <code>exec</code>.
+Note that children are not inherited: if A spawns child B and B spawns child
+process C, then A cannot wait for C, even if B is dead. A call to <code>wait(C)</code> by
+process A must fail. Similarly, orphaned processes are not assigned to a new
+parent if their parent process exits before they do.</li>
+<li>The process that calls <code>wait</code> has already called <code>wait</code> on <code>pid</code>. That is, a
+process may <code>wait</code> for any given child at most once.</li>
+</ul>
+</blockquote>
+<p>Processes may spawn any number of children, <code>wait</code> for them in any order, and
+may even exit without having waited for some or all of their children. Your
+design should consider all the ways in which waits can occur. All of a
+process&apos;s resources, including its <code>struct thread</code>, must be freed whether its
+parent ever waits for it or not, and regardless of whether the child exits
+before or after its parent.</p>
+<p><strong>You must ensure that Pintos does not terminate until the initial process exits</strong>.
+The supplied Pintos code tries to do this by calling <code>process_wait()</code> (in
+<code>userprog/process.c</code>) from <code>main()</code> (in <code>threads/init.c</code>). We suggest that you
+implement <code>process_wait()</code> according to the comment at the top of the function
+and then implement the wait system call in terms of <code>process_wait()</code>.</p>
+<p>Implementing this system call requires considerably more work than any of the
+rest.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">create</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *file, <span class="hljs-keyword">unsigned</span> initial_size)</span></span>;
+</code></pre>
+<blockquote>
+<p>Creates a new file called <code>file</code> initially <code>initial_size</code> bytes in size.
+Returns true if successful, false otherwise. Creating a new file does not open
+it: opening the new file is a separate operation which would require a <code>open</code>
+system call.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">remove</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *file)</span></span>;
+</code></pre>
+<blockquote>
+<p>Deletes the file called <code>file</code>. Returns true if successful, false otherwise. A
+file may be removed regardless of whether it is open or closed, and removing
+an open file does not close it. See Removing an Open File in <a href="FAQ.html">FAQ</a>
+for details.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">open</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *file)</span></span>;
+</code></pre>
+<blockquote>
+<p>Opens the file called <code>file</code>. Returns a nonnegative integer handle called a
+&quot;file descriptor&quot; (fd), or <code>-1</code> if the file could not be opened.
+File descriptors numbered 0 and 1 are reserved for the console: fd 0
+(<code>STDIN_FILENO</code>) is standard input, fd 1 (<code>STDOUT_FILENO</code>) is standard output.
+The <code>open</code> system call will never return either of these file descriptors,
+which are valid as system call arguments only as explicitly described below.
+Each process has an independent set of file descriptors. File descriptors are
+inherited by child processes. When a single file is opened more than once,
+whether by a single process or different processes, each open returns a new
+file descriptor. Different file descriptors for a single file are closed
+independently in separate calls to close and they do not share a file
+position. <strong>You should follow the linux scheme, which returns integer starting
+from zero, to do the extra.</strong></p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">filesize</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> fd)</span></span>;
+</code></pre>
+<blockquote>
+<p>Returns the size, in bytes, of the file open as <code>fd</code>.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">read</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> fd, <span class="hljs-keyword">void</span> *buffer, <span class="hljs-keyword">unsigned</span> size)</span></span>;
+</code></pre>
+<blockquote>
+<p>Reads <code>size</code> bytes from the file open as <code>fd</code> into <code>buffer</code>. Returns the
+number of bytes actually read (<code>0</code> at end of file), or <code>-1</code> if the file could
+not be read (due to a condition other than end of file). <code>fd</code> 0 reads from the
+keyboard using <code>input_getc()</code>.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">write</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> fd, <span class="hljs-keyword">const</span> <span class="hljs-keyword">void</span> *buffer, <span class="hljs-keyword">unsigned</span> size)</span></span>;
+</code></pre>
+<blockquote>
+<p>Writes <code>size</code> bytes from <code>buffer</code> to the open file <code>fd</code>. Returns the number of
+bytes actually written, which may be less than <code>size</code> if some bytes could not
+be written. Writing past end-of-file would normally extend the file, but file
+growth is not implemented by the basic file system. The expected behavior is
+to write as many bytes as possible up to end-of-file and return the actual
+number written, or <code>0</code> if no bytes could be written at all. <code>fd</code> 1 writes to
+the console. Your code to write to the console should write all of buffer in
+one call to <code>putbuf()</code>, at least as long as size is not bigger than a few
+hundred bytes (It is reasonable to break up larger buffers). Otherwise, lines
+of text output by different processes may end up interleaved on the console,
+confusing both human readers and our grading scripts.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">seek</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> fd, <span class="hljs-keyword">unsigned</span> position)</span></span>;
+</code></pre>
+<blockquote>
+<p>Changes the next byte to be read or written in open file <code>fd</code> to <code>position</code>,
+expressed in bytes from the beginning of the file (Thus, a <code>position</code> of <code>0</code>
+is the file&apos;s start). A seek past the current end of a file is not an error. A
+later <code>read</code> obtains 0 bytes, indicating end of file. A later <code>write</code> extends
+the file, filling any unwritten gap with zeros. (However, in Pintos files have
+a fixed length until project 4 is complete, so <code>write</code>s past end of file will
+return an error.) These semantics are implemented in the file system and do
+not require any special effort in system call implementation.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">unsigned</span> <span class="hljs-title">tell</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> fd)</span></span>;
+</code></pre>
+<blockquote>
+<p>Returns the position of the next byte to be read or written in open file <code>fd</code>,
+expressed in bytes from the beginning of the file.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">close</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> fd)</span></span>;
+</code></pre>
+<blockquote>
+<p>Closes file descriptor <code>fd</code>. Exiting or terminating a process implicitly
+closes all its open file descriptors, as if by calling this function for each
+one.</p>
+</blockquote>
+<p>The file defines other syscalls. Ignore them for now. You will implement some of
+them in project 3 and the rest in project 4, so be sure to design your system
+with extensibility in mind.</p>
+<p>You must synchronize system calls so that any number of user processes can make
+them at once. In particular, it is not safe to call into the file system code
+provided in the <code>filesys</code> directory from multiple threads at once. Your system
+call implementation must treat the file system code as a critical section.
+Don&apos;t forget that <code>process_exec()</code> also accesses files. For now, we recommend
+against modifying code in the <code>filesys</code> directory.</p>
+<p>We have provided you a user-level function for each system call in
+<code>lib/user/syscall.c</code>. These provide a way for user processes to invoke each
+system call from a C program. Each uses a little inline assembly code to invoke
+the system call and (if appropriate) returns the system call&apos;s return value.</p>
+<p>When you&apos;re done with this part, and forevermore, Pintos should be bulletproof.
+Nothing that a user program can do should ever cause the OS to crash, panic,
+fail an assertion, or otherwise malfunction. It is important to emphasize this
+point: our tests will try to break your system calls in many, many ways. You
+need to think of all the corner cases and handle them. The sole way a user
+program should be able to cause the OS to halt is by invoking the halt system
+call.</p>
+<p>If a system call is passed an invalid argument, acceptable options include
+returning an error value (for those calls that return a value), returning an
+undefined value, or terminating the process.</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="user_memory.html" class="navigation navigation-prev " aria-label="Previous page: User Memory">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="process_termination.html" class="navigation navigation-next " aria-label="Next page: Process Termination Messages">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"System Calls","level":"3.4","depth":1,"next":{"title":"Process Termination Messages","level":"3.5","depth":1,"path":"project2/process_termination.md","ref":"project2/process_termination.md","articles":[]},"previous":{"title":"User Memory","level":"3.3","depth":1,"path":"project2/user_memory.md","ref":"project2/user_memory.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project2/system_call.md","mtime":"2020-04-02T13:14:29.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:14:43.835Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

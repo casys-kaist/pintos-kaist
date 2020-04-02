@@ -390,7 +390,7 @@
                 <span>
             
                     
-                    Inter-Process Memory Sharing
+                    Inter-Process Communication (IPC)
             
                 </span>
             
@@ -714,10 +714,14 @@ so we had to require certain specific function interfaces within the kernel.
 From now on, we will test your operating system by running user programs. This
 gives you much greater freedom. You must make sure that the user program
 interface meets the specifications described here, but given that constraint you
-are free to restructure or rewrite kernel code however you wish.</p>
+are free to restructure or rewrite kernel code however you wish. All of your
+codes should never located in block that enclosed by <code>#ifdef VM</code>. This blocks
+will be included after enabling the virtual memory subsystem, which you will
+implement in the project 3. Also, if the codes is enclosed by <code>#ifndef VM</code>,
+those codes will be omitted from project3.</p>
 <p><strong>We strongly recommend you to read
 <a href="../appendix/synchronization.html">synchronization</a> and <a href="../appendix/virtual_address.html">virtual
-addrees</a> before you start.</strong></p>
+address</a> before you start.</strong></p>
 <h3 id="source-files">Source Files</h3>
 <p>The easiest way to get an overview of the programming you will be doing is to
 simply go over each part you&apos;ll be working with. In <code>userprog</code>, you&apos;ll find a
@@ -1020,7 +1024,7 @@ value into <code>%rip</code>.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"3.1","depth":1,"next":{"title":"Argument Passing","level":"3.2","depth":1,"path":"project2/argument_passing.md","ref":"project2/argument_passing.md","articles":[]},"previous":{"title":"FAQ","level":"2.5","depth":1,"path":"project1/FAQ.md","ref":"project1/FAQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project2/introduction.md","mtime":"2020-04-02T13:14:29.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:14:43.835Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"3.1","depth":1,"next":{"title":"Argument Passing","level":"3.2","depth":1,"path":"project2/argument_passing.md","ref":"project2/argument_passing.md","articles":[]},"previous":{"title":"FAQ","level":"2.5","depth":1,"path":"project1/FAQ.md","ref":"project1/FAQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project2/introduction.md","mtime":"2020-04-02T13:24:29.265Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:24:41.536Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

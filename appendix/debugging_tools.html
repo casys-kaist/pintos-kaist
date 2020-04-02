@@ -390,7 +390,7 @@
                 <span>
             
                     
-                    Inter-Process Memory Sharing
+                    Inter-Process Communication (IPC)
             
                 </span>
             
@@ -706,7 +706,7 @@ assertions throughout the body of functions in places where you suspect things
 are likely to go wrong. They are especially useful for checking loop invariants.</p>
 <p>Pintos provides the <code>ASSERT</code> macro, defined in <code>&lt;debug.h&gt;</code>, for checking
 assertions.</p>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ASSERT(expression) { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ASSERT(expression) { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <p>Tests the value of expression. If it evaluates to zero (false), the kernel
 panics. The panic message includes the expression that failed, its file and
@@ -716,7 +716,7 @@ line number, and a backtrace, which should help you to find the problem. See
 <p>These macros defined in <code>&lt;debug.h&gt;</code> tell the compiler special attributes of a
 function or function parameter. Their expansions are GCC-specific.</p>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> UNUSED { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> UNUSED { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Appended to a function parameter to tell the compiler that the parameter might
@@ -724,7 +724,7 @@ not be used within the function. It suppresses the warning that would
 otherwise appear.</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> NO_RETURN { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> NO_RETURN { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Appended to a function prototype to tell the compiler that the function never
@@ -732,7 +732,7 @@ returns. It allows the compiler to fine-tune its warnings and its code
 generation.</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> NO_INLINE { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> NO_INLINE { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Appended to a function prototype to tell the compiler to never emit the
@@ -740,7 +740,7 @@ function in-line. Occasionally useful to improve the quality of backtraces
 (see below).</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PRINTF_FORMAT(format, first) { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PRINTF_FORMAT(format, first) { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Appended to a function prototype to tell the compiler that the function takes
@@ -988,7 +988,7 @@ sector number for disks smaller than about 1.6 TB.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Debugging Tools","level":"6.5","depth":1,"next":{"title":"Development Tools","level":"6.6","depth":1,"path":"appendix/development_tools.md","ref":"appendix/development_tools.md","articles":[]},"previous":{"title":"Virtual Address","level":"6.4","depth":1,"path":"appendix/virtual_address.md","ref":"appendix/virtual_address.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/debugging_tools.md","mtime":"2020-04-02T13:14:29.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:14:43.835Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Debugging Tools","level":"6.5","depth":1,"next":{"title":"Development Tools","level":"6.6","depth":1,"path":"appendix/development_tools.md","ref":"appendix/development_tools.md","articles":[]},"previous":{"title":"Virtual Address","level":"6.4","depth":1,"path":"appendix/virtual_address.md","ref":"appendix/virtual_address.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/debugging_tools.md","mtime":"2020-04-02T13:24:29.265Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:24:41.536Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

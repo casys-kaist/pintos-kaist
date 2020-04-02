@@ -390,7 +390,7 @@
                 <span>
             
                     
-                    Inter-Process Memory Sharing
+                    Inter-Process Communication (IPC)
             
                 </span>
             
@@ -691,47 +691,47 @@
 </code></pre><p>Header <code>include/threads/vaddr.h</code>, and <code>include/threads/mmu.h</code> define these
 functions and macros for working with virtual addresses:</p>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PGSHIFT { <span class="hljs-comment">/* Emit details */</span> }</span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PGBITS { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PGSHIFT { <span class="hljs-comment">/* Omit details */</span> }</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PGBITS { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>The bit index (0) and number of bits (12) of the offset part of a virtual
 address, respectively.</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PGMASK { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PGMASK { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>A bit mask with the bits in the page offset set to 1, the rest set to 0
 (0xfff).</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PGSIZE { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> PGSIZE { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>The page size in bytes (4,096).</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pg_ofs(va) { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pg_ofs(va) { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Extracts and returns the page offset in virtual address va.</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pg_no(va) { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pg_no(va) { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Extracts and returns the page number in virtual address va.</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pg_round_down(va) { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pg_round_down(va) { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Returns the start of the virtual page that va points within, that is, va
 with the page offset set to 0.</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pg_round_up(va) { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> pg_round_up(va) { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Returns va rounded up to the nearest page boundary.</p>
@@ -740,7 +740,7 @@ with the page offset set to 0.</p>
 kernel virtual memory (see <a href="../project2/introduction">Virtual Memory Layout</a>).</p>
 <p>The boundary between them is <code>KERN_BASE</code>:</p>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> KERN_BASE { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> KERN_BASE { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Base address of kernel virtual memory. It defaults to 0x8004000000.
@@ -748,8 +748,8 @@ User virtual memory ranges from virtual address 0 up to <code>KERN_BASE</code>.
 Kernel virtual memory occupies the rest of the virtual address space.</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_user_vaddr(vaddr) { <span class="hljs-comment">/* Emit details */</span> }</span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_kernel_vaddr(vaddr) { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_user_vaddr(vaddr) { <span class="hljs-comment">/* Omit details */</span> }</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_kernel_vaddr(vaddr) { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Returns true if va is a user or kernel virtual address, respectively, false
@@ -769,14 +769,14 @@ address.</p>
 <p>Header <code>include/threads/vaddr.h</code> provides a pair of functions to do these
 translations:</p>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ptov(paddr) { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> ptov(paddr) { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Returns the kernel virtual address corresponding to physical address pa, which
 should be between 0 and the number of bytes of physical memory.</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> vtop(vaddr) { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> vtop(vaddr) { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Returns the physical address corresponding to va, which must be a kernel
@@ -784,15 +784,15 @@ virtual address.</p>
 </blockquote>
 <p>Header <code>include/threads/mmu.h</code> provides operations on page table:</p>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_user_pte(pte) { <span class="hljs-comment">/* Emit details */</span> }</span>
-<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_kern_pte(pte) { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_user_pte(pte) { <span class="hljs-comment">/* Omit details */</span> }</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_kern_pte(pte) { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Query whether the page table entry (PTE) is owned by user or kernel,
 respectively.</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_writable(pte) { <span class="hljs-comment">/* Emit details */</span> }</span>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> is_writable(pte) { <span class="hljs-comment">/* Omit details */</span> }</span>
 </code></pre>
 <blockquote>
 <p>Query whether virtual address pointed by the page table entry (PTE) is
@@ -858,7 +858,7 @@ VA represents the virtual address of the entry.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Virtual Address","level":"6.4","depth":1,"next":{"title":"Debugging Tools","level":"6.5","depth":1,"path":"appendix/debugging_tools.md","ref":"appendix/debugging_tools.md","articles":[]},"previous":{"title":"Memory Allocation","level":"6.3","depth":1,"path":"appendix/memory_allocation.md","ref":"appendix/memory_allocation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/virtual_address.md","mtime":"2020-04-02T13:14:29.341Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:14:43.835Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Virtual Address","level":"6.4","depth":1,"next":{"title":"Debugging Tools","level":"6.5","depth":1,"path":"appendix/debugging_tools.md","ref":"appendix/debugging_tools.md","articles":[]},"previous":{"title":"Memory Allocation","level":"6.3","depth":1,"path":"appendix/memory_allocation.md","ref":"appendix/memory_allocation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"appendix/virtual_address.md","mtime":"2020-04-02T13:24:29.265Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:24:41.536Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -1,0 +1,145 @@
+# -*- makefile -*-
+
+tests/%.output: FSDISK = 10
+tests/%.output: PUTFILES = $(filter-out os.dsk, $^)
+tests/threads/%.output: KERNELFLAGS += -threads-tests
+
+
+tests/userprog_TESTS = $(addprefix tests/userprog/,args-none		\
+args-single args-multiple args-many args-dbl-space halt exit create-normal		\
+create-empty create-null create-bad-ptr create-long create-exists	\
+create-bound open-normal open-missing open-boundary open-empty		\
+open-null open-bad-ptr open-twice close-normal close-twice close-bad-fd				\
+read-normal read-bad-ptr read-boundary \
+read-zero read-stdout read-bad-fd write-normal write-bad-ptr		\
+write-boundary write-zero write-stdin write-bad-fd fork-once fork-multiple	\
+fork-recursive fork-read fork-close fork-boundary exec-once exec-arg \
+exec-boundary exec-missing exec-bad-ptr exec-read wait-simple wait-twice		\
+wait-killed wait-bad-pid multi-recurse multi-child-fd       \
+rox-simple rox-child rox-multichild bad-read bad-write bad-read2 bad-write2  \
+bad-jump bad-jump2)
+
+tests/userprog_PROGS = $(tests/userprog_TESTS) $(addprefix \
+tests/userprog/,child-simple child-args child-bad child-close child-rox child-read)
+
+tests/userprog/args-none_SRC = tests/userprog/args.c
+tests/userprog/args-single_SRC = tests/userprog/args.c
+tests/userprog/args-multiple_SRC = tests/userprog/args.c
+tests/userprog/args-many_SRC = tests/userprog/args.c
+tests/userprog/args-dbl-space_SRC = tests/userprog/args.c
+tests/userprog/bad-read_SRC = tests/userprog/bad-read.c tests/main.c
+tests/userprog/bad-write_SRC = tests/userprog/bad-write.c tests/main.c
+tests/userprog/bad-jump_SRC = tests/userprog/bad-jump.c tests/main.c
+tests/userprog/bad-read2_SRC = tests/userprog/bad-read2.c tests/main.c
+tests/userprog/bad-write2_SRC = tests/userprog/bad-write2.c tests/main.c
+tests/userprog/bad-jump2_SRC = tests/userprog/bad-jump2.c tests/main.c
+tests/userprog/halt_SRC = tests/userprog/halt.c tests/main.c
+tests/userprog/exit_SRC = tests/userprog/exit.c tests/main.c
+tests/userprog/create-normal_SRC = tests/userprog/create-normal.c tests/main.c
+tests/userprog/create-empty_SRC = tests/userprog/create-empty.c tests/main.c
+tests/userprog/create-null_SRC = tests/userprog/create-null.c tests/main.c
+tests/userprog/create-bad-ptr_SRC = tests/userprog/create-bad-ptr.c	\
+tests/main.c
+tests/userprog/create-long_SRC = tests/userprog/create-long.c tests/main.c
+tests/userprog/create-exists_SRC = tests/userprog/create-exists.c tests/main.c
+tests/userprog/create-bound_SRC = tests/userprog/create-bound.c	\
+tests/userprog/boundary.c tests/main.c
+tests/userprog/open-normal_SRC = tests/userprog/open-normal.c tests/main.c
+tests/userprog/open-missing_SRC = tests/userprog/open-missing.c tests/main.c
+tests/userprog/open-boundary_SRC = tests/userprog/open-boundary.c	\
+tests/userprog/boundary.c tests/main.c
+tests/userprog/open-empty_SRC = tests/userprog/open-empty.c tests/main.c
+tests/userprog/open-null_SRC = tests/userprog/open-null.c tests/main.c
+tests/userprog/open-bad-ptr_SRC = tests/userprog/open-bad-ptr.c tests/main.c
+tests/userprog/open-twice_SRC = tests/userprog/open-twice.c tests/main.c
+tests/userprog/close-normal_SRC = tests/userprog/close-normal.c tests/main.c
+tests/userprog/close-twice_SRC = tests/userprog/close-twice.c tests/main.c
+tests/userprog/close-bad-fd_SRC = tests/userprog/close-bad-fd.c tests/main.c
+tests/userprog/read-normal_SRC = tests/userprog/read-normal.c tests/main.c
+tests/userprog/read-bad-ptr_SRC = tests/userprog/read-bad-ptr.c tests/main.c
+tests/userprog/read-boundary_SRC = tests/userprog/read-boundary.c	\
+tests/userprog/boundary.c tests/main.c
+tests/userprog/read-zero_SRC = tests/userprog/read-zero.c tests/main.c
+tests/userprog/read-stdout_SRC = tests/userprog/read-stdout.c tests/main.c
+tests/userprog/read-bad-fd_SRC = tests/userprog/read-bad-fd.c tests/main.c
+tests/userprog/write-normal_SRC = tests/userprog/write-normal.c tests/main.c
+tests/userprog/write-bad-ptr_SRC = tests/userprog/write-bad-ptr.c tests/main.c
+tests/userprog/write-boundary_SRC = tests/userprog/write-boundary.c	\
+tests/userprog/boundary.c tests/main.c
+tests/userprog/write-zero_SRC = tests/userprog/write-zero.c tests/main.c
+tests/userprog/write-stdin_SRC = tests/userprog/write-stdin.c tests/main.c
+tests/userprog/write-bad-fd_SRC = tests/userprog/write-bad-fd.c tests/main.c
+tests/userprog/exec-once_SRC = tests/userprog/exec-once.c tests/main.c
+tests/userprog/fork-read_SRC = tests/userprog/fork-read.c 	\
+tests/userprog/boundary.c tests/main.c
+tests/userprog/fork-close_SRC = tests/userprog/fork-close.c 	\
+tests/userprog/boundary.c tests/main.c
+tests/userprog/fork-boundary_SRC = tests/userprog/fork-boundary.c	\
+tests/userprog/boundary.c tests/main.c
+tests/userprog/fork-once_SRC = tests/userprog/fork-once.c tests/main.c
+tests/userprog/fork-recursive_SRC = tests/userprog/fork-recursive.c tests/main.c
+tests/userprog/exec-arg_SRC = tests/userprog/exec-arg.c tests/main.c
+tests/userprog/exec-boundary_SRC = tests/userprog/exec-boundary.c	\
+tests/userprog/boundary.c tests/main.c
+tests/userprog/fork-multiple_SRC = tests/userprog/fork-multiple.c tests/main.c
+tests/userprog/exec-missing_SRC = tests/userprog/exec-missing.c tests/main.c
+tests/userprog/exec-bad-ptr_SRC = tests/userprog/exec-bad-ptr.c tests/main.c
+tests/userprog/exec-read_SRC = tests/userprog/exec-read.c 	\
+tests/userprog/boundary.c tests/main.c
+tests/userprog/wait-simple_SRC = tests/userprog/wait-simple.c tests/main.c
+tests/userprog/wait-twice_SRC = tests/userprog/wait-twice.c tests/main.c
+tests/userprog/wait-killed_SRC = tests/userprog/wait-killed.c tests/main.c
+tests/userprog/wait-bad-pid_SRC = tests/userprog/wait-bad-pid.c tests/main.c
+tests/userprog/multi-recurse_SRC = tests/userprog/multi-recurse.c
+tests/userprog/multi-child-fd_SRC = tests/userprog/multi-child-fd.c	\
+tests/main.c
+tests/userprog/rox-simple_SRC = tests/userprog/rox-simple.c tests/main.c
+tests/userprog/rox-child_SRC = tests/userprog/rox-child.c tests/main.c
+tests/userprog/rox-multichild_SRC = tests/userprog/rox-multichild.c	\
+tests/main.c
+
+tests/userprog/child-simple_SRC = tests/userprog/child-simple.c
+tests/userprog/child-args_SRC = tests/userprog/args.c
+tests/userprog/child-bad_SRC = tests/userprog/child-bad.c tests/main.c
+tests/userprog/child-close_SRC = tests/userprog/child-close.c
+tests/userprog/child-rox_SRC = tests/userprog/child-rox.c
+tests/userprog/child-read_SRC = tests/userprog/child-read.c \
+tests/userprog/boundary.c
+
+$(foreach prog,$(tests/userprog_PROGS),$(eval $(prog)_SRC += tests/lib.c))
+
+tests/userprog/args-single_ARGS = onearg
+tests/userprog/args-multiple_ARGS = some arguments for you!
+tests/userprog/args-many_ARGS = a b c d e f g h i j k l m n o p q r s t u v
+tests/userprog/args-dbl-space_ARGS = two  spaces!
+tests/userprog/multi-recurse_ARGS = 15
+
+tests/userprog/open-normal_PUTFILES += tests/userprog/sample.txt
+tests/userprog/open-boundary_PUTFILES += tests/userprog/sample.txt
+tests/userprog/open-twice_PUTFILES += tests/userprog/sample.txt
+tests/userprog/close-normal_PUTFILES += tests/userprog/sample.txt
+tests/userprog/close-twice_PUTFILES += tests/userprog/sample.txt
+tests/userprog/read-normal_PUTFILES += tests/userprog/sample.txt
+tests/userprog/read-bad-ptr_PUTFILES += tests/userprog/sample.txt
+tests/userprog/read-boundary_PUTFILES += tests/userprog/sample.txt
+tests/userprog/read-zero_PUTFILES += tests/userprog/sample.txt
+tests/userprog/write-normal_PUTFILES += tests/userprog/sample.txt
+tests/userprog/write-bad-ptr_PUTFILES += tests/userprog/sample.txt
+tests/userprog/fork-read_PUTFILES += tests/userprog/sample.txt
+tests/userprog/fork-close_PUTFILES += tests/userprog/sample.txt
+tests/userprog/exec-read_PUTFILES += tests/userprog/sample.txt
+tests/userprog/write-boundary_PUTFILES += tests/userprog/sample.txt
+tests/userprog/write-zero_PUTFILES += tests/userprog/sample.txt
+tests/userprog/multi-child-fd_PUTFILES += tests/userprog/sample.txt
+
+tests/userprog/exec-boundary_PUTFILES += tests/userprog/child-simple
+tests/userprog/exec-once_PUTFILES += tests/userprog/child-simple
+tests/userprog/wait-simple_PUTFILES += tests/userprog/child-simple
+tests/userprog/wait-twice_PUTFILES += tests/userprog/child-simple
+
+tests/userprog/exec-arg_PUTFILES += tests/userprog/child-args
+tests/userprog/multi-child-fd_PUTFILES += tests/userprog/child-close
+tests/userprog/wait-killed_PUTFILES += tests/userprog/child-bad
+tests/userprog/rox-child_PUTFILES += tests/userprog/child-rox
+tests/userprog/rox-multichild_PUTFILES += tests/userprog/child-rox
+tests/userprog/exec-read_PUTFILES += tests/userprog/child-read

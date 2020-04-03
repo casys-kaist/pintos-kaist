@@ -35,6 +35,18 @@ file_reopen (struct file *file) {
 	return file_open (inode_reopen (file->inode));
 }
 
+/* Duplicate the file object including attributes and returns a new file for the
+ * same inode as FILE. Returns a null pointer if unsuccessful. */
+struct file *
+file_duplicate (struct file *file) {
+	struct file *nfile = file_open (inode_reopen (file->inode));
+	if (nfile) {
+		nfile->pos = file->pos;
+		nfile->deny_write = file->deny_write;
+	}
+	return nfile;
+}
+
 /* Closes FILE. */
 void
 file_close (struct file *file) {

@@ -1,7 +1,8 @@
 # -*- makefile -*-
+include ../Make.vars
 
 $(PROGS): CPPFLAGS += -I$(SRCDIR)/include/lib/user -I.
-$(PROGS): CFLAGS := -fno-stack-protector
+$(PROGS): CFLAGS += $(TDEFINE) -fno-stack-protector -Wno-builtin-declaration-mismatch
 
 # Linker flags.
 $(PROGS): LDFLAGS = -nostdlib -static -Wl,-T,$(LDSCRIPT)

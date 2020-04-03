@@ -1,11 +1,11 @@
-BUILD_SUBDIRS = threads filesys
+BUILD_SUBDIRS = threads userprog filesys
 TAR_PATH := team${TEAM}.tar.gz
 
 all::
 	@echo "Run 'make' in subdirectories: $(BUILD_SUBDIRS)."
 	@echo "This top-level make has only 'clean' targets."
 
-CLEAN_SUBDIRS = $(BUILD_SUBDIRS) examples
+CLEAN_SUBDIRS = $(BUILD_SUBDIRS)
 
 clean::
 	for d in $(CLEAN_SUBDIRS); do $(MAKE) -C $$d $@; done

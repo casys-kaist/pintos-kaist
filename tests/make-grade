@@ -41,25 +41,25 @@ while (<GRADING>) {
     my ($cnt, $passed) = (0, 0);
     my ($was_score) = 0;
     while (<RUBRIC>) {
-	chomp;
-	push (@rubrics, "\t$_"), next if /^-/;
-	push (@rubrics, ""), next if /^\s*$/;
-	my ($poss, $name) = /^(\d+)\t(.*)$/ or die;
-	my ($test) = "$dir/$name";
-	my ($points) = 0;
-	if (!defined $verdicts{$test}) {
-	    push (@overall, "warning: $test not tested, assuming failure");
-	} elsif ($verdicts{$test}) {
-	    $points = $poss;
-	    $passed++;
-	}
-	push (@failures, $test) if !$points;
-	$verdict_counts{$test}++;
-	push (@rubrics, sprintf ("\t%4s%2d/%2d %s",
-				 $points ? '' : '**', $points, $poss, $test));
-	$score += $points;
-	$possible += $poss;
-	$cnt++;
+			chomp;
+			push (@rubrics, "\t$_"), next if /^-/;
+			push (@rubrics, ""), next if /^\s*$/;
+			my ($poss, $name) = /^(\d+)\t(.*)$/ or die;
+			my ($test) = "$dir/$name";
+			my ($points) = 0;
+			if (!defined $verdicts{$test}) {
+					push (@overall, "warning: $test not tested, assuming failure");
+			} elsif ($verdicts{$test}) {
+					$points = $poss;
+					$passed++;
+			}
+			push (@failures, $test) if !$points;
+			$verdict_counts{$test}++;
+			push (@rubrics, sprintf ("\t%4s%2d/%2d %s",
+						$points ? '' : '**', $points, $poss, $test));
+			$score += $points;
+			$possible += $poss;
+			$cnt++;
     }
     close (RUBRIC);
 

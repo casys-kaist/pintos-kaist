@@ -1,0 +1,18 @@
+# -*- makefile -*-
+
+tests/filesys/base_TESTS = $(addprefix tests/filesys/base/,lg-create	\
+lg-full lg-random lg-seq-block lg-seq-random sm-create sm-full		\
+sm-random sm-seq-block sm-seq-random syn-read syn-remove syn-write)
+
+tests/filesys/base_PROGS = $(tests/filesys/base_TESTS) $(addprefix	\
+tests/filesys/base/,child-syn-read child-syn-wrt)
+
+$(foreach prog,$(tests/filesys/base_PROGS),				\
+	$(eval $(prog)_SRC += $(prog).c tests/lib.c tests/filesys/seq-test.c))
+$(foreach prog,$(tests/filesys/base_TESTS),			\
+	$(eval $(prog)_SRC += tests/main.c))
+
+tests/filesys/base/syn-read_PUTFILES = tests/filesys/base/child-syn-read
+tests/filesys/base/syn-write_PUTFILES = tests/filesys/base/child-syn-wrt
+
+tests/filesys/base/syn-read.output: TIMEOUT = 300

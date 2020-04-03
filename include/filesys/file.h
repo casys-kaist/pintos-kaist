@@ -8,6 +8,7 @@ struct inode;
 /* Opening and closing files. */
 struct file *file_open (struct inode *);
 struct file *file_reopen (struct file *);
+struct file *file_duplicate (struct file *file);
 void file_close (struct file *);
 struct inode *file_get_inode (struct file *);
 

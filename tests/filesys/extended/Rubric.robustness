@@ -1,0 +1,9 @@
+Robustness of file system:
+1	dir-empty-name
+1	dir-open
+1	dir-over-file
+1	dir-under-file
+
+3	dir-rm-cwd
+2	dir-rm-parent
+1	dir-rm-root

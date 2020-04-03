@@ -1,0 +1,22 @@
+# Percentage of the testing point total designated for each set of
+# tests.
+
+# This project is primarily about implementing the file system, but
+# all the previous functionality should work too.  It's not too easy
+# to screw it up, thus the emphasis.
+
+# 65% for extended file system features.
+30%	tests/filesys/extended/Rubric.functionality
+15%	tests/filesys/extended/Rubric.robustness
+20%	tests/filesys/extended/Rubric.persistence
+
+# 20% to not break the provided file system features.
+20%	tests/filesys/base/Rubric
+
+# 15% for the rest.
+10%	tests/userprog/Rubric.functionality
+5%	tests/userprog/Rubric.robustness
+
+# Up to 10% bonus for working VM functionality.
+8%	tests/vm/Rubric.functionality
+2%	tests/vm/Rubric.robustness

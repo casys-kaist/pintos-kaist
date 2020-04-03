@@ -1,0 +1,13 @@
+# -*- makefile -*-
+
+tests/userprog/dup2_TESTS = $(addprefix tests/userprog/dup2/dup2-,complex simple)
+
+tests/userprog/dup2_PROGS = $(tests/userprog/dup2_TESTS)
+
+tests/userprog/dup2/dup2-complex_SRC = tests/userprog/dup2/dup2-complex.c	\
+tests/lib.c tests/userprog/boundary.c
+tests/userprog/dup2/dup2-simple_SRC = tests/userprog/dup2/dup2-simple.c	\
+tests/lib.c tests/userprog/boundary.c
+
+tests/userprog/dup2/dup2-complex_PUTFILES += tests/userprog/dup2/sample.txt
+tests/userprog/dup2/dup2-simple_PUTFILES += tests/userprog/dup2/sample.txt

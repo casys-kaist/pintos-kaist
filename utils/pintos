@@ -24,9 +24,10 @@ def get_temp_dsk_name():
 
 
 class Pintos(object):
-    def __init__(self, no_vga=True, serial=False, args=[], hostfns=[],
-                 gdb=False, fs='fs.dsk', timeout=0):
-        self.mem = 256
+    def __init__(self, ttest=False, mem=256, no_vga=True, serial=False, args=[],
+                 hostfns=[], gdb=False, fs='fs.dsk', timeout=0):
+        self.ttest = ttest
+        self.mem = mem
         self.no_vga = no_vga
         self.args = args
         self.gdb = gdb
@@ -146,6 +147,9 @@ if __name__ == '__main__':
                         'panic, test failure, or triple fault (deprecated)')
     parser.add_argument('-T', '--timeout', type=int, default=0,
                         help='Kill Pintos after N seconds CPU time')
+
+    parser.add_argument('-m', '--memory', type=int, default=256,
+                        help='memory capacity')
     parser.add_argument('--fs-disk', default='fs.dsk',
                         help='Set FS disk file or size')
     parser.add_argument('-p', '--put-file', dest='HOSTFNS', nargs=1,
@@ -157,6 +161,8 @@ if __name__ == '__main__':
                              'by default under same name')
     parser.add_argument('--gdb', action='store_true', default=False,
                         help='Debug with gdb')
+    parser.add_argument('-t', '--threads-tests', action='store_true', default=False,
+                        help='Run proj1 test cases with USERPROG flag')
 
     if '--' in sys.argv:
         pintos_arg_index = sys.argv.index('--')
@@ -167,6 +173,6 @@ if __name__ == '__main__':
         kern_args = []
 
     args = parser.parse_args(util_args)
-    Pintos(no_vga=args.no_vga, args=kern_args, timeout=args.timeout,
-           fs=args.fs_disk, gdb=args.gdb,
+    Pintos(ttest=args.threads_tests, mem=args.memory, no_vga=args.no_vga,
+           args=kern_args, timeout=args.timeout, fs=args.fs_disk, gdb=args.gdb,
            hostfns=[f[0].split(':') for f in args.HOSTFNS]).run()

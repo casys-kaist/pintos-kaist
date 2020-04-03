@@ -1,0 +1,24 @@
+Persistence of file system:
+1	dir-empty-name-persistence
+1	dir-mk-tree-persistence
+1	dir-mkdir-persistence
+1	dir-open-persistence
+1	dir-over-file-persistence
+1	dir-rm-cwd-persistence
+1	dir-rm-parent-persistence
+1	dir-rm-root-persistence
+1	dir-rm-tree-persistence
+1	dir-rmdir-persistence
+1	dir-under-file-persistence
+1	dir-vine-persistence
+1	grow-create-persistence
+1	grow-dir-lg-persistence
+1	grow-file-size-persistence
+1	grow-root-lg-persistence
+1	grow-root-sm-persistence
+1	grow-seq-lg-persistence
+1	grow-seq-sm-persistence
+1	grow-sparse-persistence
+1	grow-tell-persistence
+1	grow-two-files-persistence
+1	syn-rw-persistence

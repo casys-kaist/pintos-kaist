@@ -72,7 +72,7 @@ struct area {
 
 #define BASE_MEM_THRESHOLD 0x100000
 #define USABLE 1
-#define ACPI_RECLAIMABLE 2
+#define ACPI_RECLAIMABLE 3
 #define APPEND_HILO(hi, lo) (((uint64_t) ((hi)) << 32) + (lo))
 
 /* Iterate on the e820 entry, parse the range of basemem and extmem. */
@@ -84,10 +84,11 @@ resolve_area_info (struct area *base_mem, struct area *ext_mem) {
 
 	for (i = 0; i < mb_info->mmap_len / sizeof (struct e820_entry); i++) {
 		struct e820_entry *entry = &entries[i];
-		if (entry->type == ACPI_RECLAIMABLE || entry->type == USABLE || 1) {
+		if (entry->type == ACPI_RECLAIMABLE || entry->type == USABLE) {
 			uint64_t start = APPEND_HILO (entry->mem_hi, entry->mem_lo);
 			uint64_t size = APPEND_HILO (entry->len_hi, entry->len_lo);
 			uint64_t end = start + size;
+			printf("%llx ~ %llx %d\n", start, end, entry->type);
 
 			struct area *area = start < BASE_MEM_THRESHOLD ? base_mem : ext_mem;
 
@@ -317,10 +318,8 @@ palloc_free_multiple (void *pages, size_t page_cnt) {
 #ifndef NDEBUG
 	memset (pages, 0xcc, PGSIZE * page_cnt);
 #endif
-	lock_acquire (&pool->lock);
 	ASSERT (bitmap_all (pool->used_map, page_idx, page_cnt));
 	bitmap_set_multiple (pool->used_map, page_idx, page_cnt, false);
-	lock_release (&pool->lock);
 }
 
 /* Frees the page at PAGE. */

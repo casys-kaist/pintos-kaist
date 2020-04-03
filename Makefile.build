@@ -14,7 +14,7 @@ os.dsk: CPPFLAGS += -I$(SRCDIR)/lib/kernel
 # Core kernel.
 include ../../threads/targets.mk
 # User process code.
-# include ../../userprog/targets.mk
+include ../../userprog/targets.mk
 # Virtual memory code.
 # include ../../vm/targets.mk
 # Filesystem code.

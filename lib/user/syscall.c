@@ -3,9 +3,17 @@
 #include "../syscall-nr.h"
 
 __attribute__((always_inline))
-static __inline int64_t syscall(uint64_t num, uint64_t a1, uint64_t a2,
-		uint64_t a3, uint64_t a4, uint64_t a5, uint64_t a6) {
+static __inline int64_t syscall(uint64_t num_, uint64_t a1_, uint64_t a2_,
+		uint64_t a3_, uint64_t a4_, uint64_t a5_, uint64_t a6_) {
 	int64_t ret;
+	register uint64_t *num asm ("rax") = num_;
+	register uint64_t *a1 asm ("rdi") = a1_;
+	register uint64_t *a2 asm ("rsi") = a2_;
+	register uint64_t *a3 asm ("rdx") = a3_;
+	register uint64_t *a4 asm ("r10") = a4_;
+	register uint64_t *a5 asm ("r8") = a5_;
+	register uint64_t *a6 asm ("r9") = a6_;
+
 	__asm __volatile(
 			"mov %1, %%rax\n"
 			"mov %2, %%rdi\n"
@@ -46,8 +54,8 @@ exit (int status) {
 }
 
 pid_t
-fork (const char *name) {
-	return (pid_t) syscall1 (SYS_FORK, name);
+fork (const char *thread_name){
+	return (pid_t) syscall1 (SYS_FORK, thread_name);
 }
 
 int
@@ -103,6 +111,11 @@ tell (int fd) {
 void
 close (int fd) {
 	syscall1 (SYS_CLOSE, fd);
+}
+
+int
+dup2 (int oldfd, int newfd){
+	syscall2 (SYS_DUP2, oldfd, newfd);
 }
 
 mapid_t

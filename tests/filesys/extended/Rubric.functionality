@@ -1,0 +1,26 @@
+Functionality of extended file system:
+- Test directory support.
+1	dir-mkdir
+3	dir-mk-tree
+
+1	dir-rmdir
+3	dir-rm-tree
+
+5	dir-vine
+
+- Test file growth.
+1	grow-create
+1	grow-seq-sm
+3	grow-seq-lg
+3	grow-sparse
+3	grow-two-files
+1	grow-tell
+1	grow-file-size
+
+- Test directory growth.
+1	grow-dir-lg
+1	grow-root-sm
+1	grow-root-lg
+
+- Test writing from multiple processes.
+5	syn-rw

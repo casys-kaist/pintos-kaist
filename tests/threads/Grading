@@ -3,4 +3,4 @@
 
 20.0%	tests/threads/Rubric.alarm
 40.0%	tests/threads/Rubric.priority
-40.0%	tests/threads/Rubric.mlfqs
+40.0%	tests/threads/mlfqs/Rubric

@@ -1,0 +1,16 @@
+# Percentage of the testing point total designated for each set of
+# tests.
+
+# This project is primarily about implementing system calls.
+# If you do so properly, the base file system functionality
+# should come "for free".  Thus, the points emphasis below.
+
+2%	tests/threads/Rubric.alarm
+3%	tests/threads/Rubric.priority
+40%	tests/userprog/Rubric.functionality
+30%	tests/userprog/Rubric.robustness
+10%	tests/userprog/no-vm/Rubric
+15%	tests/filesys/base/Rubric
+
+# Extra project
+20%	tests/userprog/dup2/Rubric

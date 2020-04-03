@@ -1,0 +1,19 @@
+Functionality of base file system:
+- Test basic support for small files.
+1	sm-create
+2	sm-full
+2	sm-random
+2	sm-seq-block
+3	sm-seq-random
+
+- Test basic support for large files.
+1	lg-create
+2	lg-full
+2	lg-random
+2	lg-seq-block
+3	lg-seq-random
+
+- Test synchronized multiprogram access to files.
+4	syn-read
+4	syn-write
+2	syn-remove

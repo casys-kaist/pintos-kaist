@@ -799,20 +799,22 @@ respectively.</p>
 wriatable or not.</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">void</span> <span class="hljs-title">pte_for_each_func</span> <span class="hljs-params">(uint64_t *pte, <span class="hljs-keyword">void</span> *va, <span class="hljs-keyword">void</span> *aux)</span></span>;
-<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">pml4_for_each</span> <span class="hljs-params">(uint64_t *pml4, pte_for_each_func *func, <span class="hljs-keyword">void</span> *aux)</span></span>;
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">pte_for_each_func</span> <span class="hljs-params">(uint64_t *pte, <span class="hljs-keyword">void</span> *va, <span class="hljs-keyword">void</span> *aux)</span></span>;
+<span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">pml4_for_each</span> <span class="hljs-params">(uint64_t *pml4, pte_for_each_func *func, <span class="hljs-keyword">void</span> *aux)</span></span>;
 </code></pre>
 <blockquote>
 <p>For each valid entry under PML4, apply FUNC with auxillary value AUX.
-VA represents the virtual address of the entry.</p>
+VA represents the virtual address of the entry. If pte_for_each_func
+returns false, stop iteration and return false.</p>
 </blockquote>
 <p>Below shows example usage of pml4_for_each:</p>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span>
 <span class="hljs-title">stat_page</span><span class="hljs-params">(uint64_t *pte, <span class="hljs-keyword">void</span> *va,  <span class="hljs-keyword">void</span> *aux)</span> </span>{
         <span class="hljs-keyword">if</span> (is_user_vaddr (va))
                 <span class="hljs-built_in">printf</span> (<span class="hljs-string">&quot;user page: %llx\n&quot;</span>, va);
         <span class="hljs-keyword">if</span> (is_writable (va))
                 <span class="hljs-built_in">printf</span> (<span class="hljs-string">&quot;writable page: %llx\n&quot;</span>, va);
+        <span class="hljs-keyword">return</span> true;
 }
 </code></pre>
 

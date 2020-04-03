@@ -777,43 +777,43 @@ Note that the stack grows down.</p>
 <td>char[8]</td>
 </tr>
 <tr>
-<td>0x4747ffe0</td>
+<td>0x4747ffe8</td>
 <td>word-align</td>
 <td>0</td>
-<td>uint8_t</td>
+<td>uint8_t[]</td>
 </tr>
 <tr>
-<td>0x4747ffd8</td>
+<td>0x4747ffe0</td>
 <td>argv[4]</td>
 <td>0</td>
 <td>char *</td>
 </tr>
 <tr>
-<td>0x4747ffd0</td>
+<td>0x4747ffd8</td>
 <td>argv[3]</td>
 <td>0x4747fffc</td>
 <td>char *</td>
 </tr>
 <tr>
-<td>0x4747ffc8</td>
+<td>0x4747ffd0</td>
 <td>argv[2]</td>
 <td>0x4747fff8</td>
 <td>char *</td>
 </tr>
 <tr>
-<td>0x4747ffc0</td>
+<td>0x4747ffc8</td>
 <td>argv[1]</td>
 <td>0x4747fff5</td>
 <td>char *</td>
 </tr>
 <tr>
-<td>0x4747ffb8</td>
+<td>0x4747ffc0</td>
 <td>argv[0]</td>
 <td>0x4747ffed</td>
 <td>char *</td>
 </tr>
 <tr>
-<td>0x4747ffb0</td>
+<td>0x4747ffb8</td>
 <td>return address</td>
 <td>0</td>
 <td>void (*) ()</td>
@@ -821,9 +821,9 @@ Note that the stack grows down.</p>
 </tbody>
 </table>
 <blockquote>
-<p>RDI: 4 | RSI: 0x4747ffb8</p>
+<p>RDI: 4 | RSI: 0x4747ffc0</p>
 </blockquote>
-<p>In this example, the stack pointer would be initialized to <code>0x4747ffb0</code>
+<p>In this example, the stack pointer would be initialized to <code>0x4747ffb8</code>
 As shown above, your code should start the stack at the <code>USER_STACK</code>, which is
 defined in <code>include/threads/vaddr.h</code>.</p>
 <p>You may find the non-standard <code>hex_dump()</code> function, declared in <code>&lt;stdio.h&gt;</code>,

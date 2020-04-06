@@ -721,7 +721,7 @@ implement in the project 3. Also, if the codes is enclosed by <code>#ifndef VM</
 those codes will be omitted from project3.</p>
 <p><strong>We strongly recommend you to read
 <a href="../appendix/synchronization.html">synchronization</a> and <a href="../appendix/virtual_address.html">virtual
-address</a> before you start.</strong></p>
+addrees</a> before you start.</strong></p>
 <h3 id="source-files">Source Files</h3>
 <p>The easiest way to get an overview of the programming you will be doing is to
 simply go over each part you&apos;ll be working with. In <code>userprog</code>, you&apos;ll find a
@@ -799,18 +799,27 @@ is open when it is removed, its blocks are not deallocated and it may still be
 accessed by any threads that have it open, until the last one closes it. See
 <a href="FAQ.html">Removing an Open File</a> for more information.</p>
 <hr>
-<p>You need to be able to create a simulated disk with a file system partition. The
-pintosmkdisk program provides this functionality. From the <code>userprog/build</code>
+<p>Unlike project 1 where all test programs were already present in the kernel image,
+you have to put test programs (which runs in the user space) into the Pintos
+virtual machine. To make your life much easier, our testing scripts
+(i.e. <code>make check</code>) automatically handle this, so in most cases, you don&apos;t need
+to understand this. However, knowing this would significantly help you to run
+individual test cases.</p>
+<p>To put a file into the Pintos virtual machine, firstly you need to be able to
+create a simulated disk with a file system partition. The
+<code>pintos-mkdisk</code> program provides this functionality. From the <code>userprog/build</code>
 directory, execute <code>pintos-mkdisk filesys.dsk 2</code>. This command
 creates a simulated disk named <code>filesys.dsk</code> that contains a 2 MB Pintos file
-system partition. Then format the file system partition by passing <code>-f -q</code> on
-the kernel&apos;s command line: <code>pintos -f -q</code>. The <code>-f</code> option causes the file
-system to be formatted, and <code>-q</code> causes Pintos to exit as soon as the format is
-done.</p>
+system partition. Then, specify the disk by passing <code>--fs-disk filesys.dsk</code>
+after <code>pintos</code> but before <code>--</code> (i.e. <code>pintos --fs-disk filesys.disk -- KERNEL_COMMANDS...</code>).
+The <code>--</code> is needed because <code>--fs-disk</code> is for the pintos script, not for
+the simulated kernel. Afterward, format the file system partition by passing
+<code>-f -q</code> on the kernel&apos;s command line: <code>pintos SCRIPT_COMMANDS -- -f -q</code>. The <code>-f</code>
+option causes the file system to be formatted, and <code>-q</code> causes Pintos to exit
+as soon as the format is done.</p>
 <p>You&apos;ll need a way to copy files in and out of the simulated file system. The
 pintos <code>-p</code> (&quot;put&quot;) and <code>-g</code> (&quot;get&quot;) options do this. To copy &apos;file&apos; into the
-Pintos file system, use the command <code>pintos -p file -- -q</code>. (The <code>--</code> is needed
-because <code>-p</code> is for the pintos script, not for the simulated kernel.) To copy it
+Pintos file system, use the command <code>pintos -p file -- -q</code>. To copy it
 to the Pintos file system under the name <code>newname</code>, add <code>:newname</code> after the
 original filename: <code>pintos -p file:newname -- -q</code>. The commands for copying
 files out of a VM are similar, but substitute <code>-g</code> for <code>-p</code>.</p>
@@ -819,29 +828,20 @@ on the kernel&apos;s command line and copying to and from a special simulated
 &quot;scratch&quot; partition. If you&apos;re very curious, you can look at the pintos script
 as well as <code>filesys/fsutil.c</code> to learn the implementation details.</p>
 <p>Here&apos;s a summary of how to create a disk with a file system partition, format
-the file system, copy the echo program into the new disk, and then run echo,
-passing argument x. (Argument passing won&apos;t work until you implemented it.)
-It assumes that you&apos;ve already built the examples in <code>examples</code> and that the
-current directory is <code>userprog/build</code>:</p>
+the file system, copy the <em>args-single</em> program&#x2014;which is the second test case for
+this project&#x2014;into the new disk, and then run it, passing argument &apos;onearg&apos;.
+(Argument passing won&apos;t work until you implemented it.) It assumes that you&apos;ve
+already built the test cases and that the current directory is <code>userprog/build</code>:</p>
 <pre><code class="lang-sh">pintos-mkdisk filesys.dsk 10
-pintos <span class="hljs-_">-f</span> -q
-pintos -p ../../examples/<span class="hljs-built_in">echo</span>:<span class="hljs-built_in">echo</span> -- -q
-pintos -q run <span class="hljs-string">&apos;echo x&apos;</span>
-</code></pre>
-<p>The three final steps can actually be combined into a single command:</p>
-<pre><code class="lang-sh">pintos-mkdisk filesys.dsk 10
-pintos -p ../../examples/<span class="hljs-built_in">echo</span>:<span class="hljs-built_in">echo</span> -- <span class="hljs-_">-f</span> -q run <span class="hljs-string">&apos;echo x&apos;</span>
+pintos --fs-disk filesys.dsk -p tests/userprog/args-single:args-single -- -q <span class="hljs-_">-f</span> run <span class="hljs-string">&apos;args-single onearg&apos;</span>
 </code></pre>
 <p>If you don&apos;t want to keep the file system disk around for later use or
 inspection, you can even combine all four steps into a single command.
 The <code>--filesys-size=n</code> option creates a temporary file system partition
 approximately n megabytes in size just for the duration of the pintos run.
 The Pintos automatic test suite makes extensive use of this syntax:</p>
-<pre><code class="lang-sh">pintos --filesys-size=10 -p ../../examples/<span class="hljs-built_in">echo</span>:<span class="hljs-built_in">echo</span> -- <span class="hljs-_">-f</span> -q run <span class="hljs-string">&apos;echo x&apos;</span>
+<pre><code class="lang-sh">pintos --fs-disk=10 -p tests/userprog/args-single:args-single -- -q <span class="hljs-_">-f</span> run <span class="hljs-string">&apos;args-single onearg&apos;</span>
 </code></pre>
-<p>You can delete a file from the Pintos file system using the rm file kernel
-action, e.g. pintos -q rm file. Also, ls lists the files in the file system and
-cat file prints a file&apos;s contents to the display.</p>
 <h3 id="how-user-programs-work">How User Programs Work</h3>
 <p>Pintos can run normal C programs, as long as they fit into memory and use only
 the system calls you implement. Notably, <code>malloc()</code> cannot be implemented
@@ -849,10 +849,6 @@ because none of the system calls required for this project allow for memory
 allocation. Pintos also can&apos;t run programs that use floating point operations,
 since the kernel doesn&apos;t save and restore the processor&apos;s floating-point unit
 when switching threads.</p>
-<p>The <code>src/examples</code> directory contains a few sample user programs. The <code>Makefile</code>
-in this directory compiles the provided examples, and you can edit it compile
-your own programs as well. Some of the example programs will only work once
-projects 3 or 4 have been implemented.</p>
 <p>Pintos can load ELF executables with the loader provided for you in
 <code>userprog/process.c</code>. ELF is a file format used by Linux, Solaris, and many
 other operating systems for object files, shared libraries, and executables.</p>
@@ -1024,7 +1020,7 @@ value into <code>%rip</code>.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"3.1","depth":1,"next":{"title":"Argument Passing","level":"3.2","depth":1,"path":"project2/argument_passing.md","ref":"project2/argument_passing.md","articles":[]},"previous":{"title":"FAQ","level":"2.5","depth":1,"path":"project1/FAQ.md","ref":"project1/FAQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project2/introduction.md","mtime":"2020-04-02T13:24:29.265Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-02T13:24:41.536Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"3.1","depth":1,"next":{"title":"Argument Passing","level":"3.2","depth":1,"path":"project2/argument_passing.md","ref":"project2/argument_passing.md","articles":[]},"previous":{"title":"FAQ","level":"2.5","depth":1,"path":"project1/FAQ.md","ref":"project1/FAQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project2/introduction.md","mtime":"2020-04-06T06:42:02.103Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-06T06:42:12.138Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

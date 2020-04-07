@@ -70,7 +70,7 @@ consume_some_resources (void)
 /* Consume some resources, then terminate this process
    in some abnormal way.  */
 static int NO_INLINE
-consume_some_resources_and_die (int seed)
+consume_some_resources_and_die (void)
 {
   consume_some_resources ();
   int *KERN_BASE = (int *)0x8004000000;
@@ -113,7 +113,7 @@ make_children (void) {
       if (pid > 0 && wait (pid) != -1) {
         fail ("crashed child should return -1.");
       } else if (pid == 0) {
-        consume_some_resources_and_die(i);
+        consume_some_resources_and_die();
         fail ("Unreachable");
       }
     }

@@ -130,8 +130,13 @@ __do_fork (void *aux) {
 		goto error;
 
 	process_activate (current);
+#ifdef VM
+	if (!frame_table_copy (&parent->frame_table, &current->frame_table))
+		goto error;
+#else
 	if (!pml4_for_each (parent->pml4, duplicate_pte, parent))
 		goto error;
+#endif
 
 	/* TODO: Your code goes here.
 	 * TODO: Hint) To duplicate the file object, use `file_duplicate`
@@ -232,7 +237,7 @@ process_cleanup (void) {
 		pml4_destroy (pml4);
 	}
 #else
-	vm_kill (curr);
+	frame_table_kill (&curr->frame_table);
 #endif
 }
 
@@ -598,8 +603,8 @@ load_segment (struct file *file, off_t ofs, uint8_t *upage,
 
 		/* TODO: Set up aux to pass information to the lazy_load_segment. */
 		void *aux = NULL;
-		if (!vm_alloc_page_with_initializer (
-					PAL_USER, VM_ANON, upage, writable, lazy_load_segment, aux))
+		if (!vm_alloc_page_with_initializer (VM_ANON, upage,
+					writable, lazy_load_segment, aux))
 			return false;
 
 		/* Advance. */

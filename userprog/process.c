@@ -31,9 +31,6 @@ static void __do_fork (void *);
 static void
 process_init (void) {
 	struct thread *current = thread_current ();
-#ifdef VM
-	frame_table_init (&current->frame_table);
-#endif
 }
 
 /* Starts the first userland program, called "initd", loaded from FILE_NAME.
@@ -131,7 +128,7 @@ __do_fork (void *aux) {
 
 	process_activate (current);
 #ifdef VM
-	if (!frame_table_copy (&parent->frame_table, &current->frame_table))
+	if (!supplemental_page_table_copy (&current->spt, &parent->spt))
 		goto error;
 #else
 	if (!pml4_for_each (parent->pml4, duplicate_pte, parent))
@@ -237,7 +234,7 @@ process_cleanup (void) {
 		pml4_destroy (pml4);
 	}
 #else
-	frame_table_kill (&curr->frame_table);
+	supplemental_page_table_kill (&curr->spt);
 #endif
 }
 
@@ -567,11 +564,14 @@ install_page (void *upage, void *kpage, bool writable) {
 /* From here, codes will be used after project 3.
  * If you want to implement the function for only project 2, implement it on the
  * upper block. */
+
 static bool
-lazy_load_segment (void *va, void *aux) {
+lazy_load_segment (struct page *page, void *aux) {
 	/* TODO: Load the segment from the file */
-	/* TODO: This called when the first page fault occurs on address KVA. */
+	/* TODO: This called when the first page fault occurs on address VA. */
+	/* TODO: VA is available when calling this function. */
 }
+
 /* Loads a segment starting at offset OFS in FILE at address
  * UPAGE.  In total, READ_BYTES + ZERO_BYTES bytes of virtual
  * memory are initialized, as follows:
@@ -593,7 +593,6 @@ load_segment (struct file *file, off_t ofs, uint8_t *upage,
 	ASSERT (pg_ofs (upage) == 0);
 	ASSERT (ofs % PGSIZE == 0);
 
-	file_seek (file, ofs);
 	while (read_bytes > 0 || zero_bytes > 0) {
 		/* Do calculate how to fill this page.
 		 * We will read PAGE_READ_BYTES bytes from FILE
@@ -618,7 +617,6 @@ load_segment (struct file *file, off_t ofs, uint8_t *upage,
 /* Create a PAGE of stack at the USER_STACK. Return true on success. */
 static bool
 setup_stack (struct intr_frame *if_) {
-	uint8_t *kpage;
 	bool success = false;
 	void *stack_bottom = (void *) (((uint8_t *) USER_STACK) - PGSIZE);
 

@@ -54,15 +54,15 @@ hash_clear (struct hash *h, hash_action_func *destructor) {
 	for (i = 0; i < h->bucket_cnt; i++) {
 		struct list *bucket = &h->buckets[i];
 
-		if (destructor != NULL) 
+		if (destructor != NULL)
 			while (!list_empty (bucket)) {
 				struct list_elem *list_elem = list_pop_front (bucket);
 				struct hash_elem *hash_elem = list_elem_to_hash_elem (list_elem);
 				destructor (hash_elem, h->aux);
 			}
 
-		list_init (bucket); 
-	}    
+		list_init (bucket);
+	}
 
 	h->elem_cnt = 0;
 }
@@ -87,18 +87,18 @@ hash_destroy (struct hash *h, hash_action_func *destructor) {
 /* Inserts NEW into hash table H and returns a null pointer, if
    no equal element is already in the table.
    If an equal element is already in the table, returns it
-   without inserting NEW. */   
+   without inserting NEW. */
 struct hash_elem *
 hash_insert (struct hash *h, struct hash_elem *new) {
 	struct list *bucket = find_bucket (h, new);
 	struct hash_elem *old = find_elem (h, bucket, new);
 
-	if (old == NULL) 
+	if (old == NULL)
 		insert_elem (h, bucket, new);
 
 	rehash (h);
 
-	return old; 
+	return old;
 }
 
 /* Inserts NEW into hash table H, replacing any equal element
@@ -136,13 +136,13 @@ hash_delete (struct hash *h, struct hash_elem *e) {
 	struct hash_elem *found = find_elem (h, find_bucket (h, e), e);
 	if (found != NULL) {
 		remove_elem (h, found);
-		rehash (h); 
+		rehash (h);
 	}
 	return found;
 }
 
 /* Calls ACTION for each element in hash table H in arbitrary
-   order. 
+   order.
    Modifying hash table H while hash_apply() is running, using
    any of the functions hash_clear(), hash_destroy(),
    hash_insert(), hash_replace(), or hash_delete(), yields
@@ -236,42 +236,42 @@ hash_empty (struct hash *h) {
 }
 
 /* Fowler-Noll-Vo hash constants, for 32-bit word sizes. */
-#define FNV_32_PRIME 16777619u
-#define FNV_32_BASIS 2166136261u
+#define FNV_64_PRIME 0x00000100000001B3UL
+#define FNV_64_BASIS 0xcbf29ce484222325UL
 
 /* Returns a hash of the SIZE bytes in BUF. */
-unsigned
+uint64_t
 hash_bytes (const void *buf_, size_t size) {
 	/* Fowler-Noll-Vo 32-bit hash, for bytes. */
 	const unsigned char *buf = buf_;
-	unsigned hash;
+	uint64_t hash;
 
 	ASSERT (buf != NULL);
 
-	hash = FNV_32_BASIS;
+	hash = FNV_64_BASIS;
 	while (size-- > 0)
-		hash = (hash * FNV_32_PRIME) ^ *buf++;
+		hash = (hash * FNV_64_PRIME) ^ *buf++;
 
 	return hash;
-} 
+}
 
 /* Returns a hash of string S. */
-unsigned
+uint64_t
 hash_string (const char *s_) {
 	const unsigned char *s = (const unsigned char *) s_;
-	unsigned hash;
+	uint64_t hash;
 
 	ASSERT (s != NULL);
 
-	hash = FNV_32_BASIS;
+	hash = FNV_64_BASIS;
 	while (*s != '\0')
-		hash = (hash * FNV_32_PRIME) ^ *s++;
+		hash = (hash * FNV_64_PRIME) ^ *s++;
 
 	return hash;
 }
 
 /* Returns a hash of integer I. */
-unsigned
+uint64_t
 hash_int (int i) {
 	return hash_bytes (&i, sizeof i);
 }
@@ -292,7 +292,7 @@ find_elem (struct hash *h, struct list *bucket, struct hash_elem *e) {
 	for (i = list_begin (bucket); i != list_end (bucket); i = list_next (i)) {
 		struct hash_elem *hi = list_elem_to_hash_elem (i);
 		if (!h->less (hi, e, h->aux) && !h->less (e, hi, h->aux))
-			return hi; 
+			return hi;
 	}
 	return NULL;
 }
@@ -352,7 +352,7 @@ rehash (struct hash *h) {
 		   there's no reason for it to be an error. */
 		return;
 	}
-	for (i = 0; i < new_bucket_cnt; i++) 
+	for (i = 0; i < new_bucket_cnt; i++)
 		list_init (&new_buckets[i]);
 
 	/* Install new bucket info. */

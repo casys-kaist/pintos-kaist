@@ -24,8 +24,9 @@ def get_temp_dsk_name():
 
 
 class Pintos(object):
-    def __init__(self, ttest=False, mem=256, no_vga=True, serial=False, args=[],
-                 hostfns=[], gdb=False, fs='fs.dsk', timeout=0):
+    def __init__(self, ttest=False, mem=256, no_vga=True, serial=False,
+                 args=[], hostfns=[], gdb=False, fs='fs.dsk', swap='swap.dsk',
+                 timeout=0):
         self.ttest = ttest
         self.mem = mem
         self.no_vga = no_vga
@@ -34,7 +35,7 @@ class Pintos(object):
         self.proc = None
         self.timeout = timeout
         self.host_fns = hostfns
-        self.bdevs = {'os': 'os.dsk', 'fs': fs, 'swap': 'swap.dsk'}
+        self.bdevs = {'os': 'os.dsk', 'fs': fs, 'swap': swap}
 
     def __scan_dir(self):
         new = {}
@@ -152,6 +153,8 @@ if __name__ == '__main__':
                         help='memory capacity')
     parser.add_argument('--fs-disk', default='fs.dsk',
                         help='Set FS disk file or size')
+    parser.add_argument('--swap-disk', default='swap.dsk',
+                        help='Set SWAP disk file or size')
     parser.add_argument('-p', '--put-file', dest='HOSTFNS', nargs=1,
                         action='append', default=[],
                         help='Copy HOSTFN into VM, splited by ":".'
@@ -161,7 +164,8 @@ if __name__ == '__main__':
                              'by default under same name')
     parser.add_argument('--gdb', action='store_true', default=False,
                         help='Debug with gdb')
-    parser.add_argument('-t', '--threads-tests', action='store_true', default=False,
+    parser.add_argument('-t', '--threads-tests', action='store_true',
+                        default=False,
                         help='Run proj1 test cases with USERPROG flag')
 
     if '--' in sys.argv:
@@ -175,4 +179,5 @@ if __name__ == '__main__':
     args = parser.parse_args(util_args)
     Pintos(ttest=args.threads_tests, mem=args.memory, no_vga=args.no_vga,
            args=kern_args, timeout=args.timeout, fs=args.fs_disk, gdb=args.gdb,
+           swap=args.swap_disk,
            hostfns=[f[0].split(':') for f in args.HOSTFNS]).run()

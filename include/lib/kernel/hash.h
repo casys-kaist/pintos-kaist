@@ -41,7 +41,7 @@ struct hash_elem {
 
 /* Computes and returns the hash value for hash element E, given
  * auxiliary data AUX. */
-typedef unsigned hash_hash_func (const struct hash_elem *e, void *aux);
+typedef uint64_t hash_hash_func (const struct hash_elem *e, void *aux);
 
 /* Compares the value of two hash elements A and B, given
  * auxiliary data AUX.  Returns true if A is less than B, or
@@ -93,8 +93,8 @@ size_t hash_size (struct hash *);
 bool hash_empty (struct hash *);
 
 /* Sample hash functions. */
-unsigned hash_bytes (const void *, size_t);
-unsigned hash_string (const char *);
-unsigned hash_int (int);
+uint64_t hash_bytes (const void *, size_t);
+uint64_t hash_string (const char *);
+uint64_t hash_int (int);
 
 #endif /* lib/kernel/hash.h */

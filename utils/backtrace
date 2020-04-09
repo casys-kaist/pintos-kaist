@@ -33,7 +33,7 @@ def resolve_loc(addrs):
 
 def main(argv):
     if len(argv) < 2 or "-h" in argv or "--help" in argv:
-        usage()
+        usage(argv[0])
     resolve_loc(argv[1:])
 
 

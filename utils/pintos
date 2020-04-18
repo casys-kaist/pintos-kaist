@@ -135,6 +135,10 @@ class Pintos(object):
             subprocess.run(cmd, **args)
         except subprocess.TimeoutExpired:
             sys.stdout.write("TIMEOUT")
+        finally:
+            for k, bdev in self.bdevs.items(): # delete temporal disk file
+                if os.path.exists(bdev) and "tmp" in bdev:
+                    os.remove(bdev)
 
 
 if __name__ == '__main__':

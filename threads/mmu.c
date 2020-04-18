@@ -15,10 +15,11 @@ pgdir_walk (uint64_t *pdp, const uint64_t va, int create) {
 		uint64_t *pte = (uint64_t *) pdp[idx];
 		if (!((uint64_t) pte & PTE_P)) {
 			if (create) {
-				uint64_t *new_page = palloc_get_page (PAL_ASSERT | PAL_ZERO);
-				if (new_page) {
+				uint64_t *new_page = palloc_get_page (PAL_ZERO);
+				if (new_page)
 					pdp[idx] = vtop (new_page) | PTE_U | PTE_W | PTE_P;
-				}
+				else
+					return NULL;
 			} else
 				return NULL;
 		}
@@ -36,18 +37,19 @@ pdpe_walk (uint64_t *pdpe, const uint64_t va, int create) {
 		uint64_t *pde = (uint64_t *) pdpe[idx];
 		if (!((uint64_t) pde & PTE_P)) {
 			if (create) {
-				uint64_t *new_page = palloc_get_page (PAL_ASSERT | PAL_ZERO);
+				uint64_t *new_page = palloc_get_page (PAL_ZERO);
 				if (new_page) {
 					pdpe[idx] = vtop (new_page) | PTE_U | PTE_W | PTE_P;
 					allocated = 1;
-				}
+				} else
+					return NULL;
 			} else
 				return NULL;
 		}
 		pte = pgdir_walk (ptov (PTE_ADDR (pdpe[idx])), va, create);
 	}
 	if (pte == NULL && allocated) {
-		palloc_free_page ((void *) PTE_ADDR (pdpe[idx]));
+		palloc_free_page ((void *) ptov (PTE_ADDR (pdpe[idx])));
 		pdpe[idx] = 0;
 	}
 	return pte;
@@ -68,18 +70,19 @@ pml4e_walk (uint64_t *pml4e, const uint64_t va, int create) {
 		uint64_t *pdpe = (uint64_t *) pml4e[idx];
 		if (!((uint64_t) pdpe & PTE_P)) {
 			if (create) {
-				uint64_t *new_page = palloc_get_page (PAL_ASSERT | PAL_ZERO);
+				uint64_t *new_page = palloc_get_page (PAL_ZERO);
 				if (new_page) {
 					pml4e[idx] = vtop (new_page) | PTE_U | PTE_W | PTE_P;
 					allocated = 1;
-				}
+				} else
+					return NULL;
 			} else
 				return NULL;
 		}
 		pte = pdpe_walk (ptov (PTE_ADDR (pml4e[idx])), va, create);
 	}
 	if (pte == NULL && allocated) {
-		palloc_free_page ((void *) PTE_ADDR (pml4e[idx]));
+		palloc_free_page ((void *) ptov (PTE_ADDR (pml4e[idx])));
 		pml4e[idx] = 0;
 	}
 	return pte;

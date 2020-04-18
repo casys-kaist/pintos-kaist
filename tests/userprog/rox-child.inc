@@ -21,11 +21,13 @@ test_main (void)
          "write \"child-rox\"");
 
   /* Execute child-rox and wait for it. */
+  msg ("exec \"%s\"", child_cmd);
   if (!(child = fork ("child-rox"))){
     exec (child_cmd);
   }
 
-  CHECK (child != -1, "exec \"%s\"", child_cmd);
+  if (child < 0)
+    fail ("fork() returned %d", child);
   quiet = true;
   CHECK (wait (child) == 12, "wait for child");
   quiet = false;

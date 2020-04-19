@@ -42,10 +42,13 @@ main (int argc UNUSED, char *argv[])
       int child;
       
       snprintf (cmd, sizeof cmd, "child-rox %d", atoi (argv[1]) - 1);
+      msg ("exec \"%s\"", cmd);
       if (!(child = fork ("child-rox"))){
         exec (cmd);
       }
-      CHECK (child != -1, "exec \"%s\"", cmd);
+
+      if (child < 0)
+        fail ("fork() returned %d", child);
       quiet = true;
       CHECK (wait (child) == 12, "wait for \"child-rox\"");
       quiet = false;

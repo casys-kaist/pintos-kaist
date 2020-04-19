@@ -5,4 +5,4 @@ tests/userprog/no-vm_PROGS = $(tests/userprog/no-vm_TESTS)
 tests/userprog/no-vm/multi-oom_SRC = tests/userprog/no-vm/multi-oom.c	\
 tests/lib.c
 
-tests/userprog/no-vm/multi-oom.output: TIMEOUT = 360 -m 20
+tests/userprog/no-vm/multi-oom.output: TIMEOUT = 600 -m 20

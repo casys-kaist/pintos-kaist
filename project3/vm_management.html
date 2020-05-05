@@ -1,0 +1,925 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Memory Management · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="anon.html" />
+    
+    
+    <link rel="prev" href="introduction.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        <li class="header">Introduction</li>
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../introduction/getting_started.html">
+            
+                <a href="../introduction/getting_started.html">
+            
+                    
+                    Getting Started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../introduction/grading.html">
+            
+                <a href="../introduction/grading.html">
+            
+                    
+                    Grading
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../introduction/legal_and_ethical_issues.html">
+            
+                <a href="../introduction/legal_and_ethical_issues.html">
+            
+                    
+                    Legal and Ethical Issues
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project1: Threads</li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../project1/introduction.html">
+            
+                <a href="../project1/introduction.html">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../project1/alarm_clock.html">
+            
+                <a href="../project1/alarm_clock.html">
+            
+                    
+                    Alarm Clock
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../project1/priority_scheduling.html">
+            
+                <a href="../project1/priority_scheduling.html">
+            
+                    
+                    Priority Scheduling
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../project1/advanced_scheduler.html">
+            
+                <a href="../project1/advanced_scheduler.html">
+            
+                    
+                    Advanced Scheduler
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="../project1/FAQ.html">
+            
+                <a href="../project1/FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project2: User Programs</li>
+        
+        
+    
+        <li class="chapter " data-level="3.1" data-path="../project2/introduction.html">
+            
+                <a href="../project2/introduction.html">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.2" data-path="../project2/argument_passing.html">
+            
+                <a href="../project2/argument_passing.html">
+            
+                    
+                    Argument Passing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.3" data-path="../project2/user_memory.html">
+            
+                <a href="../project2/user_memory.html">
+            
+                    
+                    User Memory
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.4" data-path="../project2/system_call.html">
+            
+                <a href="../project2/system_call.html">
+            
+                    
+                    System Calls
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.5" data-path="../project2/process_termination.html">
+            
+                <a href="../project2/process_termination.html">
+            
+                    
+                    Process Termination Messages
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.6" data-path="../project2/deny_write.html">
+            
+                <a href="../project2/deny_write.html">
+            
+                    
+                    Denying Writes to Executables
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.7" data-path="../project2/dup.html">
+            
+                <a href="../project2/dup.html">
+            
+                    
+                    Extend File Descriptor (Extra)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="3.8" data-path="../project2/FAQ.html">
+            
+                <a href="../project2/FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project3: Virtual Memory</li>
+        
+        
+    
+        <li class="chapter " data-level="4.1" data-path="introduction.html">
+            
+                <a href="introduction.html">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="4.2" data-path="vm_management.html">
+            
+                <a href="vm_management.html">
+            
+                    
+                    Memory Management
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.3" data-path="anon.html">
+            
+                <a href="anon.html">
+            
+                    
+                    Anonymous Page
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.4" data-path="stack_growth.html">
+            
+                <a href="stack_growth.html">
+            
+                    
+                    Stack Growth
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.5" data-path="memory_mapped_files.html">
+            
+                <a href="memory_mapped_files.html">
+            
+                    
+                    Memory Mapped Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.6" data-path="swapping.html">
+            
+                <a href="swapping.html">
+            
+                    
+                    Swap In/Out
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.7" data-path="cow.html">
+            
+                <a href="cow.html">
+            
+                    
+                    Copy-on-Write (Extra)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="4.8" data-path="FAQ.html">
+            
+                <a href="FAQ.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Project4: File System</li>
+        
+        
+    
+        <li class="chapter " data-level="5.1" data-path="../project4/introduction.md">
+            
+                <span>
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.2" data-path="../project4/indexed_and_extensible_files.md">
+            
+                <span>
+            
+                    
+                    Indexed and Extensible Files
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.3" data-path="../project4/subdirectories.md">
+            
+                <span>
+            
+                    
+                    Subdirectories and Soft Links
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.4" data-path="../project4/buffer_cache.md">
+            
+                <span>
+            
+                    
+                    Buffer Cache
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.5" data-path="../project4/synchronization.md">
+            
+                <span>
+            
+                    
+                    Synchronization
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.6" >
+            
+                <span>
+            
+                    
+                    Filesystem Journaling (Extra)
+            
+                </span>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="5.7" data-path="../project4/FAQ.md">
+            
+                <span>
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="header">Appendix</li>
+        
+        
+    
+        <li class="chapter " data-level="6.1" data-path="../appendix/threads.html">
+            
+                <a href="../appendix/threads.html">
+            
+                    
+                    Threads
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.2" data-path="../appendix/synchronization.html">
+            
+                <a href="../appendix/synchronization.html">
+            
+                    
+                    Synchronization
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.3" data-path="../appendix/memory_allocation.html">
+            
+                <a href="../appendix/memory_allocation.html">
+            
+                    
+                    Memory Allocation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.4" data-path="../appendix/virtual_address.html">
+            
+                <a href="../appendix/virtual_address.html">
+            
+                    
+                    Virtual Address
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.5" data-path="../appendix/debugging_tools.html">
+            
+                <a href="../appendix/debugging_tools.html">
+            
+                    
+                    Debugging Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.6" data-path="../appendix/development_tools.html">
+            
+                <a href="../appendix/development_tools.html">
+            
+                    
+                    Development Tools
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="6.7" data-path="../appendix/hash_table.html">
+            
+                <a href="../appendix/hash_table.html">
+            
+                    
+                    Hash Table
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Memory Management</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="memory-management">Memory Management</h2>
+<p>In order to support your virtual memory system, you need to effectively
+manage virtual pages and physical frames. This means that you have to keep track
+of which (virtual or physical) memory regions are being used, for what purpose,
+by whom, and so on. You will first deal with supplemental page table, then
+physical frames. Note that, for your understanding, we use the term &quot;page&quot; for
+virtual page, and the term &quot;frame&quot; for a physical page.</p>
+<h3 id="page-structure-and-operations">Page Structure and Operations</h3>
+<h4 id="struct-page">struct page</h4>
+<p>A <code>page</code> defined in <code>include/vm/vm.h</code> is a structure that represents a page in
+virtual memory. It stores all the necessary data that we need to know about the
+page. Currently, the structure looks like the following in the template:</p>
+<pre><code class="lang-C"><span class="hljs-keyword">struct</span> page {
+  <span class="hljs-keyword">const</span> <span class="hljs-keyword">struct</span> page_operations *operations;
+  <span class="hljs-keyword">void</span> *va;              <span class="hljs-comment">/* Address in terms of user space */</span>
+  <span class="hljs-keyword">struct</span> frame *frame;   <span class="hljs-comment">/* Back reference for frame */</span>
+
+  <span class="hljs-keyword">union</span> {
+    <span class="hljs-keyword">struct</span> uninit_page uninit;
+    <span class="hljs-keyword">struct</span> anon_page anon;
+    <span class="hljs-keyword">struct</span> file_page file;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> EFILESYS</span>
+    <span class="hljs-keyword">struct</span> page_cache page_cache;
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span>
+  };
+};
+</code></pre>
+<p>It has page operations (read below), virtual address, and physical frame.
+Additionally, it has a union field. A union is a special data type that
+allows us to store different types of data in a memory region.
+There are multiple members in the union, but only one member can contain a value
+at a time. This means that a page in our system can be a uninit_page, anon_page,
+file_page, or page_cache.
+For example, if a page is an anonymous page (See <a href="anon.html">Anonymous Page</a>),
+then the page struct will have the field <code>struct anon_page anon</code> as one of its
+members. <code>anon_page</code> will contain all the necessary information we need to keep
+for an anonymous page.</p>
+<h4 id="page-operations">Page Operations</h4>
+<p>As described above and defined in <code>include/vm/vm.h</code>,
+a page at can be <code>VM_UNINIT</code>, <code>VM_ANON</code>, or <code>VM_FILE</code>.
+For a page, there are several actions to be taken, such as swapping in,
+swapping out, and destroying the page. For each type of page,
+the required steps and tasks differ for these actions. In other words, a different <code>destroy</code>
+function needs to be invoked for a <code>VM_ANON</code> page and <code>VM_FILE</code> page. One way is
+use a switch-case syntax in each function to handle each case. We introduce a
+&quot;class inheritance&quot; concept of Object-Oriented-Programming to deal it.
+Indeed, there is no &quot;class&quot; nor &quot;inheritance&quot; in C programming language, we
+utilizes <a href="https://www.geeksforgeeks.org/function-pointer-in-c/" target="_blank">function pointers</a>
+to realize the concepts, in a similar way in real operating system codes like Linux.</p>
+<p>A function pointer is a pointer, just like any other pointers you&apos;ve learned
+sofar, that points to a function, or an executable code within the memory.
+Function pointers are useful because they provide a simple way to call a
+specific function to execute based on run-time values without any checking.
+In our case, simply calling <code>destroy (page)</code> is sufficient at code-level, and the
+compiler will choose the appropriate <code>destroy</code> routine depending on the page type
+by calling the right function pointer.</p>
+<p>A structure for page operations <code>struct page_operations</code> is defined in
+<code>include/vm/vm.h</code>. Consider this structure as a table of functions, containing 3
+function pointers.</p>
+<pre><code class="lang-C"><span class="hljs-keyword">struct</span> page_operations {
+  <span class="hljs-keyword">bool</span> (*swap_in) (<span class="hljs-keyword">struct</span> page *, <span class="hljs-keyword">void</span> *);
+  <span class="hljs-keyword">bool</span> (*swap_out) (<span class="hljs-keyword">struct</span> page *);
+  <span class="hljs-keyword">void</span> (*destroy) (<span class="hljs-keyword">struct</span> page *);
+  <span class="hljs-keyword">enum</span> vm_type type;
+};
+</code></pre>
+<p>Now, let&apos;s see where we can find a page_operation structure. If you look into a
+page structure <code>struct page</code> in <code>include/vm/vm.h</code>, you see that it has a field
+named <code>operations</code>. Now, go to <code>vm/file.c</code>, you will see the page_operations
+structure <code>file_ops</code> declared before the function prototypes. This is the table
+of function pointers for file-mapped pages. <code>.destroy</code> field has value
+<code>file_map_destroy</code>, which is a function that destroys the page and is defined in
+the same file.</p>
+<p>Let&apos;s try to understand how <code>file_map_destroy</code> is invoked with the function
+pointer interface. Suppose <code>vm_dealloc_page (page)</code> (in <code>vm/vm.c</code>) is called,
+and this page happens to be a file-mapped page (<code>VM_FILE</code>). Inside the function,
+it invokes <code>destroy (page)</code>. <code>destroy (page)</code> is defined with a macro in
+<code>include/vm/vm.h</code> like the following:</p>
+<pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> destroy(page) <span class="hljs-meta-keyword">if</span> ((page)-&gt;operations-&gt;destroy) (page)-&gt;operations-&gt;destroy (page)</span>
+</code></pre>
+<p>This tells us that calling <code>destroy</code> function actually invokes
+<code>(page)-&gt;operations-&gt;destroy (page)</code>, which is the <code>destroy</code> function retrieved
+from the page structure. Because the page is a <code>VM_FILE</code> page, its <code>.destroy</code>
+field points to <code>file_map_destory</code>. As a result, destroy routine for file-mapped
+page is performed.</p>
+<h3 id="implement-supplemental-page-table">Implement Supplemental Page Table</h3>
+<p>At this point, your Pintos has a page table (<code>pml4</code>) to manage virtual and
+physical mappings of memory. However, this is not enough. As discussion in the
+previous section, you will also need a supplementary page table to hold additional
+information about each page in order to handle page fault and resource
+management. Therefore, we suggest you to implement some basic functionalities
+for the supplemental page table as the first task of project 3.</p>
+<p><strong>Implement supplemental page table management functions in <code>vm/vm.c</code>.</strong></p>
+<p>You will first have to decide how you will design the supplemental page table in
+your Pintos. After design your own supplemental page table, implements below
+three functions with respect to your design.</p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">supplemental_page_table_init</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> supplemental_page_table *spt)</span></span>;
+</code></pre>
+<blockquote>
+<p>Initializes the supplemental page table. You may choose the data structure to
+use for the supplemental page table. The function is called when a new process
+starts (in <code>initd</code> of <code>userprog/process.c</code>) and when a process is being forked
+(in <code>__do_fork</code> of <code>userprog/process.c</code>).</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">struct</span> page *<span class="hljs-title">spt_find_page</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> supplemental_page_table *spt, <span class="hljs-keyword">void</span> *va)</span></span>;
+</code></pre>
+<blockquote>
+<p>Find <code>struct page</code> that corresponds to va from the given supplemental page
+table. If fail, return NULL.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">spt_insert_page</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> supplemental_page_table *spt, <span class="hljs-keyword">struct</span> page *page)</span></span>;
+</code></pre>
+<blockquote>
+<p>Insert <code>struct page</code> into the given supplemental page table. This function
+should checks that the virtual address does not exist in the given
+supplemental page table.</p>
+</blockquote>
+<h3 id="frame-management">Frame Management</h3>
+<p>From now, all the pages are not just holding the meta-data for the memory when
+it was constructed. Therefore, we need a different scheme to manage the physical
+memory. In <code>include/vm/vm.h</code>, there exists <code>struct frame</code> which represents a
+physical memory. Currently, the structure looks like this:</p>
+<pre><code class="lang-C"><span class="hljs-comment">/* The representation of &quot;frame&quot; */</span>
+<span class="hljs-keyword">struct</span> frame {
+  <span class="hljs-keyword">void</span> *kva;
+  <span class="hljs-keyword">struct</span> page *page;
+};
+</code></pre>
+<p>It only has two fields - <code>kva</code> which is the
+kernel virtual address and <code>page</code> which is a page structure.
+You are allowed to add more members as you implement a frame management interface.</p>
+<p><strong>Implement <code>vm_get_frame</code>, <code>vm_claim_page</code> and <code>vm_do_claim_page</code> in
+<code>vm/vm.c</code>.</strong></p>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">struct</span> frame *<span class="hljs-title">vm_get_frame</span> <span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;
+</code></pre>
+<blockquote>
+<p>Gets a new physical page from the user pool by calling <code>palloc_get_page</code>.
+When successfully got a page from the user pool, also allocates a frame,
+initialize its members, and returns it.
+After you implement <code>vm_get_frame</code>, you have to allocate all user space pages
+(PALLOC_USER) through this function. You don&apos;t need to handle swap out for now
+in case of page allocation failure. Just mark those case with <code>PANIC (&quot;todo&quot;)</code>
+for now.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">vm_do_claim_page</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> page *page)</span></span>;
+</code></pre>
+<blockquote>
+<p>Claims, meaning allocate a physical frame, a page. You first get a frame by
+calling <code>vm_get_frame</code> (which is already done for you in the template).
+Then, you need to set up the MMU. In other words, add the mapping from the
+virtual address to the physical address in the page table. The return value
+should indicate whether the operation was successful or not.</p>
+</blockquote>
+<hr>
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">vm_claim_page</span> <span class="hljs-params">(<span class="hljs-keyword">void</span> *va)</span></span>;
+</code></pre>
+<blockquote>
+<p>Claims the page to allocate <code>va</code>. You will first need to get a page and then
+calls vm_do_claim_page with the page.</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="introduction.html" class="navigation navigation-prev " aria-label="Previous page: Introduction">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="anon.html" class="navigation navigation-next " aria-label="Next page: Anonymous Page">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Memory Management","level":"4.2","depth":1,"next":{"title":"Anonymous Page","level":"4.3","depth":1,"path":"project3/anon.md","ref":"project3/anon.md","articles":[]},"previous":{"title":"Introduction","level":"4.1","depth":1,"path":"project3/introduction.md","ref":"project3/introduction.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project3/vm_management.md","mtime":"2020-05-05T03:31:59.820Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-05T03:32:16.725Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

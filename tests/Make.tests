@@ -15,6 +15,8 @@ include ../../Makefile.userprog
 endif
 
 TIMEOUT = 60
+MEMORY = 20
+SWAP_DISK = 4
 
 clean::
 	rm -f $(OUTPUTS) $(ERRORS) $(RESULTS) 
@@ -51,7 +53,7 @@ $(foreach test,$(TESTS),$(eval $(test).output: TEST = $(test)))
 # Prevent an environment variable VERBOSE from surprising us.
 VERBOSE =
 
-TESTCMD = pintos -v -k -T $(TIMEOUT)
+TESTCMD = pintos -v -k -T $(TIMEOUT) -m $(MEMORY)
 TESTCMD += $(SIMULATOR)
 TESTCMD += $(PINTOSOPTS)
 ifeq ($(filter userprog, $(KERNEL_SUBDIRS)), userprog)
@@ -59,7 +61,7 @@ TESTCMD += --fs-disk=$(FSDISK)
 TESTCMD += $(foreach file,$(PUTFILES),-p $(file):$(notdir $(file)))
 endif
 ifeq ($(filter vm, $(KERNEL_SUBDIRS)), vm)
-TESTCMD += --swap-disk=4
+TESTCMD += --swap-disk=$(SWAP_DISK)
 endif
 TESTCMD += -- -q 
 TESTCMD += $(KERNELFLAGS)

@@ -1,0 +1,7 @@
+# -*- makefile -*-
+
+tests/vm/cow_TESTS = $(addprefix tests/vm/cow/cow-, simple)
+
+tests/vm/cow_PROGS = $(tests/vm/cow_TESTS)
+
+tests/vm/cow/cow-simple_SRC = tests/vm/cow/cow-simple.c tests/lib.c tests/main.c

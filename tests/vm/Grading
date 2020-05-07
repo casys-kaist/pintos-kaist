@@ -1,0 +1,17 @@
+# Percentage of the testing point total designated for each set of
+# tests.
+
+# This project is primarily about virtual memory, but all the previous
+# functionality should work too
+
+1%	tests/threads/Rubric.alarm
+1%	tests/threads/Rubric.priority
+8%	tests/userprog/Rubric.functionality
+5%	tests/userprog/Rubric.robustness
+
+55%	tests/vm/Rubric.functionality
+25%	tests/vm/Rubric.robustness
+5%	tests/filesys/base/Rubric
+
+# Extra project
+25%	tests/vm/cow/Rubric

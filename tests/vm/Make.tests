@@ -1,0 +1,139 @@
+# -*- makefile -*-
+
+tests/vm_TESTS = $(addprefix tests/vm/,pt-grow-stack	\
+pt-grow-bad pt-big-stk-obj pt-bad-addr pt-bad-read pt-write-code	\
+pt-write-code2 pt-grow-stk-sc page-linear page-parallel page-merge-seq	\
+page-merge-par page-merge-stk page-merge-mm page-shuffle mmap-read	\
+mmap-close mmap-unmap mmap-overlap mmap-twice mmap-write mmap-ro mmap-exit	\
+mmap-shuffle mmap-bad-fd mmap-clean mmap-inherit mmap-misalign		\
+mmap-null mmap-over-code mmap-over-data mmap-over-stk mmap-remove	\
+mmap-zero mmap-bad-fd2 mmap-bad-fd3 mmap-zero-len mmap-off mmap-bad-off \
+mmap-kernel lazy-file lazy-anon swap-file swap-anon swap-iter swap-fork)
+
+tests/vm_PROGS = $(tests/vm_TESTS) $(addprefix tests/vm/,child-linear	\
+child-sort child-qsort child-qsort-mm child-mm-wrt child-inherit child-swap)
+
+tests/vm/pt-grow-stack_SRC = tests/vm/pt-grow-stack.c tests/arc4.c	\
+tests/cksum.c tests/lib.c tests/main.c
+tests/vm/pt-grow-bad_SRC = tests/vm/pt-grow-bad.c tests/lib.c tests/main.c
+tests/vm/pt-big-stk-obj_SRC = tests/vm/pt-big-stk-obj.c tests/arc4.c	\
+tests/cksum.c tests/lib.c tests/main.c
+tests/vm/pt-bad-addr_SRC = tests/vm/pt-bad-addr.c tests/lib.c tests/main.c
+tests/vm/pt-bad-read_SRC = tests/vm/pt-bad-read.c tests/lib.c tests/main.c
+tests/vm/pt-write-code_SRC = tests/vm/pt-write-code.c tests/lib.c tests/main.c
+tests/vm/pt-write-code2_SRC = tests/vm/pt-write-code2.c tests/lib.c tests/main.c
+tests/vm/pt-grow-stk-sc_SRC = tests/vm/pt-grow-stk-sc.c tests/lib.c tests/main.c
+tests/vm/page-linear_SRC = tests/vm/page-linear.c tests/arc4.c	\
+tests/lib.c tests/main.c
+tests/vm/page-parallel_SRC = tests/vm/page-parallel.c tests/lib.c tests/main.c
+tests/vm/page-merge-seq_SRC = tests/vm/page-merge-seq.c tests/arc4.c	\
+tests/lib.c tests/main.c
+tests/vm/page-merge-par_SRC = tests/vm/page-merge-par.c \
+tests/vm/parallel-merge.c tests/arc4.c tests/lib.c tests/main.c
+tests/vm/page-merge-stk_SRC = tests/vm/page-merge-stk.c \
+tests/vm/parallel-merge.c tests/arc4.c tests/lib.c tests/main.c
+tests/vm/page-merge-mm_SRC = tests/vm/page-merge-mm.c \
+tests/vm/parallel-merge.c tests/arc4.c tests/lib.c tests/main.c
+tests/vm/page-shuffle_SRC = tests/vm/page-shuffle.c tests/arc4.c	\
+tests/cksum.c tests/lib.c tests/main.c
+tests/vm/mmap-read_SRC = tests/vm/mmap-read.c tests/lib.c tests/main.c
+tests/vm/mmap-close_SRC = tests/vm/mmap-close.c tests/lib.c tests/main.c
+tests/vm/mmap-unmap_SRC = tests/vm/mmap-unmap.c tests/lib.c tests/main.c
+tests/vm/mmap-overlap_SRC = tests/vm/mmap-overlap.c tests/lib.c tests/main.c
+tests/vm/mmap-twice_SRC = tests/vm/mmap-twice.c tests/lib.c tests/main.c
+tests/vm/mmap-write_SRC = tests/vm/mmap-write.c tests/lib.c tests/main.c
+tests/vm/mmap-ro_SRC = tests/vm/mmap-ro.c tests/lib.c tests/main.c
+tests/vm/mmap-exit_SRC = tests/vm/mmap-exit.c tests/lib.c tests/main.c
+tests/vm/mmap-shuffle_SRC = tests/vm/mmap-shuffle.c tests/arc4.c	\
+tests/cksum.c tests/lib.c tests/main.c
+tests/vm/mmap-bad-fd_SRC = tests/vm/mmap-bad-fd.c tests/lib.c tests/main.c
+tests/vm/mmap-bad-fd2_SRC = tests/vm/mmap-bad-fd2.c tests/lib.c tests/main.c
+tests/vm/mmap-bad-fd3_SRC = tests/vm/mmap-bad-fd3.c tests/lib.c tests/main.c
+tests/vm/mmap-clean_SRC = tests/vm/mmap-clean.c tests/lib.c tests/main.c
+tests/vm/mmap-inherit_SRC = tests/vm/mmap-inherit.c tests/lib.c tests/main.c
+tests/vm/mmap-misalign_SRC = tests/vm/mmap-misalign.c tests/lib.c	\
+tests/main.c
+tests/vm/mmap-null_SRC = tests/vm/mmap-null.c tests/lib.c tests/main.c
+tests/vm/mmap-over-code_SRC = tests/vm/mmap-over-code.c tests/lib.c	\
+tests/main.c
+tests/vm/mmap-over-data_SRC = tests/vm/mmap-over-data.c tests/lib.c	\
+tests/main.c
+tests/vm/mmap-over-stk_SRC = tests/vm/mmap-over-stk.c tests/lib.c tests/main.c
+tests/vm/mmap-remove_SRC = tests/vm/mmap-remove.c tests/lib.c tests/main.c
+tests/vm/mmap-zero_SRC = tests/vm/mmap-zero.c tests/lib.c tests/main.c
+tests/vm/mmap-zero-len_SRC = tests/vm/mmap-zero-len.c tests/lib.c tests/main.c
+tests/vm/mmap-off_SRC = tests/vm/mmap-off.c tests/lib.c tests/main.c
+tests/vm/mmap-bad-off_SRC = tests/vm/mmap-bad-off.c tests/lib.c tests/main.c
+tests/vm/mmap-kernel_SRC = tests/vm/mmap-kernel.c tests/lib.c tests/main.c
+
+tests/vm/child-linear_SRC = tests/vm/child-linear.c tests/arc4.c tests/lib.c
+tests/vm/child-qsort_SRC = tests/vm/child-qsort.c tests/vm/qsort.c tests/lib.c
+tests/vm/child-qsort-mm_SRC = tests/vm/child-qsort-mm.c tests/vm/qsort.c \
+tests/lib.c
+tests/vm/child-sort_SRC = tests/vm/child-sort.c tests/lib.c
+tests/vm/child-mm-wrt_SRC = tests/vm/child-mm-wrt.c tests/lib.c tests/main.c
+tests/vm/child-inherit_SRC = tests/vm/child-inherit.c tests/lib.c tests/main.c
+
+tests/vm/swap-file_SRC = tests/vm/swap-file.c tests/lib.c tests/main.c
+tests/vm/swap-iter_SRC = tests/vm/swap-iter.c tests/lib.c tests/main.c
+tests/vm/swap-anon_SRC = tests/vm/swap-anon.c tests/lib.c tests/main.c
+tests/vm/swap-fork_SRC = tests/vm/swap-fork.c tests/lib.c tests/main.c
+tests/vm/lazy-file_SRC = tests/vm/lazy-file.c tests/lib.c tests/main.c
+tests/vm/lazy-anon_SRC = tests/vm/lazy-anon.c tests/lib.c tests/main.c
+
+tests/vm/child-swap_SRC = tests/vm/child-swap.c tests/lib.c tests/main.c
+
+tests/vm/pt-bad-read_PUTFILES = tests/vm/sample.txt
+tests/vm/pt-write-code2_PUTFILES = tests/vm/sample.txt
+tests/vm/mmap-close_PUTFILES = tests/vm/sample.txt
+tests/vm/mmap-read_PUTFILES = tests/vm/sample.txt
+tests/vm/mmap-unmap_PUTFILES = tests/vm/sample.txt
+tests/vm/mmap-twice_PUTFILES = tests/vm/sample.txt
+tests/vm/mmap-ro_PUTFILES = tests/vm/large.txt
+tests/vm/mmap-overlap_PUTFILES = tests/vm/zeros
+tests/vm/mmap-exit_PUTFILES = tests/vm/child-mm-wrt
+tests/vm/page-parallel_PUTFILES = tests/vm/child-linear
+tests/vm/page-merge-seq_PUTFILES = tests/vm/child-sort
+tests/vm/page-merge-par_PUTFILES = tests/vm/child-sort
+tests/vm/page-merge-stk_PUTFILES = tests/vm/child-qsort
+tests/vm/page-merge-mm_PUTFILES = tests/vm/child-qsort-mm
+tests/vm/mmap-clean_PUTFILES = tests/vm/sample.txt
+tests/vm/mmap-inherit_PUTFILES = tests/vm/sample.txt tests/vm/child-inherit
+tests/vm/mmap-misalign_PUTFILES = tests/vm/sample.txt
+tests/vm/mmap-null_PUTFILES = tests/vm/sample.txt
+tests/vm/mmap-over-code_PUTFILES = tests/vm/sample.txt
+tests/vm/mmap-over-data_PUTFILES = tests/vm/sample.txt
+tests/vm/mmap-over-stk_PUTFILES = tests/vm/sample.txt
+tests/vm/mmap-remove_PUTFILES = tests/vm/sample.txt
+tests/vm/swap-file_PUTFILES = tests/vm/large.txt
+tests/vm/swap-iter_PUTFILES = tests/vm/large.txt
+tests/vm/swap-fork_PUTFILES = tests/vm/child-swap
+tests/vm/lazy-file_PUTFILES = tests/vm/sample.txt tests/vm/small.txt
+tests/vm/mmap-off_PUTFILES = tests/vm/large.txt
+tests/vm/mmap-bad-off_PUTFILES = tests/vm/large.txt
+tests/vm/mmap-kernel_PUTFILES = tests/vm/sample.txt
+
+tests/vm/page-linear.output: TIMEOUT = 300
+tests/vm/page-shuffle.output: TIMEOUT = 600
+tests/vm/page-shuffle.output: MEMORY = 20
+tests/vm/mmap-shuffle.output: TIMEOUT = 600
+tests/vm/mmap-shuffle.output: MEMORY = 20
+tests/vm/page-merge-seq.output: TIMEOUT = 600
+tests/vm/page-merge-par.output: TIMEOUT = 600
+tests/vm/lazy-file.output: TIMEOUT = 600
+tests/vm/swap-anon.output: SWAP_DISK = 30
+tests/vm/swap-anon.output: MEMORY = 10
+tests/vm/swap-file.output: SWAP_DISK = 10
+tests/vm/swap-file.output: MEMORY = 10
+tests/vm/swap-iter.output: SWAP_DISK = 50
+tests/vm/swap-iter.output: MEMORY = 10
+tests/vm/swap-fork.output: SWAP_DISK = 200
+tests/vm/swap-fork.output: MEMORY = 40
+tests/vm/swap-fork.output: TIMEOUT = 600
+
+
+tests/vm/zeros:
+	dd if=/dev/zero of=$@ bs=1024 count=6
+
+clean::
+	rm -f tests/vm/zeros

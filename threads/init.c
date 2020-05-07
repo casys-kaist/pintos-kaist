@@ -27,9 +27,8 @@
 #include "userprog/gdt.h"
 #include "userprog/syscall.h"
 #include "userprog/tss.h"
-#else
-#include "tests/threads/tests.h"
 #endif
+#include "tests/threads/tests.h"
 #ifdef VM
 #include "vm/vm.h"
 #endif

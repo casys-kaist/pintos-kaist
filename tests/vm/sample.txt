@@ -1,0 +1,17 @@
+===  ALL USERS PLEASE NOTE  ========================
+
+CAR and CDR now return extra values.
+
+The function CAR now returns two values.  Since it has to go to the
+trouble to figure out if the object is carcdr-able anyway, we figured
+you might as well get both halves at once.  For example, the following
+code shows how to destructure a cons (SOME-CONS) into its two slots
+(THE-CAR and THE-CDR):
+
+        (MULTIPLE-VALUE-BIND (THE-CAR THE-CDR) (CAR SOME-CONS) ...)
+
+For symmetry with CAR, CDR returns a second value which is the CAR of
+the object.  In a related change, the functions MAKE-ARRAY and CONS
+have been fixed so they don't allocate any storage except on the
+stack.  This should hopefully help people who don't like using the
+garbage collector because it cold boots the machine so often.

@@ -16,7 +16,7 @@ include ../../threads/targets.mk
 # User process code.
 include ../../userprog/targets.mk
 # Virtual memory code.
-# include ../../vm/targets.mk
+include ../../vm/targets.mk
 # Filesystem code.
 include ../../filesys/targets.mk
 # Library code shared between kernel and user programs.

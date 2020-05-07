@@ -11,7 +11,7 @@ typedef int pid_t;
 
 /* Map region identifier. */
 typedef int off_t;
-#define MAP_FAILED ((mapid_t) -1)
+#define MAP_FAILED ((void *) NULL)
 
 /* Maximum characters in a filename written by readdir(). */
 #define READDIR_MAX_LEN 14
@@ -48,5 +48,13 @@ bool mkdir (const char *dir);
 bool readdir (int fd, char name[READDIR_MAX_LEN + 1]);
 bool isdir (int fd);
 int inumber (int fd);
+
+static inline void* get_phys_addr (void *user_addr) {
+	void* pa;
+	asm volatile ("movq %0, %%rax" ::"r"(user_addr));
+	asm volatile ("int $0x42");
+	asm volatile ("\t movq %%rax, %0": "=r" (pa));
+	return pa;
+}
 
 #endif /* lib/user/syscall.h */

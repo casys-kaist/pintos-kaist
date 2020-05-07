@@ -1,4 +1,4 @@
-BUILD_SUBDIRS = threads userprog vm filesys
+BUILD_SUBDIRS = threads userprog vm
 TAR_PATH := team${TEAM}.tar.gz
 
 all::

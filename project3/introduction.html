@@ -683,8 +683,8 @@
 OS can properly handle multiple threads of execution with proper
 synchronization, and can load multiple user programs at once. However, the
 number and size of programs that can run is limited by the machine&apos;s main memory
-size. In this assignment, you will remove that limitation by building an illusion
-of infinite memory.</p>
+size. In this assignment, you will remove that limitation by building an
+illusion of infinite memory.</p>
 <p>You will build this assignment on top of the last one. Test programs from
 project 2 should also work with project 3. You should take care to fix any bugs
 in your project 2 submission before you start work on project 3, because those
@@ -701,15 +701,14 @@ provide some details about each template file that you will be modifying.</p>
 <ul>
 <li><p><code>include/vm/vm.h</code>, <code>vm/vm.c</code></p>
 <p>Provides a general interface for virtual memory. In the header file,
-you see different vm_types, VM_UNINIT, VM_ANON, VM_FILE, VM_PAGE_CACHE
-that your virtual memory system has to support (ignore VM_PAGE_CACHE for now, 
-this is for project 4).
+you can see the defintion and explanation for different vm_type -- VM_UNINIT,
+VM_ANON, VM_FILE, VM_PAGE_CACHE -- that your virtual memory system has to support (ignore VM_PAGE_CACHE for now, this is for project 4).
 You will also implement your supplementary page table here (read below).</p>
 </li>
 <li><p><code>include/vm/uninit.h</code>, <code>vm/uninit.c</code></p>
-<p>Provides operations for uninitialized pages (vm_type = <code>VM_UNINIT</code>). All pages
-are initially set up as uninitialized pages, then it transforms to anonymous
-pages or file-mapped pages.</p>
+<p>Provides operations for uninitialized pages (vm_type = <code>VM_UNINIT</code>). Under
+the current design, all pages are initially set up as uninitialized pages,
+then it transforms to anonymous pages or file-mapped pages.</p>
 </li>
 <li><p><code>include/vm/anon.h</code>, <code>vm/anon.c</code></p>
 <p>Provides operations for anonymous pages (vm_type = <code>VM_ANON</code>).</p>
@@ -721,7 +720,7 @@ pages or file-mapped pages.</p>
 <p>Contains memory inspection operations for grading. Do not change this files.</p>
 </li>
 </ul>
-<p>Most of the code you write for this project will be files 
+<p>Most of the code you write for this project will be files
 in <code>vm</code> directory and in files introduced in earlier projects.
 You will probably be encountering just a few files for the first time such as:</p>
 <ul>
@@ -752,8 +751,8 @@ we use 4-level page table, which makes a virtual address to look like this:</p>
                                           Virtual Address
 </code></pre><p>Each process has an independent set of user (virtual) pages, which are those
 pages below the virtual address <code>KERN_BASE</code> (0x8004000000). The set of
-<strong><em>kernel (virtual) pages</em></strong>, on the other hand, is global, and thus remain in 
-the same position 
+<strong><em>kernel (virtual) pages</em></strong>, on the other hand, is global, and thus remain in
+the same position
 regardless of what thread or process is running. The kernel may access both user
 and kernel pages, but a user process may access only its own user pages. See
 <a href="../project2/introduction.html">Virtual Memory Layout</a>, for more information.</p>
@@ -797,8 +796,8 @@ unmodified offset to obtain the physical address, on the right.</p>
                   \_______________________________________/
 </code></pre><h4 id="swap-slots">Swap Slots</h4>
 <p>A <strong><em>swap slot</em></strong> is a page-size region of disk space in the swap
-partition. Although hardware limitations dictating the placement 
-of slots are more flexible than for frames, swap slots should be 
+partition. Although hardware limitations dictating the placement
+of slots are more flexible than for frames, swap slots should be
 page-aligned because there is no downside in doing so.</p>
 <h3 id="resource-management-overview">Resource Management Overview</h3>
 <p>You will need to design/implement the following data structures:</p>
@@ -824,9 +823,9 @@ should contain. You also need to decide on the data structure&apos;s scope, eith
 local (per-process) or global (applying to the whole system), and how many
 instances are required within its scope.</p>
 <p>To simplify your design, you may store these data structures in non-pageable
-memory. That means that you can be sure that pointers among them will remain
-valid.</p>
-<p>Possible choices of data structures include arrays, lists, bitmaps, and hash
+memory (e.g., memory allocated by <code>calloc</code> or <code>malloc</code>). That means that you can be sure that pointers among them will remain valid.</p>
+<h4 id="choices-of-implementation-performance-perspective">Choices of implementation (Performance perspective)</h4>
+<p>Possible choices for implementation include arrays, lists, bitmaps, and hash
 tables. An array is often the simplest approach, but a sparsely populated array
 wastes memory. Lists are also simple, but traversing a long list to find
 a particular position wastes time. Both arrays and lists can be resized, but lists
@@ -854,12 +853,16 @@ on a page fault, the kernel looks up the virtual page that faulted in the
 supplemental page table to find out what data should be there. Second, the
 kernel consults the supplemental page table when a process terminates, to decide
 what resources to free.</p>
+<h4 id="organization-of-supplemental-page-table">Organization of Supplemental Page Table</h4>
 <p>You may organize the supplemental page table as you wish. There are at least two
 basic approaches to its organization: in terms of segments or in terms of pages.
-Optionally, you may use the page table itself as an index to track the members
+A segment here refers to a consecutive group of pages, i.e., memory region
+containing an executable or a memory-mapped file.</p>
+<p>Optionally, you may use the page table itself to track the members
 of the supplemental page table. You will have to modify the Pintos page table
 implementation in <code>threads/mmu.c</code> to do so. We recommend this approach for
 advanced students only.</p>
+<h4 id="handling-page-fault">Handling page fault</h4>
 <p>The most important user of the supplemental page table is the page fault
 handler. In project 2, a page fault always indicated a bug in the kernel or a
 user program. In project 3, this is no longer true. Now, a page fault might only
@@ -869,10 +872,10 @@ page fault handler, which is <code>page_fault()</code> in <code>userprog/excepti
 your page fault handler, <code>vm_try_handle_fault()</code> in <code>vm/vm.c</code>.
 Your page fault handler needs to do roughly the following:</p>
 <ol>
-<li><p>Locate the page that faulted in the supplemental page table. If the memory 
+<li><p>Locate the page that faulted in the supplemental page table. If the memory
 reference is valid, use the supplemental page table entry to locate the data
 that goes in the page, which might be in the file system, or in a swap slot, or
-it might simply be an all-zero page. If you implement sharing, the page&apos;s data
+it might simply be an all-zero page. If you implement sharing (i.e., Copy-on-Write), the page&apos;s data
 might even already be in a page frame, but not in the page table.
 If the supplemental page table indicates that the user process should not
 expect any data at the address it was trying to access, or if the page lies
@@ -946,8 +949,7 @@ details of the functions to work with accessed and dirty bits.</p>
 unused swap slot for evicting a page from its frame to the swap partition. It
 should allow freeing a swap slot when its page is read back or the process whose
 page was swapped is terminated.</p>
-<p>You may use the <code>BLOCK_SWAP</code> block device for swapping, obtaining the
-<code>struct block</code> that represents it by calling <code>block_get_role()</code>. From the
+<p>From the
 <code>vm/build</code> directory, use the command <code>pintos-mkdisk swap.dsk --swap-size=n</code> to
 create a disk named <code>swap.dsk</code> that contains a n-MB swap partition. Afterward,
 <code>swap.dsk</code> will automatically be attached as an extra disk when you run pintos.
@@ -1027,7 +1029,7 @@ process.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"4.1","depth":1,"next":{"title":"Memory Management","level":"4.2","depth":1,"path":"project3/vm_management.md","ref":"project3/vm_management.md","articles":[]},"previous":{"title":"FAQ","level":"3.8","depth":1,"path":"project2/FAQ.md","ref":"project2/FAQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project3/introduction.md","mtime":"2020-05-12T12:13:40.310Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-12T12:13:51.076Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"4.1","depth":1,"next":{"title":"Memory Management","level":"4.2","depth":1,"path":"project3/vm_management.md","ref":"project3/vm_management.md","articles":[]},"previous":{"title":"FAQ","level":"3.8","depth":1,"path":"project2/FAQ.md","ref":"project2/FAQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project3/introduction.md","mtime":"2020-05-13T11:34:06.127Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-13T11:34:26.043Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

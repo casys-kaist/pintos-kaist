@@ -15,7 +15,8 @@ test_main (void)
   for (i = 0; i < CHILD_CNT; i++) {
     children[i] = fork ("child-linear");
     if (children[i] == 0) {
-      CHECK (exec ("child-linear") != -1, "exec \"child-linear\"");
+      if (exec ("child-linear") == -1)
+        fail ("failed to exec child-linear");
     }
   }
   for (i = 0; i < CHILD_CNT; i++) {

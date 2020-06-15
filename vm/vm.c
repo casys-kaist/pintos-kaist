@@ -39,8 +39,7 @@ static struct frame *vm_evict_frame (void);
 
 /* Create the pending page object with initializer. If you want to create a
  * page, do not create it directly and make it through this function or
- * `vm_alloc_page`.
- * DO NOT MODIFY THIS FUNCTION. */
+ * `vm_alloc_page`. */
 bool
 vm_alloc_page_with_initializer (enum vm_type type, void *upage, bool writable,
 		vm_initializer *init, void *aux) {

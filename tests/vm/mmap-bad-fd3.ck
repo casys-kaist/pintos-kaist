@@ -10,6 +10,6 @@ mmap-bad-fd3: exit(0)
 EOF
 (mmap-bad-fd3) begin
 (mmap-bad-fd3) try to mmap stdout
-mmap-bad-fd: exit(-1)
+mmap-bad-fd3: exit(-1)
 EOF
 pass;

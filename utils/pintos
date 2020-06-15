@@ -25,8 +25,8 @@ def get_temp_dsk_name():
 
 class Pintos(object):
     def __init__(self, ttest=False, mem=256, no_vga=True, serial=False,
-                 args=[], hostfns=[], gdb=False, fs='fs.dsk', swap='swap.dsk',
-                 timeout=0):
+                 args=[], mnts=[], hostfns=[], guestfns=[], gdb=False,
+                 fs='fs.dsk', swap='swap.dsk', timeout=0):
         self.ttest = ttest
         self.mem = mem
         self.no_vga = no_vga
@@ -35,6 +35,8 @@ class Pintos(object):
         self.proc = None
         self.timeout = timeout
         self.host_fns = hostfns
+        self.guest_fns = guestfns
+        self.mnts = mnts
         self.bdevs = {'os': 'os.dsk', 'fs': fs, 'swap': swap}
 
     def __scan_dir(self):
@@ -55,6 +57,7 @@ class Pintos(object):
 
     def __prepare_scratch_files(self):
         puts = []
+        gets = []
         self.bdevs['scratch'] = get_temp_dsk_name()
         disk = open(self.bdevs['scratch'], 'wb')
         for fname in self.host_fns:
@@ -66,10 +69,15 @@ class Pintos(object):
                        struct.pack("<I", len(data)) +
                        bytes("\0" * 504, 'utf-8'))
             disk.write(align(data, 512))
-        disk.close()
-        return puts
 
-    def __prepare_kernel_argument(self, puts):
+        for fname in self.guest_fns:
+            disk.write(bytes("\0" * 0x100000, 'utf-8'))
+            gets.append(fname)
+
+        disk.close()
+        return puts, gets
+
+    def __prepare_kernel_argument(self, puts, gets):
         rem = []
         args = []
         for idx, arg in enumerate(self.args):
@@ -83,6 +91,9 @@ class Pintos(object):
             args.extend(['put', put])
 
         args.extend(rem)
+
+        for get in gets:
+            args.extend(['get', get[0]])
 
         cmd = ''.join('{}\0'.format(c) for c in args)
         if len(cmd) > 128:
@@ -113,6 +124,11 @@ class Pintos(object):
                 cmd.extend(['-drive',
                             'file={},format=raw,index={},media=disk'
                             .format(self.bdevs[d], idx)])
+        for idx, mnt in enumerate(self.mnts):
+            cmd.extend(['-drive',
+                        'file={},format=raw,index={},media=disk'
+                        .format(mnt, 4 + idx)])
+
         cmd.extend(['-cpu', 'qemu64'])
         cmd.extend(['-m', str(self.mem)])
         cmd.extend(['-no-reboot'])
@@ -120,13 +136,28 @@ class Pintos(object):
         cmd.extend(['-serial', 'mon:stdio'])
         return cmd
 
+    def get_files(self, gets):
+        # get files.
+        if gets:
+            with open(self.bdevs['scratch'], 'rb') as f:
+                for get in gets:
+                    if f.read(4) != b'GET\0':
+                        print('bad signature on scratch disk')
+                    else:
+                        size = struct.unpack("<I", f.read(4))[0]
+                        f.read(504)  # skip to the next sector
+                        with open(get[1], 'wb') as g:  # Copy file data.
+                            g.write(f.read(size))
+                        # Skip forward in disk up to beginning of next sector.
+                        if size % 512 != 0:
+                            size += (512 - size % 512)
+
     def run(self):
         self.bdevs = self.__scan_dir()
-        if self.host_fns:
-            puts = self.__prepare_scratch_files()
-        else:
-            puts = []
-        self.bdevs['os'] = self.__prepare_kernel_argument(puts)
+        puts, gets = (self.__prepare_scratch_files()
+                      if self.host_fns or self.guest_fns else ([], []))
+
+        self.bdevs['os'] = self.__prepare_kernel_argument(puts, gets)
         cmd = self.__prepare_cmd()
         args = {'stdin': sys.stdin, 'stdout': sys.stdout, 'stderr': sys.stderr}
         if self.timeout != 0:
@@ -136,8 +167,9 @@ class Pintos(object):
         except subprocess.TimeoutExpired:
             sys.stdout.write("TIMEOUT")
         finally:
-            for k, bdev in self.bdevs.items(): # delete temporal disk file
-                if os.path.exists(bdev) and "tmp" in bdev:
+            self.get_files(gets)
+            for k, bdev in self.bdevs.items():  # delete temporal disk file
+                if os.path.exists(bdev) and bdev.startswith("/tmp"):
                     os.remove(bdev)
 
 
@@ -163,9 +195,13 @@ if __name__ == '__main__':
                         action='append', default=[],
                         help='Copy HOSTFN into VM, splited by ":".'
                              ' (e.g. tests/userprog/args-none:args-none')
-    parser.add_argument('-g', '--get-file', dest='GUESTFNS',
+    parser.add_argument('-g', '--get-file', dest='GUESTFNS', nargs=1,
+                        action='append', default=[],
                         help='Copy GUESTFN out of VM, '
                              'by default under same name')
+    parser.add_argument('--mnts', dest='MNTS', nargs=1,
+                        action='append', default=[],
+                        help='Additional mounting disks')
     parser.add_argument('--gdb', action='store_true', default=False,
                         help='Debug with gdb')
     parser.add_argument('-t', '--threads-tests', action='store_true',
@@ -184,4 +220,6 @@ if __name__ == '__main__':
     Pintos(ttest=args.threads_tests, mem=args.memory, no_vga=args.no_vga,
            args=kern_args, timeout=args.timeout, fs=args.fs_disk, gdb=args.gdb,
            swap=args.swap_disk,
-           hostfns=[f[0].split(':') for f in args.HOSTFNS]).run()
+           mnts=[f[0] for f in args.MNTS],
+           hostfns=[f[0].split(':') for f in args.HOSTFNS],
+           guestfns=[f[0].split(':') for f in args.GUESTFNS]).run()

@@ -24,3 +24,8 @@ Functionality of extended file system:
 
 - Test writing from multiple processes.
 5	syn-rw
+
+- Symlink
+5	symlink-file
+5	symlink-dir
+5	symlink-link

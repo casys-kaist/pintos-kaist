@@ -48,6 +48,7 @@ bool mkdir (const char *dir);
 bool readdir (int fd, char name[READDIR_MAX_LEN + 1]);
 bool isdir (int fd);
 int inumber (int fd);
+int symlink (const char* target, const char* linkpath);
 
 static inline void* get_phys_addr (void *user_addr) {
 	void* pa;

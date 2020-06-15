@@ -42,7 +42,8 @@ file_duplicate (struct file *file) {
 	struct file *nfile = file_open (inode_reopen (file->inode));
 	if (nfile) {
 		nfile->pos = file->pos;
-		nfile->deny_write = file->deny_write;
+		if (file->deny_write)
+			file_deny_write (nfile);
 	}
 	return nfile;
 }

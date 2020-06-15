@@ -29,9 +29,13 @@ enum {
 	SYS_READDIR,                /* Reads a directory entry. */
 	SYS_ISDIR,                  /* Tests if a fd represents a directory. */
 	SYS_INUMBER,                /* Returns the inode number for a fd. */
+	SYS_SYMLINK,                /* Returns the inode number for a fd. */
 
 	/* Extra for Project 2 */
 	SYS_DUP2,                   /* Duplicate the file descriptor */
+
+	SYS_MOUNT,
+	SYS_UMOUNT,
 };
 
 #endif /* lib/syscall-nr.h */

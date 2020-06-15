@@ -27,6 +27,9 @@ enum vm_type {
 #include "vm/uninit.h"
 #include "vm/anon.h"
 #include "vm/file.h"
+#ifdef EFILESYS
+#include "filesys/page_cache.h"
+#endif
 
 struct page_operations;
 struct thread;

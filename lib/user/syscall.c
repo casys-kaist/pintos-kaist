@@ -179,3 +179,18 @@ int
 inumber (int fd) {
 	return syscall1 (SYS_INUMBER, fd);
 }
+
+int
+symlink (const char* target, const char* linkpath) {
+	return syscall2 (SYS_SYMLINK, target, linkpath);
+}
+
+int
+mount (const char *path, int chan_no, int dev_no) {
+	return syscall3 (SYS_MOUNT, path, chan_no, dev_no);
+}
+
+int
+umount (const char *path) {
+	return syscall1 (SYS_UMOUNT, path);
+}

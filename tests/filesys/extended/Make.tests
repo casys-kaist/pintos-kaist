@@ -4,7 +4,8 @@ raw_tests = dir-empty-name dir-mk-tree dir-mkdir dir-open		\
 dir-over-file dir-rm-cwd dir-rm-parent dir-rm-root dir-rm-tree		\
 dir-rmdir dir-under-file dir-vine grow-create grow-dir-lg		\
 grow-file-size grow-root-lg grow-root-sm grow-seq-lg grow-seq-sm	\
-grow-sparse grow-tell grow-two-files syn-rw
+grow-sparse grow-tell grow-two-files syn-rw				\
+symlink-file symlink-dir symlink-link
 
 tests/filesys/extended_TESTS = $(patsubst %,tests/filesys/extended/%,$(raw_tests))
 tests/filesys/extended_EXTRA_GRADES = $(patsubst %,tests/filesys/extended/%-persistence,$(raw_tests))
@@ -35,7 +36,7 @@ GETCMD = pintos -v -k -T $(GETTIMEOUT)
 GETCMD += $(PINTOSOPTS)
 GETCMD += $(SIMULATOR)
 GETCMD += --fs-disk=$(FSDISK)
-GETCMD += -g fs.tar -a $(TEST).tar
+GETCMD += -g fs.tar:$(TEST).tar
 ifeq ($(filter vm, $(KERNEL_SUBDIRS)), vm)
 GETCMD += --swap-disk=4
 endif

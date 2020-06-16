@@ -46,7 +46,7 @@ filesys_init (bool format) {
 void
 filesys_done (void) {
 	/* Original FS */
-#ifdef EFILSYS
+#ifdef EFILESYS
 	fat_close ();
 #else
 	free_map_close ();
@@ -107,7 +107,7 @@ static void
 do_format (void) {
 	printf ("Formatting file system...");
 
-#ifdef EFILSYS
+#ifdef EFILESYS
 	/* Create FAT and save it to the disk. */
 	fat_create ();
 	fat_close ();

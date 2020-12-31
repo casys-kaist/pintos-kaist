@@ -695,7 +695,7 @@
 <p>In this part of this project, you will implement the non-disk based image
 called <em>anonymous page</em>.</p>
 <p>An anonymous mapping has no backing file or device. It is anonymous
-because it does not have any named file source (unlike file-mapped pages).
+because it does not have any named file source (unlike file-backed pages).
 Anonymous pages are used in executable, such as for stack and heap.</p>
 <p>There is a struct to describe an anonymous page - <code>anon_page</code> in
 <code>include/vm/anon.h</code>. It is currently empty, but you may add members to store
@@ -720,7 +720,7 @@ point, a page fault occurs because the program is trying to access a page which
 it believes to possess but the page has no contents yet. During the fault
 handling procedure, <code>uninit_initialize</code> is invoked and calls the initializer you
 set earlier. The initializer will be <code>anon_initializer</code> for anonymous pages and
-<code>file_map_initializer</code> for file-mapped pages.</p>
+<code>file_backed_initializer</code> for file-backed pages.</p>
 <p>A page can have a life cycle of
 initialize-&gt;(page_fault-&gt;lazy-load-&gt;swap-in&gt;swap-out-&gt;...)-&gt;destroy.
 For each transition of the life cycle, the required procedure differs
@@ -881,7 +881,7 @@ still can be uninit page when the process exits.</p>
 want to check the vm type of the page and handle accordingly.</p>
 </blockquote>
 <p>For now, you can only handle the anonymous pages. You will later revisit this
-function to clean up the file-mapped pages.</p>
+function to clean up the file-backed pages.</p>
 <hr>
 <pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">anon_destroy</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> page *page)</span></span>;
 </code></pre>
@@ -933,7 +933,7 @@ explicitly free the page struct, the caller should do it.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Anonymous Page","level":"4.3","depth":1,"next":{"title":"Stack Growth","level":"4.4","depth":1,"path":"project3/stack_growth.md","ref":"project3/stack_growth.md","articles":[]},"previous":{"title":"Memory Management","level":"4.2","depth":1,"path":"project3/vm_management.md","ref":"project3/vm_management.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project3/anon.md","mtime":"2020-06-15T13:21:24.972Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-15T13:22:40.985Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Anonymous Page","level":"4.3","depth":1,"next":{"title":"Stack Growth","level":"4.4","depth":1,"path":"project3/stack_growth.md","ref":"project3/stack_growth.md","articles":[]},"previous":{"title":"Memory Management","level":"4.2","depth":1,"path":"project3/vm_management.md","ref":"project3/vm_management.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project3/anon.md","mtime":"2020-12-31T09:41:36.408Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-12-31T09:47:04.878Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

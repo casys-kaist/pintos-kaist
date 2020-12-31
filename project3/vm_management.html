@@ -761,12 +761,12 @@ function pointers.</p>
 page structure <code>struct page</code> in <code>include/vm/vm.h</code>, you see that it has a field
 named <code>operations</code>. Now, go to <code>vm/file.c</code>, you will see the page_operations
 structure <code>file_ops</code> declared before the function prototypes. This is the table
-of function pointers for file-mapped pages. <code>.destroy</code> field has value
-<code>file_map_destroy</code>, which is a function that destroys the page and is defined in
+of function pointers for file-backed pages. <code>.destroy</code> field has value
+<code>file_backed_destroy</code>, which is a function that destroys the page and is defined in
 the same file.</p>
-<p>Let&apos;s try to understand how <code>file_map_destroy</code> is invoked with the function
+<p>Let&apos;s try to understand how <code>file_backed_destroy</code> is invoked with the function
 pointer interface. Suppose <code>vm_dealloc_page (page)</code> (in <code>vm/vm.c</code>) is called,
-and this page happens to be a file-mapped page (<code>VM_FILE</code>). Inside the function,
+and this page happens to be a file-backed page (<code>VM_FILE</code>). Inside the function,
 it invokes <code>destroy (page)</code>. <code>destroy (page)</code> is defined with a macro in
 <code>include/vm/vm.h</code> like the following:</p>
 <pre><code class="lang-C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> destroy(page) <span class="hljs-meta-keyword">if</span> ((page)-&gt;operations-&gt;destroy) (page)-&gt;operations-&gt;destroy (page)</span>
@@ -774,7 +774,7 @@ it invokes <code>destroy (page)</code>. <code>destroy (page)</code> is defined w
 <p>This tells us that calling <code>destroy</code> function actually invokes
 <code>(page)-&gt;operations-&gt;destroy (page)</code>, which is the <code>destroy</code> function retrieved
 from the page structure. Because the page is a <code>VM_FILE</code> page, its <code>.destroy</code>
-field points to <code>file_map_destory</code>. As a result, destroy routine for file-mapped
+field points to <code>file_backed_destory</code>. As a result, destroy routine for file-backed
 page is performed.</p>
 <h3 id="implement-supplemental-page-table">Implement Supplemental Page Table</h3>
 <p>At this point, your Pintos has a page table (<code>pml4</code>) to manage virtual and
@@ -899,7 +899,7 @@ calls vm_do_claim_page with the page.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Memory Management","level":"4.2","depth":1,"next":{"title":"Anonymous Page","level":"4.3","depth":1,"path":"project3/anon.md","ref":"project3/anon.md","articles":[]},"previous":{"title":"Introduction","level":"4.1","depth":1,"path":"project3/introduction.md","ref":"project3/introduction.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project3/vm_management.md","mtime":"2020-06-15T13:21:24.972Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-15T13:22:40.985Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Memory Management","level":"4.2","depth":1,"next":{"title":"Anonymous Page","level":"4.3","depth":1,"path":"project3/anon.md","ref":"project3/anon.md","articles":[]},"previous":{"title":"Introduction","level":"4.1","depth":1,"path":"project3/introduction.md","ref":"project3/introduction.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project3/vm_management.md","mtime":"2020-12-31T09:41:36.412Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-12-31T09:47:04.878Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

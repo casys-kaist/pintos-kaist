@@ -702,7 +702,7 @@ run out of memory but receives a memory allocation request, it chooses a page to
 evict out to swap disk. Then, the exact state of the memory frame is copied to
 the disk. When a process tries to access a swapped out page, OS recovers the
 page by bringing the exact content back to the memory.</p>
-<p>The page chosen for eviction may be an anonymous page or a file-mapped page.
+<p>The page chosen for eviction may be an anonymous page or a file-backed page.
 In this section, you will handle each case.</p>
 <p>All the swapping operations are not called explicitly, but as function pointers.
 They are members of <code>struct page_operations file_ops</code>, which will be registered
@@ -752,20 +752,20 @@ data should be saved in the page struct. If there is no more free slot in the
 disk, you can panic the kernel.</p>
 </blockquote>
 <h3 id="file-mapped-page">File-Mapped Page</h3>
-<p>Since the contents of a file-mapped page comes from a file, the mmaped file
-should be used as a backing store. That is, evicting a file-mapped page writes
-it back to the file it was mapped from. Implement <code>file_map_swap_in</code>,
-<code>file_map_swap_out</code> in <code>vm/file.c</code>. You might modify <code>file_map_init</code> and
+<p>Since the contents of a file-backed page comes from a file, the mmaped file
+should be used as a backing store. That is, evicting a file-backed page writes
+it back to the file it was mapped from. Implement <code>file_backed_swap_in</code>,
+<code>file_backed_swap_out</code> in <code>vm/file.c</code>. You might modify <code>file_backed_init</code> and
 <code>file_initializer</code> according to your design.</p>
 <hr>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">file_map_swap_in</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> page *page, <span class="hljs-keyword">void</span> *kva)</span></span>;
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">file_backed_swap_in</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> page *page, <span class="hljs-keyword">void</span> *kva)</span></span>;
 </code></pre>
 <blockquote>
 <p>Swaps in a page at <code>kva</code> by reading the contents in from the file. You need to
 synchronize with the file system.</p>
 </blockquote>
 <hr>
-<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">file_map_swap_out</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> page *page)</span></span>;
+<pre><code class="lang-C"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span> <span class="hljs-title">file_backed_swap_out</span> <span class="hljs-params">(<span class="hljs-keyword">struct</span> page *page)</span></span>;
 </code></pre>
 <blockquote>
 <p>Swaps out a page by writing the contents back to the file. You may want to
@@ -816,7 +816,7 @@ off the dirty bit for the page.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Swap In/Out","level":"4.6","depth":1,"next":{"title":"Copy-on-Write (Extra)","level":"4.7","depth":1,"path":"project3/cow.md","ref":"project3/cow.md","articles":[]},"previous":{"title":"Memory Mapped Files","level":"4.5","depth":1,"path":"project3/memory_mapped_files.md","ref":"project3/memory_mapped_files.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project3/swapping.md","mtime":"2020-06-15T13:21:24.972Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-15T13:22:40.985Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Swap In/Out","level":"4.6","depth":1,"next":{"title":"Copy-on-Write (Extra)","level":"4.7","depth":1,"path":"project3/cow.md","ref":"project3/cow.md","articles":[]},"previous":{"title":"Memory Mapped Files","level":"4.5","depth":1,"path":"project3/memory_mapped_files.md","ref":"project3/memory_mapped_files.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project3/swapping.md","mtime":"2020-12-31T09:41:36.412Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-12-31T09:47:04.878Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

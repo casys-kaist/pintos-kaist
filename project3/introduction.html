@@ -721,13 +721,13 @@ You will also implement your supplementary page table here (read below).</p>
 <li><p><code>include/vm/uninit.h</code>, <code>vm/uninit.c</code></p>
 <p>Provides operations for uninitialized pages (vm_type = <code>VM_UNINIT</code>). Under
 the current design, all pages are initially set up as uninitialized pages,
-then it transforms to anonymous pages or file-mapped pages.</p>
+then it transforms to anonymous pages or file-backed pages.</p>
 </li>
 <li><p><code>include/vm/anon.h</code>, <code>vm/anon.c</code></p>
 <p>Provides operations for anonymous pages (vm_type = <code>VM_ANON</code>).</p>
 </li>
 <li><p><code>include/vm/file.h</code>, <code>vm/file.c</code></p>
-<p>Provides operations for file-mapped pages (vm_type = <code>VM_FILE</code>).</p>
+<p>Provides operations for file-backed pages (vm_type = <code>VM_FILE</code>).</p>
 </li>
 <li><p><code>include/vm/inspect.h</code>, <code>vm/inspect.c</code></p>
 <p>Contains memory inspection operations for grading. Do not change this files.</p>
@@ -1042,7 +1042,7 @@ process.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"4.1","depth":1,"next":{"title":"Memory Management","level":"4.2","depth":1,"path":"project3/vm_management.md","ref":"project3/vm_management.md","articles":[]},"previous":{"title":"FAQ","level":"3.8","depth":1,"path":"project2/FAQ.md","ref":"project2/FAQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project3/introduction.md","mtime":"2020-06-15T13:21:24.972Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-06-15T13:22:40.985Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"4.1","depth":1,"next":{"title":"Memory Management","level":"4.2","depth":1,"path":"project3/vm_management.md","ref":"project3/vm_management.md","articles":[]},"previous":{"title":"FAQ","level":"3.8","depth":1,"path":"project2/FAQ.md","ref":"project2/FAQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project3/introduction.md","mtime":"2020-12-31T09:41:36.408Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-12-31T09:47:04.878Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

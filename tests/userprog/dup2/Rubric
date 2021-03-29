@@ -1,4 +1,4 @@
 Functionality of features that VM might break:
 
 1	dup2-simple
-99	dup2-complex
+3	dup2-complex

@@ -1,42 +1,59 @@
-Robustness of system calls:
-- Test robustness of file descriptor handling.
-2	close-bad-fd
-2	close-twice
-2	read-bad-fd
-2	read-stdout
-2	write-bad-fd
-2	write-stdin
-2	multi-child-fd
+Functionality of system calls:
+- Test argument passing on Pintos command line.
+1	args-none
+1	args-single
+1	args-multiple
+1	args-many
+1	args-dbl-space
 
-- Test robustness of pointer handling.
-3	create-bad-ptr
-3	exec-bad-ptr
-3	open-bad-ptr
-3	read-bad-ptr
-3	write-bad-ptr
+- Test "create" system call.
+1	create-empty
+1	create-long
+1	create-normal
+1	create-exists
 
-- Test robustness of buffer copying across page boundaries.
-3	create-bound
-3	open-boundary
-3	read-boundary
-3	write-boundary
-3	fork-boundary
-3	exec-boundary
+- Test "open" system call.
+1	open-missing
+1	open-normal
+1	open-twice
 
-- Test handling of null pointer and empty strings.
-2	create-null
-2	open-null
-2	open-empty
+- Test "read" system call.
+1	read-normal
+1	read-zero
 
-- Test robustness of "fork", "exec" and "wait" system calls.
-5	exec-missing
-5	wait-bad-pid
-5	wait-killed
+- Test "write" system call.
+1	write-normal
+1	write-zero
 
-- Test robustness of exception handling.
-1	bad-read
-1	bad-write
-1	bad-jump
-1	bad-read2
-1	bad-write2
-1	bad-jump2
+- Test "close" system call.
+1	close-normal
+
+- Test "fork" system call.
+1	fork-once
+1	fork-multiple
+2	fork-close
+2	fork-read
+
+- Test "exec" system call.
+1	exec-once
+1	exec-arg
+2	exec-read
+
+- Test "wait" system call.
+1	wait-simple
+1	wait-twice
+
+- Test "exit" system call.
+1	exit
+
+- Test "halt" system call.
+1	halt
+
+- Test recursive execution of user programs.
+2	fork-recursive
+2	multi-recurse
+
+- Test read-only executable feature.
+1	rox-simple
+2	rox-child
+2	rox-multichild

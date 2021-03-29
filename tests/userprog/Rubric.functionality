@@ -1,59 +1,59 @@
 Functionality of system calls:
 - Test argument passing on Pintos command line.
-3	args-none
-3	args-single
-3	args-multiple
-3	args-many
-3	args-dbl-space
+1	args-none
+1	args-single
+1	args-multiple
+1	args-many
+1	args-dbl-space
 
 - Test "create" system call.
-3	create-empty
-3	create-long
-3	create-normal
-3	create-exists
+1	create-empty
+1	create-long
+1	create-normal
+1	create-exists
 
 - Test "open" system call.
-3	open-missing
-3	open-normal
-3	open-twice
+1	open-missing
+1	open-normal
+1	open-twice
 
 - Test "read" system call.
-3	read-normal
-3	read-zero
+1	read-normal
+1	read-zero
 
 - Test "write" system call.
-3	write-normal
-3	write-zero
+1	write-normal
+1	write-zero
 
 - Test "close" system call.
-3	close-normal
+1	close-normal
 
 - Test "fork" system call.
-3	fork-once
-3	fork-multiple
-3	fork-close
-8	fork-read
+1	fork-once
+1	fork-multiple
+2	fork-close
+2	fork-read
 
 - Test "exec" system call.
-3	exec-once
-3	exec-arg
-10	exec-read
+1	exec-once
+1	exec-arg
+2	exec-read
 
 - Test "wait" system call.
-5	wait-simple
-5	wait-twice
+1	wait-simple
+1	wait-twice
 
 - Test "exit" system call.
-5	exit
+1	exit
 
 - Test "halt" system call.
-3	halt
+1	halt
 
 - Test recursive execution of user programs.
-5	fork-recursive
-15	multi-recurse
+2	fork-recursive
+2	multi-recurse
 
 - Test read-only executable feature.
-3	rox-simple
-3	rox-child
-3	rox-multichild
+1	rox-simple
+2	rox-child
+2	rox-multichild

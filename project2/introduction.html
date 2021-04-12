@@ -967,11 +967,14 @@ helpful code:</p>
  * UADDR must be below KERN_BASE.
  * Returns the byte value if successful, -1 if a segfault
  * occurred. */</span>
-<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span>
+<span class="hljs-function"><span class="hljs-keyword">static</span> int64_t
 <span class="hljs-title">get_user</span> <span class="hljs-params">(<span class="hljs-keyword">const</span> uint8_t *uaddr)</span> </span>{
-    <span class="hljs-keyword">int</span> result;
-    <span class="hljs-keyword">asm</span> (<span class="hljs-string">&quot;movl $1f, %0; movzbl %1, %0; 1:&quot;</span>
-         : <span class="hljs-string">&quot;=&amp;a&quot;</span> (result) : <span class="hljs-string">&quot;m&quot;</span> (*uaddr));
+    <span class="hljs-keyword">int64_t</span> result;
+    __asm __volatile (
+    <span class="hljs-string">&quot;movabsq $done_get, %0\n&quot;</span>
+    <span class="hljs-string">&quot;movzbq %1, %0\n&quot;</span>
+    <span class="hljs-string">&quot;done_get:\n&quot;</span>
+    : <span class="hljs-string">&quot;=&amp;a&quot;</span> (result) : <span class="hljs-string">&quot;m&quot;</span> (*uaddr));
     <span class="hljs-keyword">return</span> result;
 }
 
@@ -980,8 +983,11 @@ helpful code:</p>
  * Returns true if successful, false if a segfault occurred. */</span>
 <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">bool</span>
 <span class="hljs-title">put_user</span> <span class="hljs-params">(uint8_t *udst, uint8_t byte)</span> </span>{
-    <span class="hljs-keyword">int</span> error_code;
-    <span class="hljs-keyword">asm</span> (<span class="hljs-string">&quot;movl $1f, %0; movb %b2, %1; 1:&quot;</span>
+    <span class="hljs-keyword">int64_t</span> error_code;
+    __asm __volatile (
+    <span class="hljs-string">&quot;movabsq $done_put, %0\n&quot;</span>
+    <span class="hljs-string">&quot;movb %b2, %1\n&quot;</span>
+    <span class="hljs-string">&quot;done_put:\n&quot;</span>
     : <span class="hljs-string">&quot;=&amp;a&quot;</span> (error_code), <span class="hljs-string">&quot;=m&quot;</span> (*udst) : <span class="hljs-string">&quot;q&quot;</span> (byte));
     <span class="hljs-keyword">return</span> error_code != <span class="hljs-number">-1</span>;
 }
@@ -1033,7 +1039,7 @@ value into <code>%rip</code>.</p>
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"3.1","depth":1,"next":{"title":"Argument Passing","level":"3.2","depth":1,"path":"project2/argument_passing.md","ref":"project2/argument_passing.md","articles":[]},"previous":{"title":"FAQ","level":"2.5","depth":1,"path":"project1/FAQ.md","ref":"project1/FAQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project2/introduction.md","mtime":"2021-03-27T04:56:37.284Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-03-27T06:20:48.852Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"3.1","depth":1,"next":{"title":"Argument Passing","level":"3.2","depth":1,"path":"project2/argument_passing.md","ref":"project2/argument_passing.md","articles":[]},"previous":{"title":"FAQ","level":"2.5","depth":1,"path":"project1/FAQ.md","ref":"project1/FAQ.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"project2/introduction.md","mtime":"2021-04-11T09:56:49.298Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-04-11T09:57:09.538Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

@@ -1,59 +1,43 @@
-Functionality of system calls:
-- Test argument passing on Pintos command line.
-1	args-none
-1	args-single
-1	args-multiple
-1	args-many
-1	args-dbl-space
 
-- Test "create" system call.
-1	create-empty
-1	create-long
-1	create-normal
-1	create-exists
+Robustness of system calls:
+- Test robustness of file descriptor handling.
+1	close-bad-fd
+1	close-twice
+1	read-bad-fd
+1	read-stdout
+1	write-bad-fd
+1	write-stdin
+2	multi-child-fd
 
-- Test "open" system call.
-1	open-missing
-1	open-normal
-1	open-twice
+- Test robustness of pointer handling.
+1	create-bad-ptr
+1	exec-bad-ptr
+1	open-bad-ptr
+1	read-bad-ptr
+1	write-bad-ptr
 
-- Test "read" system call.
-1	read-normal
-1	read-zero
+- Test robustness of buffer copying across page boundaries.
+2	create-bound
+2	open-boundary
+2	read-boundary
+2	write-boundary
+2	fork-boundary
+2	exec-boundary
 
-- Test "write" system call.
-1	write-normal
-1	write-zero
+- Test handling of null pointer and empty strings.
+1	create-null
+1	open-null
+1	open-empty
 
-- Test "close" system call.
-1	close-normal
+- Test robustness of "fork", "exec" and "wait" system calls.
+2	exec-missing
+2	wait-bad-pid
+2	wait-killed
 
-- Test "fork" system call.
-1	fork-once
-1	fork-multiple
-2	fork-close
-2	fork-read
-
-- Test "exec" system call.
-1	exec-once
-1	exec-arg
-2	exec-read
-
-- Test "wait" system call.
-1	wait-simple
-1	wait-twice
-
-- Test "exit" system call.
-1	exit
-
-- Test "halt" system call.
-1	halt
-
-- Test recursive execution of user programs.
-2	fork-recursive
-2	multi-recurse
-
-- Test read-only executable feature.
-1	rox-simple
-2	rox-child
-2	rox-multichild
+- Test robustness of exception handling.
+1	bad-read
+1	bad-write
+1	bad-jump
+1	bad-read2
+1	bad-write2
+1	bad-jump2

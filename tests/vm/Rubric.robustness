@@ -1,9 +1,9 @@
 Robustness of virtual memory subsystem:
 - Test robustness of page table support.
-2	pt-bad-addr
-2	pt-bad-read
-2	pt-write-code
-2	pt-write-code2
+1	pt-bad-addr
+3	pt-bad-read
+1	pt-write-code
+3	pt-write-code2
 2	pt-grow-bad
 
 - Test robustness of "mmap" system call.
@@ -11,16 +11,16 @@ Robustness of virtual memory subsystem:
 1	mmap-bad-fd2
 1	mmap-bad-fd3
 
-1	mmap-inherit
+3	mmap-inherit
 1	mmap-null
 1	mmap-zero
-1	mmap-zero-len
+2	mmap-zero-len
 
 1	mmap-misalign
 
 1	mmap-over-code
 1	mmap-over-data
-1	mmap-over-stk
+2	mmap-over-stk
 1	mmap-overlap
 1	mmap-bad-off
-3	mmap-kernel
+2	mmap-kernel

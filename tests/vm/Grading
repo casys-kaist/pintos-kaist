@@ -9,8 +9,8 @@
 8%	tests/userprog/Rubric.functionality
 5%	tests/userprog/Rubric.robustness
 
-55%	tests/vm/Rubric.functionality
-25%	tests/vm/Rubric.robustness
+60%	tests/vm/Rubric.functionality
+20%	tests/vm/Rubric.robustness
 5%	tests/filesys/base/Rubric
 
 # Extra project

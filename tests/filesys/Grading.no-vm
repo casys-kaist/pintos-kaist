@@ -17,6 +17,5 @@
 15%	tests/filesys/extended/Rubric.robustness
 20%	tests/filesys/extended/Rubric.persistence
 
-# extra 40x0.9=36%
-9%	tests/filesys/mount/Rubric
-27%	tests/filesys/journaling/Rubric
+# extra 18%
+18%	tests/filesys/mount/Rubric

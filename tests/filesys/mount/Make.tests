@@ -1,0 +1,52 @@
+# -*- makefile -*-
+
+mount_tests = mount-easy
+tests/filesys/mount_TESTS = $(patsubst %,tests/filesys/mount/%,$(mount_tests))
+tests/filesys/mount_GRADES = $(patsubst %,tests/filesys/mount/%-persistence,$(mount_tests))
+
+tests/filesys/mount_PROGS = $(tests/filesys/mount_TESTS) 
+
+$(foreach prog,$(tests/filesys/mount_PROGS),			\
+	$(eval $(prog)_SRC += $(prog).c tests/lib.c tests/filesys/seq-test.c))
+$(foreach prog,$(tests/filesys/mount_TESTS),		\
+	$(eval $(prog)_SRC += tests/main.c))
+$(foreach prog,$(tests/filesys/mount_TESTS),		\
+	$(eval $(prog)_PUTFILES += tests/filesys/extended/tar))
+# The version of GNU make 3.80 on vine barfs if this is split at
+# the last comma.
+$(foreach test,$(tests/filesys/mount_TESTS),$(eval $(test).output: FSDISK = tmp.dsk))
+$(foreach test,$(tests/filesys/mount_TESTS),$(eval $(test).output: EXDISK = mnt.dsk))
+
+GETTIMEOUT = 120
+
+PUTCMD2 = pintos -v -k -T 60 --fs-disk=tmp.dsk
+PUTCMD2 += $(foreach file,$(PUTFILES),-p $(file):$(notdir $(file)))
+PUTCMD2 += -- -q -f < /dev/null 2> /dev/null > /dev/null
+
+FORMATCMD = pintos -v -k -T 60 --fs-disk=mnt.dsk -- -q   -f < /dev/null 2> /dev/null > /dev/null
+
+tests/filesys/mount/%.output: os.dsk
+	rm -f tmp.dsk
+	rm -f mnt.dsk
+	pintos-mkdisk tmp.dsk 2
+	pintos-mkdisk mnt.dsk 2
+	$(PUTCMD2)
+	$(FORMATCMD)
+	$(TESTCMD)
+	rm -f tmp.dsk
+	rm -f mnt.dsk
+# $(foreach raw_test,$(raw_tests),$(eval tests/filesys/mount/$(raw_test)-persistence.output: tests/filesys/mount/$(raw_test).output))
+# $(foreach raw_test,$(raw_tests),$(eval tests/filesys/mount/$(raw_test)-persistence.result: tests/filesys/mount/$(raw_test).result))
+
+
+%.result: %.ck %.output
+	perl -I$(SRCDIR) $< $* $@
+
+$(foreach mount_test,$(mount_tests),$(eval tests/filesys/mount/$(mount_test)-persistence.output: tests/filesys/mount/$(mount_test).output))
+$(foreach mount_test,$(mount_tests),$(eval tests/filesys/mount/$(mount_test)-persistence.result: tests/filesys/mount/$(mount_test).result))
+
+TARS = $(addsuffix .tar,$(tests/filesys/mount_TESTS))
+
+clean::
+	rm -f $(TARS)
+	rm -f tests/filesys/mount/can-rmdir-cwd

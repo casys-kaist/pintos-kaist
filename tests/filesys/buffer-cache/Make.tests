@@ -1,0 +1,51 @@
+# -*- makefile -*-
+
+buffer-cache_tests = bc-easy
+
+tests/filesys/extended_TESTS = $(patsubst %,tests/filesys/extended/%,$(raw_tests))
+tests/filesys/extended_EXTRA_GRADES = $(patsubst %,tests/filesys/extended/%-persistence,$(raw_tests))
+
+tests/filesys/extended_PROGS = $(tests/filesys/extended_TESTS) \
+tests/filesys/extended/child-syn-rw tests/filesys/extended/tar
+
+$(foreach prog,$(tests/filesys/extended_PROGS),			\
+	$(eval $(prog)_SRC += $(prog).c tests/lib.c tests/filesys/seq-test.c))
+$(foreach prog,$(tests/filesys/extended_TESTS),		\
+	$(eval $(prog)_SRC += tests/main.c))
+$(foreach prog,$(tests/filesys/extended_TESTS),		\
+	$(eval $(prog)_PUTFILES += tests/filesys/extended/tar))
+# The version of GNU make 3.80 on vine barfs if this is split at
+# the last comma.
+$(foreach test,$(tests/filesys/extended_TESTS),$(eval $(test).output: FSDISK = tmp.dsk))
+
+
+GETTIMEOUT = 60
+
+GETCMD = pintos -v -k -T $(GETTIMEOUT)
+GETCMD += $(PINTOSOPTS)
+GETCMD += $(SIMULATOR)
+GETCMD += --fs-disk=$(FSDISK)
+GETCMD += -g fs.tar:$(TEST).tar
+ifeq ($(filter vm, $(KERNEL_SUBDIRS)), vm)
+GETCMD += --swap-disk=4
+endif
+GETCMD += -- -q
+GETCMD += $(KERNELFLAGS)
+GETCMD += run 'tar fs.tar /'
+GETCMD += < /dev/null
+GETCMD += 2> $(TEST)-persistence.errors $(if $(VERBOSE),|tee,>) $(TEST)-persistence.output
+
+tests/filesys/buffer-cache/%.output: os.dsk
+	rm -f tmp.dsk
+	pintos-mkdisk tmp.dsk 2
+	$(TESTCMD)
+	$(GETCMD)
+	rm -f tmp.dsk
+$(foreach raw_test,$(raw_tests),$(eval tests/filesys/buffer-cache/$(raw_test)-persistence.output: tests/filesys/buffer-cache/$(raw_test).output))
+$(foreach raw_test,$(raw_tests),$(eval tests/filesys/buffer-cache/$(raw_test)-persistence.result: tests/filesys/buffer-cache/$(raw_test).result))
+
+TARS = $(addsuffix .tar,$(tests/filesys/buffer-cache))
+
+clean::
+	rm -f $(TARS)
+	rm -f tests/filesys/buffer-cache/can-rmdir-cwd

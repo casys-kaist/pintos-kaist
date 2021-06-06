@@ -23,4 +23,5 @@ disk_sector_t disk_size (struct disk *);
 void disk_read (struct disk *, disk_sector_t, void *);
 void disk_write (struct disk *, disk_sector_t, const void *);
 
+void 	register_disk_inspect_intr ();
 #endif /* devices/disk.h */

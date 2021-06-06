@@ -151,6 +151,9 @@ disk_init (void) {
 			if (c->devices[dev_no].is_ata)
 				identify_ata_device (&c->devices[dev_no]);
 	}
+
+	/* DO NOT MODIFY BELOW LINES. */
+	register_disk_inspect_intr ();
 }
 
 /* Prints disk statistics. */
@@ -526,4 +529,26 @@ interrupt_handler (struct intr_frame *f) {
 	NOT_REACHED ();
 }
 
+static void
+inspect_read_cnt (struct intr_frame *f) {
+	struct disk * d = disk_get (f->R.rdx, f->R.rcx);
+	f->R.rax = d->read_cnt;
+}
 
+static void
+inspect_write_cnt (struct intr_frame *f) {
+	struct disk * d = disk_get (f->R.rdx, f->R.rcx);
+	f->R.rax = d->write_cnt;
+}
+
+/* Tool for testing disk r/w cnt. Calling this function via int 0x43 and int 0x44.
+ * Input:
+ *   @RDX - chan_no of disk to inspect
+ *   @RCX - dev_no of disk to inspect
+ * Output:
+ *   @RAX - Read/Write count of disk. */
+void
+register_disk_inspect_intr (void) {
+	intr_register_int (0x43, 3, INTR_OFF, inspect_read_cnt, "Inspect Disk Read Count");
+	intr_register_int (0x44, 3, INTR_OFF, inspect_write_cnt, "Inspect Disk Write Count");
+}

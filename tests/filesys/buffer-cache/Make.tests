@@ -1,19 +1,20 @@
 # -*- makefile -*-
 
-bc_tests = bc-easy
-tests/filesys/bc_TESTS = $(patsubst %,tests/filesys/bc/%,$(bc_tests))
-tests/filesys/bc_GRADES = $(patsubst %,tests/filesys/bc/%-persistence,$(bc_tests))
-tests/filesys/bc_PROGS = $(tests/filesys/bc_TESTS) 
+buffer-cache_tests = bc-easy
+tests/filesys/buffer-cache_TESTS = $(patsubst %,tests/filesys/buffer-cache/%,$(buffer-cache_tests))
+tests/filesys/buffer-cache_GRADES = $(patsubst %,tests/filesys/buffer-cache/%-persistence,$(buffer-cache_tests))
 
-$(foreach prog,$(tests/filesys/bc_PROGS),			\
+tests/filesys/buffer-cache_PROGS = $(tests/filesys/buffer-cache_TESTS) 
+
+$(foreach prog,$(tests/filesys/buffer-cache_PROGS),			\
 	$(eval $(prog)_SRC += $(prog).c tests/lib.c tests/filesys/seq-test.c))
-$(foreach prog,$(tests/filesys/bc_TESTS),		\
+$(foreach prog,$(tests/filesys/buffer-cache_TESTS),		\
 	$(eval $(prog)_SRC += tests/main.c))
-$(foreach prog,$(tests/filesys/bc_TESTS),		\
+$(foreach prog,$(tests/filesys/buffer-cache_TESTS),		\
 	$(eval $(prog)_PUTFILES += tests/filesys/extended/tar))
 # The version of GNU make 3.80 on vine barfs if this is split at
 # the last comma.
-$(foreach test,$(tests/filesys/bc_TESTS),$(eval $(test).output: FSDISK = tmp.dsk))
+$(foreach test,$(tests/filesys/buffer-cache_TESTS),$(eval $(test).output: FSDISK = tmp.dsk))
 
 GETTIMEOUT = 120
 
@@ -21,7 +22,7 @@ PUTCMD2 = pintos -v -k -T 60 --fs-disk=tmp.dsk
 PUTCMD2 += $(foreach file,$(PUTFILES),-p $(file):$(notdir $(file)))
 PUTCMD2 += -- -q -f < /dev/null 2> /dev/null > /dev/null
 
-tests/filesys/bc/%.output: os.dsk
+tests/filesys/buffer-cache/%.output: os.dsk
 	rm -f tmp.dsk
 	pintos-mkdisk tmp.dsk 2
 	$(PUTCMD2)
@@ -33,8 +34,8 @@ tests/filesys/bc/%.output: os.dsk
 %.result: %.ck %.output
 	perl -I$(SRCDIR) $< $* $@
 
-TARS = $(addsuffix .tar,$(tests/filesys/bc_TESTS))
+TARS = $(addsuffix .tar,$(tests/filesys/buffer-cache_TESTS))
 
 clean::
 	rm -f $(TARS)
-	rm -f tests/filesys/bc/can-rmdir-cwd
+	rm -f tests/filesys/buffer-cache/can-rmdir-cwd

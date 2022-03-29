@@ -31,7 +31,8 @@ test_main (void) {
     c = 'a';
     write(fd, &c, 1);
   }
-
+  
+  seek(fd, 0);
   for (int i = 0; i < TEST_SIZE; i++){
     read(fd, &c, 1);
     if (c != 'a') fail("file content mismatch in %d : %x %x", i, buf[i], c);

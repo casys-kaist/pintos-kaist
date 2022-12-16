@@ -694,7 +694,7 @@ scheduler to switch between threads, and synchronization primitives
 (semaphores, locks, condition variables, and optimization barriers).</p>
 <p>Some of this code might seem slightly mysterious. If you haven&apos;t already
 compiled and run the base system, as described in the
-<a href="../introduction">introduction</a> you should do so now.
+<a href="../introduction/getting_started.html">introduction</a> you should do so now.
 You can read through parts of the source code to see what&apos;s going on. If you
 like, you can add calls to <code>printf()</code> almost anywhere, then recompile and run to
 see what happens and in what order. You can also run the kernel in a debugger
@@ -716,7 +716,7 @@ thread needs to wait for another thread to do something.</p>
 (You don&apos;t have to understand it.) It saves the state of the currently
 running thread and restores the state of the thread we&apos;re switching to.</p>
 <p>Using the GDB debugger, slowly trace through a context switch to see what
-happens (see <a href="">GDB</a>). You can set a breakpoint on <code>schedule()</code> to start out,
+happens (see <a href="../appendix/debugging_tools.html">GDB in Debugging Tools</a>). You can set a breakpoint on <code>schedule()</code> to start out,
 and then single-step from there. Be sure to keep track of each thread&apos;s address
 and state, and what procedures are on the call stack for each thread. You will
 notice that when one thread executes <code>iret</code> in <code>do_iret()</code>, another thread

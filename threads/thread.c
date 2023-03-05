@@ -562,7 +562,7 @@ schedule (void) {
 		   thread. This must happen late so that thread_exit() doesn't
 		   pull out the rug under itself.
 		   We just queuing the page free reqeust here because the page is
-		   currently used bye the stack.
+		   currently used by the stack.
 		   The real destruction logic will be called at the beginning of the
 		   schedule(). */
 		if (curr && curr->status == THREAD_DYING && curr != initial_thread) {

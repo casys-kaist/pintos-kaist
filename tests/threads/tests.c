@@ -11,6 +11,7 @@ struct test
 
 static const struct test tests[] = 
   {
+    {"hello", test_hello},
     {"alarm-single", test_alarm_single},
     {"alarm-multiple", test_alarm_multiple},
     {"alarm-simultaneous", test_alarm_simultaneous},
@@ -38,6 +39,7 @@ static const struct test tests[] =
     {"mlfqs-nice-2", test_mlfqs_nice_2},
     {"mlfqs-nice-10", test_mlfqs_nice_10},
     {"mlfqs-block", test_mlfqs_block},
+
   };
 
 static const char *test_name;

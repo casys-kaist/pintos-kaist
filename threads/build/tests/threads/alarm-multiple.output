@@ -1,0 +1,57 @@
+Kernel command line: -q run alarm-multiple
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'alarm-multiple':
+(alarm-multiple) begin
+(alarm-multiple) Creating 5 threads to sleep 7 times each.
+(alarm-multiple) Thread 0 sleeps 10 ticks each time,
+(alarm-multiple) thread 1 sleeps 20 ticks each time, and so on.
+(alarm-multiple) If successful, product of iteration count and
+(alarm-multiple) sleep duration will appear in nondescending order.
+(alarm-multiple) thread 0: duration=10, iteration=1, product=10
+(alarm-multiple) thread 0: duration=10, iteration=2, product=20
+(alarm-multiple) thread 1: duration=20, iteration=1, product=20
+(alarm-multiple) thread 0: duration=10, iteration=3, product=30
+(alarm-multiple) thread 2: duration=30, iteration=1, product=30
+(alarm-multiple) thread 3: duration=40, iteration=1, product=40
+(alarm-multiple) thread 0: duration=10, iteration=4, product=40
+(alarm-multiple) thread 1: duration=20, iteration=2, product=40
+(alarm-multiple) thread 0: duration=10, iteration=5, product=50
+(alarm-multiple) thread 4: duration=50, iteration=1, product=50
+(alarm-multiple) thread 2: duration=30, iteration=2, product=60
+(alarm-multiple) thread 0: duration=10, iteration=6, product=60
+(alarm-multiple) thread 1: duration=20, iteration=3, product=60
+(alarm-multiple) thread 0: duration=10, iteration=7, product=70
+(alarm-multiple) thread 3: duration=40, iteration=2, product=80
+(alarm-multiple) thread 1: duration=20, iteration=4, product=80
+(alarm-multiple) thread 2: duration=30, iteration=3, product=90
+(alarm-multiple) thread 1: duration=20, iteration=5, product=100
+(alarm-multiple) thread 4: duration=50, iteration=2, product=100
+(alarm-multiple) thread 1: duration=20, iteration=6, product=120
+(alarm-multiple) thread 2: duration=30, iteration=4, product=120
+(alarm-multiple) thread 3: duration=40, iteration=3, product=120
+(alarm-multiple) thread 1: duration=20, iteration=7, product=140
+(alarm-multiple) thread 4: duration=50, iteration=3, product=150
+(alarm-multiple) thread 2: duration=30, iteration=5, product=150
+(alarm-multiple) thread 3: duration=40, iteration=4, product=160
+(alarm-multiple) thread 2: duration=30, iteration=6, product=180
+(alarm-multiple) thread 4: duration=50, iteration=4, product=200
+(alarm-multiple) thread 3: duration=40, iteration=5, product=200
+(alarm-multiple) thread 2: duration=30, iteration=7, product=210
+(alarm-multiple) thread 3: duration=40, iteration=6, product=240
+(alarm-multiple) thread 4: duration=50, iteration=5, product=250
+(alarm-multiple) thread 3: duration=40, iteration=7, product=280
+(alarm-multiple) thread 4: duration=50, iteration=6, product=300
+(alarm-multiple) thread 4: duration=50, iteration=7, product=350
+(alarm-multiple) end
+Execution of 'alarm-multiple' complete.
+Timer: 596 ticks
+Thread: 0 idle ticks, 596 kernel ticks, 0 user ticks
+Console: 2994 characters output
+Keyboard: 0 keys pressed
+Powering off...

@@ -1,0 +1,93 @@
+FAIL
+Some load average values were missing or differed from those expected by more than 2.5.
+  time   actual <-> expected explanation
+------ -------- --- -------- ----------------------------------------
+     2     0.00  =  0.05     
+     4     0.00  =  0.16     
+     6     0.00  =  0.34     
+     8     0.00  =  0.58     
+    10     0.00  =  0.87     
+    12     0.00  =  1.22     
+    14     0.00  =  1.63     
+    16     0.00  =  2.09     
+    18     0.00 <<< 2.60     Too small, by 0.10.
+    20     0.00 <<< 3.16     Too small, by 0.66.
+    22     0.00 <<< 3.76     Too small, by 1.26.
+    24     0.00 <<< 4.42     Too small, by 1.92.
+    26     0.00 <<< 5.11     Too small, by 2.61.
+    28     0.00 <<< 5.85     Too small, by 3.35.
+    30     0.00 <<< 6.63     Too small, by 4.13.
+    32     0.00 <<< 7.46     Too small, by 4.96.
+    34     0.00 <<< 8.32     Too small, by 5.82.
+    36     0.00 <<< 9.22     Too small, by 6.72.
+    38     0.00 <<< 10.15    Too small, by 7.65.
+    40     0.00 <<< 11.12    Too small, by 8.62.
+    42     0.00 <<< 12.13    Too small, by 9.63.
+    44     0.00 <<< 13.16    Too small, by 10.66.
+    46     0.00 <<< 14.23    Too small, by 11.73.
+    48     0.00 <<< 15.33    Too small, by 12.83.
+    50     0.00 <<< 16.46    Too small, by 13.96.
+    52     0.00 <<< 17.62    Too small, by 15.12.
+    54     0.00 <<< 18.81    Too small, by 16.31.
+    56     0.00 <<< 20.02    Too small, by 17.52.
+    58     0.00 <<< 21.26    Too small, by 18.76.
+    60     0.00 <<< 22.52    Too small, by 20.02.
+    62     0.00 <<< 23.71    Too small, by 21.21.
+    64     0.00 <<< 24.80    Too small, by 22.30.
+    66     0.00 <<< 25.78    Too small, by 23.28.
+    68     0.00 <<< 26.66    Too small, by 24.16.
+    70     0.00 <<< 27.45    Too small, by 24.95.
+    72     0.00 <<< 28.14    Too small, by 25.64.
+    74     0.00 <<< 28.75    Too small, by 26.25.
+    76     0.00 <<< 29.27    Too small, by 26.77.
+    78     0.00 <<< 29.71    Too small, by 27.21.
+    80     0.00 <<< 30.06    Too small, by 27.56.
+    82     0.00 <<< 30.34    Too small, by 27.84.
+    84     0.00 <<< 30.55    Too small, by 28.05.
+    86     0.00 <<< 30.68    Too small, by 28.18.
+    88     0.00 <<< 30.74    Too small, by 28.24.
+    90     0.00 <<< 30.73    Too small, by 28.23.
+    92     0.00 <<< 30.66    Too small, by 28.16.
+    94     0.00 <<< 30.52    Too small, by 28.02.
+    96     0.00 <<< 30.32    Too small, by 27.82.
+    98     0.00 <<< 30.06    Too small, by 27.56.
+   100     0.00 <<< 29.74    Too small, by 27.24.
+   102     0.00 <<< 29.37    Too small, by 26.87.
+   104     0.00 <<< 28.95    Too small, by 26.45.
+   106     0.00 <<< 28.47    Too small, by 25.97.
+   108     0.00 <<< 27.94    Too small, by 25.44.
+   110     0.00 <<< 27.36    Too small, by 24.86.
+   112     0.00 <<< 26.74    Too small, by 24.24.
+   114     0.00 <<< 26.07    Too small, by 23.57.
+   116     0.00 <<< 25.36    Too small, by 22.86.
+   118     0.00 <<< 24.60    Too small, by 22.10.
+   120     0.00 <<< 23.81    Too small, by 21.31.
+   122     0.00 <<< 23.02    Too small, by 20.52.
+   124     0.00 <<< 22.26    Too small, by 19.76.
+   126     0.00 <<< 21.52    Too small, by 19.02.
+   128     0.00 <<< 20.81    Too small, by 18.31.
+   130     0.00 <<< 20.12    Too small, by 17.62.
+   132     0.00 <<< 19.46    Too small, by 16.96.
+   134     0.00 <<< 18.81    Too small, by 16.31.
+   136     0.00 <<< 18.19    Too small, by 15.69.
+   138     0.00 <<< 17.59    Too small, by 15.09.
+   140     0.00 <<< 17.01    Too small, by 14.51.
+   142     0.00 <<< 16.45    Too small, by 13.95.
+   144     0.00 <<< 15.90    Too small, by 13.40.
+   146     0.00 <<< 15.38    Too small, by 12.88.
+   148     0.00 <<< 14.87    Too small, by 12.37.
+   150     0.00 <<< 14.38    Too small, by 11.88.
+   152     0.00 <<< 13.90    Too small, by 11.40.
+   154     0.00 <<< 13.44    Too small, by 10.94.
+   156     0.00 <<< 13.00    Too small, by 10.50.
+   158     0.00 <<< 12.57    Too small, by 10.07.
+   160     0.00 <<< 12.15    Too small, by 9.65.
+   162     0.00 <<< 11.75    Too small, by 9.25.
+   164     0.00 <<< 11.36    Too small, by 8.86.
+   166     0.00 <<< 10.99    Too small, by 8.49.
+   168     0.00 <<< 10.62    Too small, by 8.12.
+   170     0.00 <<< 10.27    Too small, by 7.77.
+   172     0.00 <<< 9.93     Too small, by 7.43.
+   174     0.00 <<< 9.61     Too small, by 7.11.
+   176     0.00 <<< 9.29     Too small, by 6.79.
+   178     0.00 <<< 8.98     Too small, by 6.48.

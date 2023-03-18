@@ -1,0 +1,19 @@
+Kernel command line: -q run priority-fifo
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'priority-fifo':
+(priority-fifo) begin
+(priority-fifo) 16 threads will iterate 16 times in the same order each time.
+(priority-fifo) If the order varies then there is a bug.
+(priority-fifo) end
+Execution of 'priority-fifo' complete.
+Timer: 42 ticks
+Thread: 0 idle ticks, 42 kernel ticks, 0 user ticks
+Console: 557 characters output
+Keyboard: 0 keys pressed
+Powering off...

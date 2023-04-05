@@ -720,7 +720,7 @@ the memory parts that are immediately needed are loaded onto the main memory.
 This can reduce the overhead compared to eager loading, which loads all binary
 image into the memory at once.</p>
 <p>To support the lazy loading, we introduce a page type called <code>VM_UNINIT</code> in
-<code>include/vm/vm.h</code>. All pages are initially created as <code>VM_INIT</code> pages. We also
+<code>include/vm/vm.h</code>. All pages are initially created as <code>VM_UNINIT</code> pages. We also
 provide a page structure for uninitialized pages - <code>struct uninit_page</code> in
 <code>include/vm/uninit.h</code>. The functions for creating, initializing, and destroying
 uninitialized pages can be found in <code>include/vm/uninit.c</code>. You will have to

@@ -6,8 +6,8 @@ SECTIONS
 {
   /* Read-only sections, merged into text segment: */
   __executable_start = 0x0400000 + SIZEOF_HEADERS;
-  . = 0x0400000 + SIZEOF_HEADERS;
-  .text : AT(0x400000 + SIZEOF_HEADERS) {
+  . = 0x0400000;
+  .text : {
     *(.text)
     *(.note.gnu.build-id)
   } = 0x90

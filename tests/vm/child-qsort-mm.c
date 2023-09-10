@@ -7,11 +7,11 @@
 #include "tests/main.h"
 #include "tests/vm/qsort.h"
 
-const char *test_name = "child-qsort-mm";
-
 int
 main (int argc UNUSED, char *argv[]) 
 {
+  test_name = "child-qsort-mm";
+
   int handle;
   unsigned char *p = (unsigned char *) 0x10000000;
 

@@ -7,14 +7,14 @@
 #include "tests/lib.h"
 #include "tests/main.h"
 
-const char *test_name = "child-linear";
-
 #define SIZE (1024 * 1024)
 static char buf[SIZE];
 
 int
 main (int argc, char *argv[])
 {
+  test_name = "child-linear";
+
   const char *key = argv[argc - 1];
   struct arc4 arc4;
   size_t i;

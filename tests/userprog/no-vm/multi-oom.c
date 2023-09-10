@@ -34,8 +34,6 @@
 static const int EXPECTED_DEPTH_TO_PASS = 10;
 static const int EXPECTED_REPETITIONS = 10;
 
-const char *test_name = "multi-oom";
-
 int make_children (void);
 
 /* Open a number of files (and fail to close them).
@@ -141,6 +139,8 @@ make_children (void) {
 
 int
 main (int argc UNUSED, char *argv[] UNUSED) {
+  test_name = "multi-oom";
+
   msg ("begin");
 
   int first_run_depth = make_children ();

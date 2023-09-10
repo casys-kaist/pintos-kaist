@@ -9,11 +9,11 @@
 #include "tests/main.h"
 #include "tests/vm/qsort.h"
 
-const char *test_name = "child-qsort";
-
 int
 main (int argc UNUSED, char *argv[]) 
 {
+  test_name = "child-qsort";
+
   int handle;
   unsigned char buf[128 * 1024];
   size_t size;

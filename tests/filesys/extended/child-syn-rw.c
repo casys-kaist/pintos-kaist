@@ -13,14 +13,14 @@
 #include "tests/filesys/extended/syn-rw.h"
 #include "tests/lib.h"
 
-const char *test_name = "child-syn-rw";
-
 static char buf1[BUF_SIZE];
 static char buf2[BUF_SIZE];
 
 int
 main (int argc, const char *argv[]) 
 {
+  test_name = "child-syn-rw";
+
   int child_idx;
   int fd;
   size_t ofs;

@@ -31,7 +31,7 @@ cscope:: cscope.files
 	cscope -b -q -k
 
 archive:: clean
-ifeq ($(shell echo ${TEAM} | egrep "^[1-9]{1}[0-9]{0,2}$$"),)
+ifeq ($(shell echo ${TEAM} | egrep "^[1-2]{1}[0-9]{0,7}$$"),)
 	@echo "Check your team number: $(TEAM)"
 else
 	@tar -zcf /tmp/${TAR_PATH} . && \

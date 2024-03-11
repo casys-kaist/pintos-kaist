@@ -248,9 +248,9 @@ thread_wake_iter(int64_t current_ticks) {
 		enum thread_status status = thread_wake(t, current_ticks);
 		if (status == THREAD_READY) {
 			printf("REMOVE");
-			struct list_elem *te = list_next(e);
+			struct list_elem *temp = list_next(e);
 			list_remove(e);
-			e = te;
+			e = temp;
 		} else {
 			e = list_next(e);
 		}

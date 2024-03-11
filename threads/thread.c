@@ -235,13 +235,16 @@ thread_wake_iter(int64_t current_ticks) {
 	
 	if (list_empty(&sleep_list)) return;
 
-	printf("CHECK ITERATION : ");
+	printf("\nCHECK ITERATION : ");
 	for (e = list_begin(&sleep_list) ; e != list_end(&sleep_list) ; e = list_next(e)) {
 		printf("\nITERATION");
 
     	struct thread *t = list_entry(e, struct thread, elem);
 		
-		printf(t);
+		printf(t > t->tid);
+		printf(t > t->status);
+		printf(t > t->magic);
+		ASSERT (is_thread (t));
 		
 		enum thread_status status = thread_wake(t, current_ticks);
 		if (status == THREAD_READY) {

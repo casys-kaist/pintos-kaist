@@ -243,9 +243,9 @@ thread_wake_iter(int64_t current_ticks) {
 
     	struct thread *t = list_entry(e, struct thread, elem);
 
-		printf(t > t->wake_at_ticks);
+		printf("%d", t->wake_at_ticks);
 		printf("///");
-		printf(current_ticks);
+		printf("%d", current_ticks);
 		
 		enum thread_status status = thread_wake(t, current_ticks);
 		if (status == THREAD_READY) {

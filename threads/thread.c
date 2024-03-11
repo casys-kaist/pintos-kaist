@@ -231,7 +231,9 @@ thread_sleep(int64_t ticks) {
 
 void
 thread_wake_iter(int64_t current_ticks) {
-	
+
+	print(sleep_list);
+	printf(list_empty(&sleep_list));
 	if (list_empty(&sleep_list)) return;
 
 	printf("\nCHECK ITERATION : ");

@@ -250,7 +250,7 @@ thread_wake_iter(int64_t current_ticks) {
 			printf("REMOVE");
 			struct list_elem *te = list_next(e);
 			list_remove(e);
-			e = te
+			e = te;
 		} else {
 			e = list_next(e);
 		}

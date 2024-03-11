@@ -235,15 +235,9 @@ void
 thread_wake_iter(int64_t current_ticks) {
 	struct list_elem *e = list_begin(&sleep_list);
 
-	printf("CHECK ITERATION : \n");
 	while(e != list_end(&sleep_list)) {
     	struct thread *t = list_entry(e, struct thread, elem);
 
-		printf("ITERATION - ");
-		printf("%d-%d", t->tid, t->wake_at_ticks);
-		printf("///");
-		printf("%d\n", current_ticks);
-		
 		if (t -> wake_at_ticks <= current_ticks) {
 			e = list_remove(e);
 			thread_unblock (t);
@@ -252,18 +246,6 @@ thread_wake_iter(int64_t current_ticks) {
 		}
 	}
 }
-
-enum thread_status 
-thread_wake(struct thread *t, int64_t current_ticks) {
-	if (t -> wake_at_ticks <= current_ticks) {
-		
-
-		return THREAD_READY;
-	}	
-	
-	return THREAD_BLOCKED;
-}
-
 
 /* Puts the current thread to sleep.  It will not be scheduled
    again until awoken by thread_unblock().

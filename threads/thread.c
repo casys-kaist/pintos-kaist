@@ -242,10 +242,6 @@ thread_wake_iter(int64_t current_ticks) {
     	struct thread *t = list_entry(e, struct thread, elem);
 		if (t == NULL) continue;
 		
-		printf(t > t->tid);
-		printf(t > t->status);
-		printf(t > t->magic);
-		
 		enum thread_status status = thread_wake(t, current_ticks);
 		if (status == THREAD_READY) {
 			list_remove(e);

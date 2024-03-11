@@ -265,9 +265,11 @@ thread_wake(struct thread *t, int64_t current_ticks) {
 		printf("WAKING: ");
 		printf("%d-%d\n", t->tid, t->wake_at_ticks);
 		thread_unblock (t);
+
+		return THREAD_READY;
 	}	
 	
-	return t -> status;
+	return THREAD_BLOCKED;
 }
 
 

@@ -245,7 +245,7 @@ thread_wake_iter(int64_t current_ticks) {
 		printf("%d\n", current_ticks);
 		
 		if (t -> wake_at_ticks <= current_ticks) {
-			list_remove(e);
+			e = list_remove(e);
 			thread_unblock (t);
 		} else {
 			e = list_next(e);

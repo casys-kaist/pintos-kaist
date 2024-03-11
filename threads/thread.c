@@ -244,27 +244,19 @@ thread_wake_iter(int64_t current_ticks) {
 		printf("///");
 		printf("%d\n", current_ticks);
 		
-		enum thread_status status = thread_wake(t, current_ticks);
-
-		e = list_next(e);
-
-		if (status == THREAD_READY) {
-			printf("REMOVE");
-			//struct list_elem *temp = list_next(e);
-			//list_remove(e);
-			//e = temp;
-		} /*else {
+		if (t -> wake_at_ticks <= current_ticks) {
+			list_remove(e);
+			thread_unblock (t);
+		} else {
 			e = list_next(e);
-		}*/
+		}
 	}
 }
 
 enum thread_status 
 thread_wake(struct thread *t, int64_t current_ticks) {
 	if (t -> wake_at_ticks <= current_ticks) {
-		printf("WAKING: ");
-		printf("%d-%d\n", t->tid, t->wake_at_ticks);
-		thread_unblock (t);
+		
 
 		return THREAD_READY;
 	}	

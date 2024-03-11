@@ -220,7 +220,7 @@ thread_sleep(int64_t ticks) {
 
 	struct thread *t = thread_current ();
 
-	printf("SLEEP\n%d-%d\n", t->tid, t-> wake_at_ticks);
+	printf("SLEEP\n%d-%d\n", t->tid, ticks);
   
   	ASSERT (t != idle_thread);
 
@@ -251,7 +251,7 @@ thread_wake_iter(int64_t current_ticks) {
 		
 		enum thread_status status = thread_wake(t, current_ticks);
 		if (status == THREAD_READY) {
-			list_remove(e);
+			e = list_remove(e);
 		} 
 	}
 }

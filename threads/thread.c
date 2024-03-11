@@ -233,9 +233,11 @@ void
 thread_wake_iter(int64_t current_ticks) {
 	struct list_elem *e;
 	
-	printf("START ITERATION FOR WAKE");
+	if (list_empty(&sleep_list)) return;
+
+	printf("CHECK ITERATION : ");
 	for (e = list_begin(&sleep_list) ; e != list_end(&sleep_list) ; e = list_next(e)) {
-		printf("ITERATION");
+		printf("\nITERATION");
 
     	struct thread *t = list_entry(e, struct thread, elem);
 		

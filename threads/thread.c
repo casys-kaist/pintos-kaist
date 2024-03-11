@@ -28,6 +28,8 @@
    that are ready to run but not actually running. */
 static struct list ready_list;
 
+static struct list sleep_list;
+
 /* Idle thread. */
 static struct thread *idle_thread;
 
@@ -108,6 +110,7 @@ thread_init (void) {
 	/* Init the globla thread context */
 	lock_init (&tid_lock);
 	list_init (&ready_list);
+	list_init (&sleep_list);
 	list_init (&destruction_req);
 
 	/* Set up a thread structure for the running thread. */
@@ -209,6 +212,46 @@ thread_create (const char *name, int priority,
 
 	return tid;
 }
+
+void 
+thread_sleep(int64_t ticks) {
+  	enum intr_level revert_intr_level;
+  	revert_intr_level = intr_disable ();
+
+	struct thread *t = thread_current ();
+  
+  	ASSERT (t != idle_thread);
+
+  	t-> wake_at_ticks = ticks;			
+  	list_push_back (&sleep_list, &t->elem);	
+  	thread_block ();				
+
+  	intr_set_level (revert_intr_level);
+}
+
+void
+thread_wake_iter(int64_t current_ticks) {
+	struct list_elem *e;
+
+	for (e = list_begin(&sleep_list) ; e != list_end(&sleep_list) ; e = list_next(e)) {
+    	struct threat *t = list_entry(e, struct thread, elem);
+		
+		enum thread_status status = thread_awake(t, current_ticks);
+		if (status == THREAD_READY) {
+			list_remove(e);
+		} 
+	}
+}
+
+enum thread_status 
+thread_awake(struct thread *t, int64_t current_ticks) {
+	if (t -> wake_at_ticks <= current_ticks) {
+		thread_unblock (t);
+	}	
+	
+	return t -> status;
+}
+
 
 /* Puts the current thread to sleep.  It will not be scheduled
    again until awoken by thread_unblock().

@@ -232,7 +232,7 @@ thread_sleep(int64_t ticks) {
 void
 thread_wake_iter(int64_t current_ticks) {
 
-	printf(list_empty(&sleep_list));
+	printf(sleep_list);
 	if (list_empty(&sleep_list)){
 		printf("EMPTY");
 		return;

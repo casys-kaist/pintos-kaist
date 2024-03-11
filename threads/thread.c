@@ -219,8 +219,6 @@ thread_sleep(int64_t ticks) {
   	revert_intr_level = intr_disable ();
 
 	struct thread *t = thread_current ();
-
-	printf(t);
   
   	ASSERT (t != idle_thread);
 
@@ -235,8 +233,13 @@ void
 thread_wake_iter(int64_t current_ticks) {
 	struct list_elem *e;
 	
+	printf("START ITERATION FOR WAKE");
 	for (e = list_begin(&sleep_list) ; e != list_end(&sleep_list) ; e = list_next(e)) {
+		printf("ITERATION");
+
     	struct thread *t = list_entry(e, struct thread, elem);
+		
+		printf(t);
 		
 		enum thread_status status = thread_wake(t, current_ticks);
 		if (status == THREAD_READY) {
@@ -247,7 +250,6 @@ thread_wake_iter(int64_t current_ticks) {
 
 enum thread_status 
 thread_wake(struct thread *t, int64_t current_ticks) {
-	printf(t);
 	if (t -> wake_at_ticks <= current_ticks) {
 		thread_unblock (t);
 	}	

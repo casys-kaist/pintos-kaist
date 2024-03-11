@@ -236,7 +236,7 @@ thread_wake_iter(int64_t current_ticks) {
 	for (e = list_begin(&sleep_list) ; e != list_end(&sleep_list) ; e = list_next(e)) {
     	struct threat *t = list_entry(e, struct thread, elem);
 		
-		enum thread_status status = thread_awake(t, current_ticks);
+		enum thread_status status = thread_wake(t, current_ticks);
 		if (status == THREAD_READY) {
 			list_remove(e);
 		} 
@@ -244,7 +244,7 @@ thread_wake_iter(int64_t current_ticks) {
 }
 
 enum thread_status 
-thread_awake(struct thread *t, int64_t current_ticks) {
+thread_wake(struct thread *t, int64_t current_ticks) {
 	if (t -> wake_at_ticks <= current_ticks) {
 		thread_unblock (t);
 	}	

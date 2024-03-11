@@ -219,8 +219,6 @@ thread_sleep(int64_t ticks) {
   	revert_intr_level = intr_disable ();
 
 	struct thread *t = thread_current ();
-
-	printf("SLEEP\n%d-%d\n", t->tid, ticks);
   
   	ASSERT (t != idle_thread);
 

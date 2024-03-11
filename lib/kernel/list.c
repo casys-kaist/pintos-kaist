@@ -238,7 +238,7 @@ struct list_elem *e = list_pop_front (&list);
 }
 */
 struct list_elem *
-list_remove (struct list_elem *elem) {
+xlist_remove (struct list_elem *elem) {
 	ASSERT (is_interior (elem));
 	elem->prev->next = elem->next;
 	elem->next->prev = elem->prev;

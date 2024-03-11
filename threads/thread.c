@@ -264,7 +264,7 @@ thread_wake(struct thread *t, int64_t current_ticks) {
 	if (t -> wake_at_ticks <= current_ticks) {
 		printf("WAKING: ");
 		printf("%d-%d\n", t->tid, t->wake_at_ticks);
-		//thread_unblock (t);
+		thread_unblock (t);
 	}	
 	
 	return t -> status;

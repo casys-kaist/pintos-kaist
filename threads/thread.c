@@ -234,7 +234,7 @@ thread_wake_iter(int64_t current_ticks) {
 	struct list_elem *e;
 
 	for (e = list_begin(&sleep_list) ; e != list_end(&sleep_list) ; e = list_next(e)) {
-    	struct threat *t = list_entry(e, struct thread, elem);
+    	struct thread *t = list_entry(e, struct thread, elem);
 		
 		enum thread_status status = thread_wake(t, current_ticks);
 		if (status == THREAD_READY) {

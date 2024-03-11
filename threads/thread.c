@@ -240,12 +240,25 @@ thread_wake_iter(int64_t current_ticks) {
 		printf("\nITERATION");
 
     	struct thread *t = list_entry(e, struct thread, elem);
+
+		printf(t > t->wake_at_ticks);
+		printf("///");
+		printf(current_ticks);
 		
-		if (t -> wake_at_ticks <= current_ticks) {
-			thread_unblock (t);
-			list_remove (e);
+		enum thread_status status = thread_wake(t, current_ticks);
+		if (status == THREAD_READY) {
+			list_remove(e);
 		} 
 	}
+}
+
+enum thread_status 
+thread_wake(struct thread *t, int64_t current_ticks) {
+	if (t -> wake_at_ticks <= current_ticks) {
+		thread_unblock (t);
+	}	
+	
+	return t -> status;
 }
 
 

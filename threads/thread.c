@@ -233,14 +233,10 @@ thread_sleep(int64_t ticks) {
 
 void
 thread_wake_iter(int64_t current_ticks) {
-
-	if (list_empty(&sleep_list)){
-		printf("EMPTY");
-		return;
-	}
+	struct list_elem *e = list_begin(&sleep_list);
 
 	printf("CHECK ITERATION : \n");
-	for (struct list_elem *e = list_begin(&sleep_list) ; e != list_end(&sleep_list) ; e = list_remove(e)) {
+	while(e != list_end(&sleep_list)) {
 		printf("ITERATION - ");
 
     	struct thread *t = list_entry(e, struct thread, elem);
@@ -250,10 +246,11 @@ thread_wake_iter(int64_t current_ticks) {
 		printf("%d\n", current_ticks);
 		
 		enum thread_status status = thread_wake(t, current_ticks);
-		if (status != THREAD_READY) {
+		if (status == THREAD_READY) {
+			e = list_remove(e);
+		} else {
 			e = list_next(e);
-			continue;
-		} 
+		}
 	}
 }
 

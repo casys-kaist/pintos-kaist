@@ -460,6 +460,7 @@ next_thread_to_run (void) {
 		struct thread *priority_thread = list_entry(e, struct thread, elem);
 		for (e = list_begin(&ready_list) ; e != list_end(&ready_list) ; e = list_next(e)) {
 			struct thread *t = list_entry(e, struct thread, elem);
+			printf("PRI_CUR: %d-%d / CUT: %d-%d",priority_thread -> tid, priority_thread -> priority, t -> tid, t -> priority);
 			if (priority_thread -> priority < t -> priority ) {
 				priority_thread = t;
 			}

@@ -561,7 +561,7 @@ thread_launch (struct thread *th) {
 			"movw %%ss, 32(%%rax)\n"
 			"mov %%rcx, %%rdi\n"
 			"call do_iret\n"
-			"out_iret:\n"
+			"out_iret:\n"`
 			: : "g"(tf_cur), "g" (tf) : "memory"
 			);
 }
@@ -580,6 +580,8 @@ do_schedule(int status) {
 		palloc_free_page(victim);
 	}
 	thread_current () -> status = status;
+
+	printf("READYLIST SIZE: %d\n",list_size(&ready_list));
 	schedule ();
 }
 

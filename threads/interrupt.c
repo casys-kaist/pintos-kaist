@@ -382,7 +382,7 @@ intr_dump_frame (const struct intr_frame *f) {
 	   [IA32-v3a] 5.14 "Interrupt 14--Page Fault Exception
 	   (#PF)". */
 	uint64_t cr2 = rcr2();
-	printf ("Interrupt %#04llx (%s) at rip=%llx\n",
+	/*printf ("Interrupt %#04llx (%s) at rip=%llx\n",
 			f->vec_no, intr_names[f->vec_no], f->rip);
 	printf (" cr2=%016llx error=%16llx\n", cr2, f->error_code);
 	printf ("rax %016llx rbx %016llx rcx %016llx rdx %016llx\n",
@@ -395,7 +395,7 @@ intr_dump_frame (const struct intr_frame *f) {
 			f->R.r11, f->R.r12, f->R.r13, f->R.r14);
 	printf ("r15 %016llx rflags %08llx\n", f->R.r15, f->eflags);
 	printf ("es: %04x ds: %04x cs: %04x ss: %04x\n",
-			f->es, f->ds, f->cs, f->ss);
+			f->es, f->ds, f->cs, f->ss);*/
 }
 
 /* Returns the name of interrupt VEC. */

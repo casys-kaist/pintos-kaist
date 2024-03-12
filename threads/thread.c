@@ -255,7 +255,7 @@ void
 thread_block (void) {
 	ASSERT (!intr_context ());
 	ASSERT (intr_get_level () == INTR_OFF);
-	thread_current ()->status = THREAD_BLOCKED;
+	thread_current () -> status = THREAD_BLOCKED;
 	schedule ();
 }
 
@@ -581,8 +581,6 @@ do_schedule(int status) {
 		palloc_free_page(victim);
 	}
 	thread_current () -> status = status;
-	schedule ();
-}
 
 static void
 schedule (void) {

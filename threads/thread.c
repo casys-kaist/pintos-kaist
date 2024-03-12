@@ -458,7 +458,7 @@ next_thread_to_run (void) {
 	else {
 		struct list_elem *e = list_begin(&ready_list);
 		struct thread *priority_thread = list_entry(e, struct thread, elem);
-		for (e = list_next(e) ; e != list_end(&ready_list) ; e = list_next(e)) {
+		for (e = list_begin(&ready_list) ; e != list_end(&ready_list) ; e = list_next(e)) {
 			struct thread *t = list_entry(e, struct thread, elem);
 			if (priority_thread -> priority < t -> priority ) {
 				priority_thread = t;

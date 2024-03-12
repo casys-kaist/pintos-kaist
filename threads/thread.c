@@ -456,14 +456,15 @@ next_thread_to_run (void) {
 	if (list_empty (&ready_list))
 		return idle_thread;
 	else {
-		struct list_elem *e = list_begin(&ready_list);
-		struct thread *priority_thread = list_entry(e, struct thread, elem);
-		while(e != list_end(&ready_list)) {
+		struct list_elem *priority_entry = list_begin(&ready_list);
+		struct thread *priority_thread = list_entry(priority_entry, struct thread, elem);
+		if (priority_entry != list_end(&ready_list)) {
+			struct list_elem *e;
 			struct thread *t = list_entry(e, struct thread, elem);
-			if (priority_thread -> priority < t -> priority ) {
-				priority_thread = t;
-			}
-			e = list_next(e);
+
+			for (e = list_next (priority_entry); e != list_end(&ready_list) ; e = list_next (e))
+				if (priority_thread -> priority < t -> priority )
+					priority_entry = e;
 		}
 		return priority_thread;
 	}
@@ -580,8 +581,6 @@ do_schedule(int status) {
 		palloc_free_page(victim);
 	}
 	thread_current () -> status = status;
-
-	printf("READYLIST SIZE: %d\n",list_size(&ready_list));
 	schedule ();
 }
 

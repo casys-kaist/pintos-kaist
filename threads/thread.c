@@ -332,7 +332,7 @@ thread_exit (void) {
 void
 thread_yield (void) {
 	struct thread *curr = thread_current ();
-	enum intr_level old_level;
+	enum intr_level old_level; 
 
 	ASSERT (!intr_context ());
 
@@ -346,13 +346,13 @@ thread_yield (void) {
 /* Sets the current thread's priority to NEW_PRIORITY. */
 void
 thread_set_priority (int new_priority) {
-	thread_current ()->priority = new_priority;
+	thread_current () -> priority = new_priority;
 }
 
 /* Returns the current thread's priority. */
 int
 thread_get_priority (void) {
-	return thread_current ()->priority;
+	return thread_current () -> priority;
 }
 
 /* Sets the current thread's nice value to NICE. */
@@ -455,8 +455,17 @@ static struct thread *
 next_thread_to_run (void) {
 	if (list_empty (&ready_list))
 		return idle_thread;
-	else
-		return list_entry (list_pop_front (&ready_list), struct thread, elem);
+	else {
+		struct list_elem *e = list_begin(&ready_list);
+		struct thread *priority_thread = list_entry(e, struct thread, elem);
+		for (e = list_next(e) ; e != list_end(&ready_list) ; e = list_next(e)) {
+			struct thread *t = list_entry(e, struct thread, elem);
+			if (priority_thread -> priority < t -> priority ) {
+				priority_thread = t;
+			}
+		}
+		return priority_thread;
+	}
 }
 
 /* Use iretq to launch the thread */
@@ -569,7 +578,7 @@ do_schedule(int status) {
 			list_entry (list_pop_front (&destruction_req), struct thread, elem);
 		palloc_free_page(victim);
 	}
-	thread_current ()->status = status;
+	thread_current () -> status = status;
 	schedule ();
 }
 
@@ -579,15 +588,15 @@ schedule (void) {
 	struct thread *next = next_thread_to_run ();
 
 	ASSERT (intr_get_level () == INTR_OFF);
-	ASSERT (curr->status != THREAD_RUNNING);
+	ASSERT (curr -> status != THREAD_RUNNING);
 	ASSERT (is_thread (next));
 	/* Mark us as running. */
-	next->status = THREAD_RUNNING;
+	next -> status = THREAD_RUNNING;
 
 	/* Start new time slice. */
 	thread_ticks = 0;
 
-#ifdef USERPROG
+#ifdef USERPROG /* TODO: look this up. what does this segment do...?*/
 	/* Activate the new address space. */
 	process_activate (next);
 #endif
@@ -596,7 +605,7 @@ schedule (void) {
 		/* If the thread we switched from is dying, destroy its struct
 		   thread. This must happen late so that thread_exit() doesn't
 		   pull out the rug under itself.
-		   We just queuing the page free reqeust here because the page is
+		   We're just queuing the page free request here because the page is
 		   currently used by the stack.
 		   The real destruction logic will be called at the beginning of the
 		   schedule(). */

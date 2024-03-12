@@ -581,6 +581,7 @@ do_schedule(int status) {
 		palloc_free_page(victim);
 	}
 	thread_current () -> status = status;
+}
 
 static void
 schedule (void) {

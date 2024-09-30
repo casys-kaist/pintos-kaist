@@ -91,6 +91,13 @@ struct thread {
 	enum thread_status status;          /* Thread state. */
 	char name[16];                      /* Name (for debugging purposes). */
 	int priority;                       /* Priority. */
+	
+	int64_t timeToWakeUp;
+	int nice;
+	struct lock *lock_waiting;
+
+	struct list donation_list;
+	struct list_elem donation_elem;
 
 	/* Shared between thread.c and synch.c. */
 	struct list_elem elem;              /* List element. */
@@ -117,7 +124,8 @@ extern bool thread_mlfqs;
 void thread_init (void);
 void thread_start (void);
 
-void thread_tick (void);
+// unique.k 08420954
+void thread_tick (int64_t);
 void thread_print_stats (void);
 
 typedef void thread_func (void *aux);
@@ -133,6 +141,11 @@ const char *thread_name (void);
 void thread_exit (void) NO_RETURN;
 void thread_yield (void);
 
+// unique.k 08291911
+// timer.c는 sleep 관련 문제를 threads.c로 이관하였음.
+// threads.c는 이 문제를 해결. timer.c에 정의된 ticks가 input 이상이 될 때까지 sleep 한다.
+void thread_sleep(int64_t);
+
 int thread_get_priority (void);
 void thread_set_priority (int);
 
@@ -140,6 +153,10 @@ int thread_get_nice (void);
 void thread_set_nice (int);
 int thread_get_recent_cpu (void);
 int thread_get_load_avg (void);
+void check_priority (void);
+bool cmp_priority (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
+bool cmp_donate_priority (const struct list_elem *l, const struct list_elem *s, void *aux UNUSED);
+
 
 void do_iret (struct intr_frame *tf);
 

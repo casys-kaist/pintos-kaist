@@ -72,7 +72,7 @@ timer_calibrate (void) {
 
 /* Returns the number of timer ticks since the OS booted. */
 int64_t
-timer_ticks (void) {
+timer_ticks (void) { 
 	enum intr_level old_level = intr_disable ();
 	int64_t t = ticks;
 	intr_set_level (old_level);
@@ -89,12 +89,17 @@ timer_elapsed (int64_t then) {
 
 /* Suspends execution for approximately TICKS timer ticks. */
 void
-timer_sleep (int64_t ticks) {
+timer_sleep (int64_t ticks) { 
 	int64_t start = timer_ticks ();
 
-	ASSERT (intr_get_level () == INTR_ON);
-	while (timer_elapsed (start) < ticks)
-		thread_yield ();
+	ASSERT (intr_get_level () == INTR_ON); // interrupt가 켜져있어야 한다.
+
+	// unique.k 08291910
+	// threads.c 파일로 이 문제를 이관한다.
+	// timer_elapsed(start) : 현재 tick - start tick
+	if (timer_elapsed(start) < ticks) {
+		thread_sleep(start + ticks); // global tick이 start + ticks일 때 thread가 깨어나도록 한다.
+	}
 }
 
 /* Suspends execution for approximately MS milliseconds. */
@@ -120,12 +125,12 @@ void
 timer_print_stats (void) {
 	printf ("Timer: %"PRId64" ticks\n", timer_ticks ());
 }
-
+
 /* Timer interrupt handler. */
 static void
 timer_interrupt (struct intr_frame *args UNUSED) {
 	ticks++;
-	thread_tick ();
+	thread_tick (ticks);
 }
 
 /* Returns true if LOOPS iterations waits for more than one timer

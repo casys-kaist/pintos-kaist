@@ -35,6 +35,7 @@ check:: results
 		exit 1;							  \
 	fi
 
+
 results: $(RESULTS)
 	@for d in $(TESTS) $(EXTRA_GRADES); do			\
 		if echo PASS | cmp -s $$d.result -; then	\

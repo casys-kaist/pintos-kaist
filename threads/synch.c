@@ -260,6 +260,7 @@ cond_init (struct condition *cond) {
 	ASSERT (cond != NULL);
 
 	list_init (&cond->waiters);
+	
 }
 
 /* Atomically releases LOCK and waits for COND to be signaled by

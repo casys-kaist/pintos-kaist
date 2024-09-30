@@ -426,6 +426,7 @@ int
 thread_get_nice (void) {
 	/* TODO: Your implementation goes here */
 	struct thread *t = thread_current();
+
 	return t->nice;
 }
 
@@ -505,6 +506,9 @@ init_thread (struct thread *t, const char *name, int priority) {
 	t->tf.rsp = (uint64_t) t + PGSIZE - sizeof (void *);
 	t->priority = priority;
 	t->magic = THREAD_MAGIC;
+	t->timeToWakeUp = 0;
+	t->nice = 0;
+	t->lock_waiting = NULL;
 }
 
 /* Chooses and returns the next thread to be scheduled.  Should
@@ -707,9 +711,7 @@ bool cmp_priority (const struct list_elem *a, const struct list_elem *b, void *a
 	return ta->priority > tb->priority;
 }
 
-bool cmp_donate_priority (const struct list_elem *l, 
-				const struct list_elem *s, void *aux UNUSED)
-{
+bool cmp_donate_priority (const struct list_elem *l, const struct list_elem *s, void *aux UNUSED){
 	return list_entry (l, struct thread, donation_elem)->priority
 		 > list_entry (s, struct thread, donation_elem)->priority;
 }

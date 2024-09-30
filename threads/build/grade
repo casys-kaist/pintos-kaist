@@ -1,0 +1,1720 @@
+TOTAL TESTING SCORE: 21.0%
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+SUMMARY BY TEST SET
+
+Test Set                                      Pts Max  % Ttl  % Max
+--------------------------------------------- --- --- ------ ------
+tests/threads/Rubric.alarm                      5/  7  14.3%/ 20.0%
+tests/threads/Rubric.priority                   0/ 25   0.0%/ 50.0%
+tests/threads/mlfqs/Rubric                      2/  9   6.7%/ 30.0%
+--------------------------------------------- --- --- ------ ------
+Total                                                  21.0%/100.0%
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+SUMMARY OF INDIVIDUAL TESTS
+
+Functionality and robustness of alarm clock (tests/threads/Rubric.alarm):
+	     1/ 1 tests/threads/alarm-single
+	     1/ 1 tests/threads/alarm-multiple
+	     1/ 1 tests/threads/alarm-simultaneous
+	  ** 0/ 2 tests/threads/alarm-priority
+
+	     1/ 1 tests/threads/alarm-zero
+	     1/ 1 tests/threads/alarm-negative
+
+	- Section summary.
+	      5/  6 tests passed
+	      5/  7 points subtotal
+
+Functionality of priority scheduler (tests/threads/Rubric.priority):
+	  ** 0/ 1 tests/threads/priority-change
+	  ** 0/ 1 tests/threads/priority-preempt
+
+	  ** 0/ 1 tests/threads/priority-fifo
+	  ** 0/ 2 tests/threads/priority-sema
+	  ** 0/ 2 tests/threads/priority-condvar
+
+	  ** 0/ 2 tests/threads/priority-donate-one
+	  ** 0/ 3 tests/threads/priority-donate-multiple
+	  ** 0/ 3 tests/threads/priority-donate-multiple2
+	  ** 0/ 3 tests/threads/priority-donate-nest
+	  ** 0/ 3 tests/threads/priority-donate-chain
+	  ** 0/ 2 tests/threads/priority-donate-sema
+	  ** 0/ 2 tests/threads/priority-donate-lower
+
+	- Section summary.
+	      0/ 12 tests passed
+	      0/ 25 points subtotal
+
+Functionality of advanced scheduler (tests/threads/mlfqs/Rubric):
+	  ** 0/ 1 tests/threads/mlfqs/mlfqs-load-1
+	  ** 0/ 1 tests/threads/mlfqs/mlfqs-load-60
+	  ** 0/ 1 tests/threads/mlfqs/mlfqs-load-avg
+
+	  ** 0/ 1 tests/threads/mlfqs/mlfqs-recent-1
+
+	     1/ 1 tests/threads/mlfqs/mlfqs-fair-2
+	     1/ 1 tests/threads/mlfqs/mlfqs-fair-20
+
+	  ** 0/ 1 tests/threads/mlfqs/mlfqs-nice-2
+	  ** 0/ 1 tests/threads/mlfqs/mlfqs-nice-10
+
+	  ** 0/ 1 tests/threads/mlfqs/mlfqs-block
+
+	- Section summary.
+	      2/  9 tests passed
+	      2/  9 points subtotal
+
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/alarm-priority FAILURE:
+
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (alarm-priority) begin
+  (alarm-priority) Thread priority 30 woke up.
+  (alarm-priority) Thread priority 29 woke up.
+  (alarm-priority) Thread priority 28 woke up.
+  (alarm-priority) Thread priority 27 woke up.
+  (alarm-priority) Thread priority 26 woke up.
+  (alarm-priority) Thread priority 25 woke up.
+  (alarm-priority) Thread priority 24 woke up.
+  (alarm-priority) Thread priority 23 woke up.
+  (alarm-priority) Thread priority 22 woke up.
+  (alarm-priority) Thread priority 21 woke up.
+  (alarm-priority) end
+Differences in `diff -u' format:
+  (alarm-priority) begin
+- (alarm-priority) Thread priority 30 woke up.
+- (alarm-priority) Thread priority 29 woke up.
+- (alarm-priority) Thread priority 28 woke up.
+- (alarm-priority) Thread priority 27 woke up.
+  (alarm-priority) Thread priority 26 woke up.
+  (alarm-priority) Thread priority 25 woke up.
+  (alarm-priority) Thread priority 24 woke up.
+  (alarm-priority) Thread priority 23 woke up.
+  (alarm-priority) Thread priority 22 woke up.
+  (alarm-priority) Thread priority 21 woke up.
++ (alarm-priority) Thread priority 30 woke up.
++ (alarm-priority) Thread priority 29 woke up.
++ (alarm-priority) Thread priority 28 woke up.
++ (alarm-priority) Thread priority 27 woke up.
+  (alarm-priority) end
+
+OUTPUT FROM tests/threads/alarm-priority:
+
+Kernel command line: -q run alarm-priority
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'alarm-priority':
+(alarm-priority) begin
+(alarm-priority) Thread priority 26 woke up.
+(alarm-priority) Thread priority 25 woke up.
+(alarm-priority) Thread priority 24 woke up.
+(alarm-priority) Thread priority 23 woke up.
+(alarm-priority) Thread priority 22 woke up.
+(alarm-priority) Thread priority 21 woke up.
+(alarm-priority) Thread priority 30 woke up.
+(alarm-priority) Thread priority 29 woke up.
+(alarm-priority) Thread priority 28 woke up.
+(alarm-priority) Thread priority 27 woke up.
+(alarm-priority) end
+Execution of 'alarm-priority' complete.
+Timer: 542 ticks
+Thread: 0 idle ticks, 542 kernel ticks, 0 user ticks
+Console: 879 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/priority-change FAILURE:
+
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (priority-change) begin
+  (priority-change) Creating a high-priority thread 2.
+  (priority-change) Thread 2 now lowering priority.
+  (priority-change) Thread 2 should have just lowered its priority.
+  (priority-change) Thread 2 exiting.
+  (priority-change) Thread 2 should have just exited.
+  (priority-change) end
+Differences in `diff -u' format:
+  (priority-change) begin
+  (priority-change) Creating a high-priority thread 2.
+- (priority-change) Thread 2 now lowering priority.
+  (priority-change) Thread 2 should have just lowered its priority.
+- (priority-change) Thread 2 exiting.
+  (priority-change) Thread 2 should have just exited.
+  (priority-change) end
+
+OUTPUT FROM tests/threads/priority-change:
+
+Kernel command line: -q run priority-change
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'priority-change':
+(priority-change) begin
+(priority-change) Creating a high-priority thread 2.
+(priority-change) Thread 2 should have just lowered its priority.
+(priority-change) Thread 2 should have just exited.
+(priority-change) end
+Execution of 'priority-change' complete.
+Timer: 42 ticks
+Thread: 0 idle ticks, 42 kernel ticks, 0 user ticks
+Console: 603 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/priority-preempt FAILURE:
+
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (priority-preempt) begin
+  (priority-preempt) Thread high-priority iteration 0
+  (priority-preempt) Thread high-priority iteration 1
+  (priority-preempt) Thread high-priority iteration 2
+  (priority-preempt) Thread high-priority iteration 3
+  (priority-preempt) Thread high-priority iteration 4
+  (priority-preempt) Thread high-priority done!
+  (priority-preempt) The high-priority thread should have already completed.
+  (priority-preempt) end
+Differences in `diff -u' format:
+  (priority-preempt) begin
+- (priority-preempt) Thread high-priority iteration 0
+- (priority-preempt) Thread high-priority iteration 1
+- (priority-preempt) Thread high-priority iteration 2
+- (priority-preempt) Thread high-priority iteration 3
+- (priority-preempt) Thread high-priority iteration 4
+- (priority-preempt) Thread high-priority done!
+  (priority-preempt) The high-priority thread should have already completed.
+  (priority-preempt) end
+
+OUTPUT FROM tests/threads/priority-preempt:
+
+Kernel command line: -q run priority-preempt
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  104,755,200 loops/s.
+Boot complete.
+Executing 'priority-preempt':
+(priority-preempt) begin
+(priority-preempt) The high-priority thread should have already completed.
+(priority-preempt) end
+Execution of 'priority-preempt' complete.
+Timer: 38 ticks
+Thread: 0 idle ticks, 38 kernel ticks, 0 user ticks
+Console: 512 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/priority-fifo FAILURE:
+
+First iteration does not list exactly 16 threads.
+
+OUTPUT FROM tests/threads/priority-fifo:
+
+Kernel command line: -q run priority-fifo
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  156,876,800 loops/s.
+Boot complete.
+Executing 'priority-fifo':
+(priority-fifo) begin
+(priority-fifo) 16 threads will iterate 16 times in the same order each time.
+(priority-fifo) If the order varies then there is a bug.
+(priority-fifo) iteration: 0 1 2 3 4 5(priority-fifo) end
+Execution of 'priority-fifo' complete.
+Timer: 44 ticks
+Thread: 0 idle ticks, 44 kernel ticks, 0 user ticks
+Console: 595 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/priority-sema FAILURE:
+
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (priority-sema) begin
+  (priority-sema) Thread priority 30 woke up.
+  (priority-sema) Back in main thread.
+  (priority-sema) Thread priority 29 woke up.
+  (priority-sema) Back in main thread.
+  (priority-sema) Thread priority 28 woke up.
+  (priority-sema) Back in main thread.
+  (priority-sema) Thread priority 27 woke up.
+  (priority-sema) Back in main thread.
+  (priority-sema) Thread priority 26 woke up.
+  (priority-sema) Back in main thread.
+  (priority-sema) Thread priority 25 woke up.
+  (priority-sema) Back in main thread.
+  (priority-sema) Thread priority 24 woke up.
+  (priority-sema) Back in main thread.
+  (priority-sema) Thread priority 23 woke up.
+  (priority-sema) Back in main thread.
+  (priority-sema) Thread priority 22 woke up.
+  (priority-sema) Back in main thread.
+  (priority-sema) Thread priority 21 woke up.
+  (priority-sema) Back in main thread.
+  (priority-sema) end
+Differences in `diff -u' format:
+  (priority-sema) begin
+- (priority-sema) Thread priority 30 woke up.
+  (priority-sema) Back in main thread.
+- (priority-sema) Thread priority 29 woke up.
+  (priority-sema) Back in main thread.
+- (priority-sema) Thread priority 28 woke up.
+  (priority-sema) Back in main thread.
+- (priority-sema) Thread priority 27 woke up.
+  (priority-sema) Back in main thread.
+- (priority-sema) Thread priority 26 woke up.
+  (priority-sema) Back in main thread.
+- (priority-sema) Thread priority 25 woke up.
+  (priority-sema) Back in main thread.
+- (priority-sema) Thread priority 24 woke up.
+  (priority-sema) Back in main thread.
+- (priority-sema) Thread priority 23 woke up.
+  (priority-sema) Back in main thread.
+- (priority-sema) Thread priority 22 woke up.
+  (priority-sema) Back in main thread.
+- (priority-sema) Thread priority 21 woke up.
+  (priority-sema) Back in main thread.
+  (priority-sema) end
+
+OUTPUT FROM tests/threads/priority-sema:
+
+Kernel command line: -q run priority-sema
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'priority-sema':
+(priority-sema) begin
+(priority-sema) Back in main thread.
+(priority-sema) Back in main thread.
+(priority-sema) Back in main thread.
+(priority-sema) Back in main thread.
+(priority-sema) Back in main thread.
+(priority-sema) Back in main thread.
+(priority-sema) Back in main thread.
+(priority-sema) Back in main thread.
+(priority-sema) Back in main thread.
+(priority-sema) Back in main thread.
+(priority-sema) end
+Execution of 'priority-sema' complete.
+Timer: 42 ticks
+Thread: 0 idle ticks, 42 kernel ticks, 0 user ticks
+Console: 792 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/priority-condvar FAILURE:
+
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (priority-condvar) begin
+  (priority-condvar) Thread priority 23 starting.
+  (priority-condvar) Thread priority 22 starting.
+  (priority-condvar) Thread priority 21 starting.
+  (priority-condvar) Thread priority 30 starting.
+  (priority-condvar) Thread priority 29 starting.
+  (priority-condvar) Thread priority 28 starting.
+  (priority-condvar) Thread priority 27 starting.
+  (priority-condvar) Thread priority 26 starting.
+  (priority-condvar) Thread priority 25 starting.
+  (priority-condvar) Thread priority 24 starting.
+  (priority-condvar) Signaling...
+  (priority-condvar) Thread priority 30 woke up.
+  (priority-condvar) Signaling...
+  (priority-condvar) Thread priority 29 woke up.
+  (priority-condvar) Signaling...
+  (priority-condvar) Thread priority 28 woke up.
+  (priority-condvar) Signaling...
+  (priority-condvar) Thread priority 27 woke up.
+  (priority-condvar) Signaling...
+  (priority-condvar) Thread priority 26 woke up.
+  (priority-condvar) Signaling...
+  (priority-condvar) Thread priority 25 woke up.
+  (priority-condvar) Signaling...
+  (priority-condvar) Thread priority 24 woke up.
+  (priority-condvar) Signaling...
+  (priority-condvar) Thread priority 23 woke up.
+  (priority-condvar) Signaling...
+  (priority-condvar) Thread priority 22 woke up.
+  (priority-condvar) Signaling...
+  (priority-condvar) Thread priority 21 woke up.
+  (priority-condvar) end
+Differences in `diff -u' format:
+  (priority-condvar) begin
+- (priority-condvar) Thread priority 23 starting.
+- (priority-condvar) Thread priority 22 starting.
+- (priority-condvar) Thread priority 21 starting.
+- (priority-condvar) Thread priority 30 starting.
+- (priority-condvar) Thread priority 29 starting.
+- (priority-condvar) Thread priority 28 starting.
+- (priority-condvar) Thread priority 27 starting.
+- (priority-condvar) Thread priority 26 starting.
+- (priority-condvar) Thread priority 25 starting.
+- (priority-condvar) Thread priority 24 starting.
+  (priority-condvar) Signaling...
+- (priority-condvar) Thread priority 30 woke up.
+  (priority-condvar) Signaling...
+- (priority-condvar) Thread priority 29 woke up.
+  (priority-condvar) Signaling...
+- (priority-condvar) Thread priority 28 woke up.
+  (priority-condvar) Signaling...
+- (priority-condvar) Thread priority 27 woke up.
+  (priority-condvar) Signaling...
+- (priority-condvar) Thread priority 26 woke up.
+  (priority-condvar) Signaling...
+- (priority-condvar) Thread priority 25 woke up.
+  (priority-condvar) Signaling...
+- (priority-condvar) Thread priority 24 woke up.
+  (priority-condvar) Signaling...
+- (priority-condvar) Thread priority 23 woke up.
+  (priority-condvar) Signaling...
+- (priority-condvar) Thread priority 22 woke up.
+  (priority-condvar) Signaling...
+- (priority-condvar) Thread priority 21 woke up.
+  (priority-condvar) end
+
+OUTPUT FROM tests/threads/priority-condvar:
+
+Kernel command line: -q run priority-condvar
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'priority-condvar':
+(priority-condvar) begin
+(priority-condvar) Signaling...
+(priority-condvar) Signaling...
+(priority-condvar) Signaling...
+(priority-condvar) Signaling...
+(priority-condvar) Signaling...
+(priority-condvar) Signaling...
+(priority-condvar) Signaling...
+(priority-condvar) Signaling...
+(priority-condvar) Signaling...
+(priority-condvar) Signaling...
+(priority-condvar) end
+Execution of 'priority-condvar' complete.
+Timer: 43 ticks
+Thread: 0 idle ticks, 43 kernel ticks, 0 user ticks
+Console: 757 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/priority-donate-one FAILURE:
+
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (priority-donate-one) begin
+  (priority-donate-one) This thread should have priority 32.  Actual priority: 32.
+  (priority-donate-one) This thread should have priority 33.  Actual priority: 33.
+  (priority-donate-one) acquire2: got the lock
+  (priority-donate-one) acquire2: done
+  (priority-donate-one) acquire1: got the lock
+  (priority-donate-one) acquire1: done
+  (priority-donate-one) acquire2, acquire1 must already have finished, in that order.
+  (priority-donate-one) This should be the last line before finishing this test.
+  (priority-donate-one) end
+Differences in `diff -u' format:
+  (priority-donate-one) begin
+- (priority-donate-one) This thread should have priority 32.  Actual priority: 32.
+- (priority-donate-one) This thread should have priority 33.  Actual priority: 33.
+- (priority-donate-one) acquire2: got the lock
+- (priority-donate-one) acquire2: done
+- (priority-donate-one) acquire1: got the lock
+- (priority-donate-one) acquire1: done
++ (priority-donate-one) This thread should have priority 32.  Actual priority: 31.
++ (priority-donate-one) This thread should have priority 33.  Actual priority: 31.
+  (priority-donate-one) acquire2, acquire1 must already have finished, in that order.
+  (priority-donate-one) This should be the last line before finishing this test.
+  (priority-donate-one) end
+
+OUTPUT FROM tests/threads/priority-donate-one:
+
+Kernel command line: -q run priority-donate-one
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'priority-donate-one':
+(priority-donate-one) begin
+(priority-donate-one) This thread should have priority 32.  Actual priority: 31.
+(priority-donate-one) This thread should have priority 33.  Actual priority: 31.
+(priority-donate-one) acquire2, acquire1 must already have finished, in that order.
+(priority-donate-one) This should be the last line before finishing this test.
+(priority-donate-one) end
+Execution of 'priority-donate-one' complete.
+Timer: 42 ticks
+Thread: 0 idle ticks, 42 kernel ticks, 0 user ticks
+Console: 777 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/priority-donate-multiple FAILURE:
+
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (priority-donate-multiple) begin
+  (priority-donate-multiple) Main thread should have priority 32.  Actual priority: 32.
+  (priority-donate-multiple) Main thread should have priority 33.  Actual priority: 33.
+  (priority-donate-multiple) Thread b acquired lock b.
+  (priority-donate-multiple) Thread b finished.
+  (priority-donate-multiple) Thread b should have just finished.
+  (priority-donate-multiple) Main thread should have priority 32.  Actual priority: 32.
+  (priority-donate-multiple) Thread a acquired lock a.
+  (priority-donate-multiple) Thread a finished.
+  (priority-donate-multiple) Thread a should have just finished.
+  (priority-donate-multiple) Main thread should have priority 31.  Actual priority: 31.
+  (priority-donate-multiple) end
+Differences in `diff -u' format:
+  (priority-donate-multiple) begin
+- (priority-donate-multiple) Main thread should have priority 32.  Actual priority: 32.
+- (priority-donate-multiple) Main thread should have priority 33.  Actual priority: 33.
+- (priority-donate-multiple) Thread b acquired lock b.
+- (priority-donate-multiple) Thread b finished.
++ (priority-donate-multiple) Main thread should have priority 32.  Actual priority: 31.
++ (priority-donate-multiple) Main thread should have priority 33.  Actual priority: 31.
+  (priority-donate-multiple) Thread b should have just finished.
+- (priority-donate-multiple) Main thread should have priority 32.  Actual priority: 32.
+- (priority-donate-multiple) Thread a acquired lock a.
+- (priority-donate-multiple) Thread a finished.
++ (priority-donate-multiple) Main thread should have priority 32.  Actual priority: 31.
+  (priority-donate-multiple) Thread a should have just finished.
+  (priority-donate-multiple) Main thread should have priority 31.  Actual priority: 31.
+  (priority-donate-multiple) end
+
+OUTPUT FROM tests/threads/priority-donate-multiple:
+
+Kernel command line: -q run priority-donate-multiple
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'priority-donate-multiple':
+(priority-donate-multiple) begin
+(priority-donate-multiple) Main thread should have priority 32.  Actual priority: 31.
+(priority-donate-multiple) Main thread should have priority 33.  Actual priority: 31.
+(priority-donate-multiple) Thread b should have just finished.
+(priority-donate-multiple) Main thread should have priority 32.  Actual priority: 31.
+(priority-donate-multiple) Thread a should have just finished.
+(priority-donate-multiple) Main thread should have priority 31.  Actual priority: 31.
+(priority-donate-multiple) end
+Execution of 'priority-donate-multiple' complete.
+Timer: 42 ticks
+Thread: 0 idle ticks, 42 kernel ticks, 0 user ticks
+Console: 947 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/priority-donate-multiple2 FAILURE:
+
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (priority-donate-multiple2) begin
+  (priority-donate-multiple2) Main thread should have priority 34.  Actual priority: 34.
+  (priority-donate-multiple2) Main thread should have priority 36.  Actual priority: 36.
+  (priority-donate-multiple2) Main thread should have priority 36.  Actual priority: 36.
+  (priority-donate-multiple2) Thread b acquired lock b.
+  (priority-donate-multiple2) Thread b finished.
+  (priority-donate-multiple2) Thread a acquired lock a.
+  (priority-donate-multiple2) Thread a finished.
+  (priority-donate-multiple2) Thread c finished.
+  (priority-donate-multiple2) Threads b, a, c should have just finished, in that order.
+  (priority-donate-multiple2) Main thread should have priority 31.  Actual priority: 31.
+  (priority-donate-multiple2) end
+Differences in `diff -u' format:
+  (priority-donate-multiple2) begin
+- (priority-donate-multiple2) Main thread should have priority 34.  Actual priority: 34.
+- (priority-donate-multiple2) Main thread should have priority 36.  Actual priority: 36.
+- (priority-donate-multiple2) Main thread should have priority 36.  Actual priority: 36.
+- (priority-donate-multiple2) Thread b acquired lock b.
+- (priority-donate-multiple2) Thread b finished.
+- (priority-donate-multiple2) Thread a acquired lock a.
+- (priority-donate-multiple2) Thread a finished.
+- (priority-donate-multiple2) Thread c finished.
++ (priority-donate-multiple2) Main thread should have priority 34.  Actual priority: 31.
++ (priority-donate-multiple2) Main thread should have priority 36.  Actual priority: 31.
++ (priority-donate-multiple2) Main thread should have priority 36.  Actual priority: 31.
+  (priority-donate-multiple2) Threads b, a, c should have just finished, in that order.
+  (priority-donate-multiple2) Main thread should have priority 31.  Actual priority: 31.
+  (priority-donate-multiple2) end
+
+OUTPUT FROM tests/threads/priority-donate-multiple2:
+
+Kernel command line: -q run priority-donate-multiple2
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  156,262,400 loops/s.
+Boot complete.
+Executing 'priority-donate-multiple2':
+(priority-donate-multiple2) begin
+(priority-donate-multiple2) Main thread should have priority 34.  Actual priority: 31.
+(priority-donate-multiple2) Main thread should have priority 36.  Actual priority: 31.
+(priority-donate-multiple2) Main thread should have priority 36.  Actual priority: 31.
+(priority-donate-multiple2) Threads b, a, c should have just finished, in that order.
+(priority-donate-multiple2) Main thread should have priority 31.  Actual priority: 31.
+(priority-donate-multiple2) end
+Execution of 'priority-donate-multiple2' complete.
+Timer: 43 ticks
+Thread: 0 idle ticks, 44 kernel ticks, 0 user ticks
+Console: 916 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/priority-donate-nest FAILURE:
+
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (priority-donate-nest) begin
+  (priority-donate-nest) Low thread should have priority 32.  Actual priority: 32.
+  (priority-donate-nest) Low thread should have priority 33.  Actual priority: 33.
+  (priority-donate-nest) Medium thread should have priority 33.  Actual priority: 33.
+  (priority-donate-nest) Medium thread got the lock.
+  (priority-donate-nest) High thread got the lock.
+  (priority-donate-nest) High thread finished.
+  (priority-donate-nest) High thread should have just finished.
+  (priority-donate-nest) Middle thread finished.
+  (priority-donate-nest) Medium thread should just have finished.
+  (priority-donate-nest) Low thread should have priority 31.  Actual priority: 31.
+  (priority-donate-nest) end
+Differences in `diff -u' format:
+  (priority-donate-nest) begin
+- (priority-donate-nest) Low thread should have priority 32.  Actual priority: 32.
+- (priority-donate-nest) Low thread should have priority 33.  Actual priority: 33.
+- (priority-donate-nest) Medium thread should have priority 33.  Actual priority: 33.
++ (priority-donate-nest) Low thread should have priority 32.  Actual priority: 31.
++ (priority-donate-nest) Low thread should have priority 33.  Actual priority: 31.
++ (priority-donate-nest) Medium thread should have priority 33.  Actual priority: 32.
+  (priority-donate-nest) Medium thread got the lock.
+- (priority-donate-nest) High thread got the lock.
+- (priority-donate-nest) High thread finished.
+- (priority-donate-nest) High thread should have just finished.
+- (priority-donate-nest) Middle thread finished.
+  (priority-donate-nest) Medium thread should just have finished.
+  (priority-donate-nest) Low thread should have priority 31.  Actual priority: 31.
+  (priority-donate-nest) end
+
+OUTPUT FROM tests/threads/priority-donate-nest:
+
+Kernel command line: -q run priority-donate-nest
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'priority-donate-nest':
+(priority-donate-nest) begin
+(priority-donate-nest) Low thread should have priority 32.  Actual priority: 31.
+(priority-donate-nest) Low thread should have priority 33.  Actual priority: 31.
+(priority-donate-nest) Medium thread should have priority 33.  Actual priority: 32.
+(priority-donate-nest) Medium thread got the lock.
+(priority-donate-nest) Medium thread should just have finished.
+(priority-donate-nest) Low thread should have priority 31.  Actual priority: 31.
+(priority-donate-nest) end
+Execution of 'priority-donate-nest' complete.
+Timer: 42 ticks
+Thread: 0 idle ticks, 42 kernel ticks, 0 user ticks
+Console: 899 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/priority-donate-chain FAILURE:
+
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (priority-donate-chain) begin
+  (priority-donate-chain) main got lock.
+  (priority-donate-chain) main should have priority 3.  Actual priority: 3.
+  (priority-donate-chain) main should have priority 6.  Actual priority: 6.
+  (priority-donate-chain) main should have priority 9.  Actual priority: 9.
+  (priority-donate-chain) main should have priority 12.  Actual priority: 12.
+  (priority-donate-chain) main should have priority 15.  Actual priority: 15.
+  (priority-donate-chain) main should have priority 18.  Actual priority: 18.
+  (priority-donate-chain) main should have priority 21.  Actual priority: 21.
+  (priority-donate-chain) thread 1 got lock
+  (priority-donate-chain) thread 1 should have priority 21. Actual priority: 21
+  (priority-donate-chain) thread 2 got lock
+  (priority-donate-chain) thread 2 should have priority 21. Actual priority: 21
+  (priority-donate-chain) thread 3 got lock
+  (priority-donate-chain) thread 3 should have priority 21. Actual priority: 21
+  (priority-donate-chain) thread 4 got lock
+  (priority-donate-chain) thread 4 should have priority 21. Actual priority: 21
+  (priority-donate-chain) thread 5 got lock
+  (priority-donate-chain) thread 5 should have priority 21. Actual priority: 21
+  (priority-donate-chain) thread 6 got lock
+  (priority-donate-chain) thread 6 should have priority 21. Actual priority: 21
+  (priority-donate-chain) thread 7 got lock
+  (priority-donate-chain) thread 7 should have priority 21. Actual priority: 21
+  (priority-donate-chain) thread 7 finishing with priority 21.
+  (priority-donate-chain) interloper 7 finished.
+  (priority-donate-chain) thread 6 finishing with priority 18.
+  (priority-donate-chain) interloper 6 finished.
+  (priority-donate-chain) thread 5 finishing with priority 15.
+  (priority-donate-chain) interloper 5 finished.
+  (priority-donate-chain) thread 4 finishing with priority 12.
+  (priority-donate-chain) interloper 4 finished.
+  (priority-donate-chain) thread 3 finishing with priority 9.
+  (priority-donate-chain) interloper 3 finished.
+  (priority-donate-chain) thread 2 finishing with priority 6.
+  (priority-donate-chain) interloper 2 finished.
+  (priority-donate-chain) thread 1 finishing with priority 3.
+  (priority-donate-chain) interloper 1 finished.
+  (priority-donate-chain) main finishing with priority 0.
+  (priority-donate-chain) end
+Differences in `diff -u' format:
+  (priority-donate-chain) begin
+  (priority-donate-chain) main got lock.
+- (priority-donate-chain) main should have priority 3.  Actual priority: 3.
+- (priority-donate-chain) main should have priority 6.  Actual priority: 6.
+- (priority-donate-chain) main should have priority 9.  Actual priority: 9.
+- (priority-donate-chain) main should have priority 12.  Actual priority: 12.
+- (priority-donate-chain) main should have priority 15.  Actual priority: 15.
+- (priority-donate-chain) main should have priority 18.  Actual priority: 18.
+- (priority-donate-chain) main should have priority 21.  Actual priority: 21.
+- (priority-donate-chain) thread 1 got lock
+- (priority-donate-chain) thread 1 should have priority 21. Actual priority: 21
+- (priority-donate-chain) thread 2 got lock
+- (priority-donate-chain) thread 2 should have priority 21. Actual priority: 21
+- (priority-donate-chain) thread 3 got lock
+- (priority-donate-chain) thread 3 should have priority 21. Actual priority: 21
+- (priority-donate-chain) thread 4 got lock
+- (priority-donate-chain) thread 4 should have priority 21. Actual priority: 21
+- (priority-donate-chain) thread 5 got lock
+- (priority-donate-chain) thread 5 should have priority 21. Actual priority: 21
+- (priority-donate-chain) thread 6 got lock
+- (priority-donate-chain) thread 6 should have priority 21. Actual priority: 21
+- (priority-donate-chain) thread 7 got lock
+- (priority-donate-chain) thread 7 should have priority 21. Actual priority: 21
+- (priority-donate-chain) thread 7 finishing with priority 21.
+- (priority-donate-chain) interloper 7 finished.
+- (priority-donate-chain) thread 6 finishing with priority 18.
+- (priority-donate-chain) interloper 6 finished.
+- (priority-donate-chain) thread 5 finishing with priority 15.
+- (priority-donate-chain) interloper 5 finished.
+- (priority-donate-chain) thread 4 finishing with priority 12.
+- (priority-donate-chain) interloper 4 finished.
+- (priority-donate-chain) thread 3 finishing with priority 9.
+- (priority-donate-chain) interloper 3 finished.
+- (priority-donate-chain) thread 2 finishing with priority 6.
+- (priority-donate-chain) interloper 2 finished.
+- (priority-donate-chain) thread 1 finishing with priority 3.
+- (priority-donate-chain) interloper 1 finished.
++ (priority-donate-chain) main should have priority 3.  Actual priority: 0.
++ (priority-donate-chain) main should have priority 6.  Actual priority: 0.
++ (priority-donate-chain) main should have priority 9.  Actual priority: 0.
++ (priority-donate-chain) main should have priority 12.  Actual priority: 0.
++ (priority-donate-chain) main should have priority 15.  Actual priority: 0.
++ (priority-donate-chain) main should have priority 18.  Actual priority: 0.
++ (priority-donate-chain) main should have priority 21.  Actual priority: 0.
+  (priority-donate-chain) main finishing with priority 0.
+  (priority-donate-chain) end
+
+OUTPUT FROM tests/threads/priority-donate-chain:
+
+Kernel command line: -q run priority-donate-chain
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'priority-donate-chain':
+(priority-donate-chain) begin
+(priority-donate-chain) main got lock.
+(priority-donate-chain) main should have priority 3.  Actual priority: 0.
+(priority-donate-chain) main should have priority 6.  Actual priority: 0.
+(priority-donate-chain) main should have priority 9.  Actual priority: 0.
+(priority-donate-chain) main should have priority 12.  Actual priority: 0.
+(priority-donate-chain) main should have priority 15.  Actual priority: 0.
+(priority-donate-chain) main should have priority 18.  Actual priority: 0.
+(priority-donate-chain) main should have priority 21.  Actual priority: 0.
+(priority-donate-chain) main finishing with priority 0.
+(priority-donate-chain) end
+Execution of 'priority-donate-chain' complete.
+Timer: 43 ticks
+Thread: 0 idle ticks, 43 kernel ticks, 0 user ticks
+Console: 1079 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/priority-donate-sema FAILURE:
+
+Kernel panic in run: PANIC at ../../threads/interrupt.c:361 in intr_handler(): Unexpected interrupt
+Call stack: 0x80042131a2 0x8004208764 0x8004208b16 0x8004207878 0x800420d88b 0x8004216568 0x80042163dd 0x80042067f3 0x800420613d
+Translation of call stack:
+0x00000080042131a2: debug_panic (lib/kernel/debug.c:32)
+0x0000008004208764: intr_handler (threads/interrupt.c:365)
+0x0000008004208b16: intr_entry (threads/intr-stubs.o:?)
+0x0000008004207878: intr_set_level (threads/interrupt.c:131 (discriminator 1))
+0x000000800420d88b: vga_putc (devices/vga.c:92)
+0x0000008004216568: putchar_have_lock (lib/kernel/console.c:177)
+0x00000080042163dd: puts (lib/kernel/console.c:136)
+0x00000080042067f3: power_off (threads/init.c:348)
+0x000000800420613d: main (threads/init.c:127)
+
+OUTPUT FROM tests/threads/priority-donate-sema:
+
+Kernel command line: -q run priority-donate-sema
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  156,876,800 loops/s.
+Boot complete.
+Executing 'priority-donate-sema':
+(priority-donate-sema) begin
+(priority-donate-sema) Main thread finished.
+(priority-donate-sema) end
+Execution of 'priority-donate-sema' complete.
+Timer: 43 ticks
+Thread: 0 idle ticks, 43 kernel ticks, 0 user ticks
+Console: 502 characters output
+Keyboard: 0 keys pressed
+Powering off...
+Interrupt 0x0d (#GP General Protection Exception) at rip=8004208b6f
+ cr2=000000000020020a error=               c
+rax 0000000000000000 rbx 0000000000204400 rcx 00000080040b8000 rdx 00000000000003d4
+rsp 0000008004000ef8 rbp 0000008004000f30 rsi 000000000000800f rdi 0000000000000001
+rip 0000008004208b6f r8 0000008004000ec8  r9 000000800421648a r10 0000000000000000
+r11 0000000000000000 r12 0000000000000000 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00200002
+es: 0010 ds: 0010 cs: 0008 ss: 0010
+Kernel PANIC at ../../threads/interrupt.c:361 in intr_handler(): Unexpected interrupt
+Call stack: 0x80042131a2 0x8004208764 0x8004208b16 0x8004207878 0x800420d88b 0x8004216568 0x80042163dd 0x80042067f3 0x800420613d.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 44 ticks
+Thread: 0 idle ticks, 44 kernel ticks, 0 user ticks
+Console: 1
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/priority-donate-lower FAILURE:
+
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (priority-donate-lower) begin
+  (priority-donate-lower) Main thread should have priority 41.  Actual priority: 41.
+  (priority-donate-lower) Lowering base priority...
+  (priority-donate-lower) Main thread should have priority 41.  Actual priority: 41.
+  (priority-donate-lower) acquire: got the lock
+  (priority-donate-lower) acquire: done
+  (priority-donate-lower) acquire must already have finished.
+  (priority-donate-lower) Main thread should have priority 21.  Actual priority: 21.
+  (priority-donate-lower) end
+Differences in `diff -u' format:
+  (priority-donate-lower) begin
+- (priority-donate-lower) Main thread should have priority 41.  Actual priority: 41.
++ (priority-donate-lower) Main thread should have priority 41.  Actual priority: 31.
+  (priority-donate-lower) Lowering base priority...
+- (priority-donate-lower) Main thread should have priority 41.  Actual priority: 41.
+- (priority-donate-lower) acquire: got the lock
+- (priority-donate-lower) acquire: done
++ (priority-donate-lower) Main thread should have priority 41.  Actual priority: 21.
+  (priority-donate-lower) acquire must already have finished.
+  (priority-donate-lower) Main thread should have priority 21.  Actual priority: 21.
+  (priority-donate-lower) end
+
+OUTPUT FROM tests/threads/priority-donate-lower:
+
+Kernel command line: -q run priority-donate-lower
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'priority-donate-lower':
+(priority-donate-lower) begin
+(priority-donate-lower) Main thread should have priority 41.  Actual priority: 31.
+(priority-donate-lower) Lowering base priority...
+(priority-donate-lower) Main thread should have priority 41.  Actual priority: 21.
+(priority-donate-lower) acquire must already have finished.
+(priority-donate-lower) Main thread should have priority 21.  Actual priority: 21.
+(priority-donate-lower) end
+Execution of 'priority-donate-lower' complete.
+Timer: 42 ticks
+Thread: 0 idle ticks, 42 kernel ticks, 0 user ticks
+Console: 821 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/mlfqs/mlfqs-load-1 FAILURE:
+
+Kernel panic in run: PANIC at ../../tests/threads/tests.c:93 in fail(): test failed
+Call stack: 0x80042131a2 0x80042167a4 0x80042197e0 0x80042165de 0x8004206636 0x8004206783 0x8004206120
+Translation of call stack:
+0x00000080042131a2: debug_panic (lib/kernel/debug.c:32)
+0x00000080042167a4: pass (tests/threads/tests.c:99)
+0x00000080042197e0: test_mlfqs_load_1 (tests/threads/mlfqs/mlfqs-load-1.c:31)
+0x00000080042165de: run_test (tests/threads/tests.c:57)
+0x0000008004206636: run_task (threads/init.c:252)
+0x0000008004206783: run_actions (threads/init.c:297)
+0x0000008004206120: main (threads/init.c:125)
+
+OUTPUT FROM tests/threads/mlfqs/mlfqs-load-1:
+
+Kernel command line: -q -mlfqs run mlfqs-load-1
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'mlfqs-load-1':
+(mlfqs-load-1) begin
+(mlfqs-load-1) spinning for up to 45 seconds, please wait...
+(mlfqs-load-1) FAIL: load average stayed below 0.5 for more than 45 seconds
+Kernel PANIC at ../../tests/threads/tests.c:93 in fail(): test failed
+Call stack: 0x80042131a2 0x80042167a4 0x80042197e0 0x80042165de 0x8004206636 0x8004206783 0x8004206120.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 4641 ticks
+Thread: 0 idle ticks, 4641 kernel ticks, 0 user ticks
+Console: 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/mlfqs/mlfqs-load-60 FAILURE:
+
+Some load average values were missing or differed from those expected by more than 3.5.
+  time   actual <-> expected explanation
+------ -------- --- -------- ----------------------------------------
+     2     0.00  =  2.95     
+     4     0.00 <<< 4.84     Too small, by 1.34.
+     6     0.00 <<< 6.66     Too small, by 3.16.
+     8     0.00 <<< 8.42     Too small, by 4.92.
+    10     0.00 <<< 10.13    Too small, by 6.63.
+    12     0.00 <<< 11.78    Too small, by 8.28.
+    14     0.00 <<< 13.37    Too small, by 9.87.
+    16     0.00 <<< 14.91    Too small, by 11.41.
+    18     0.00 <<< 16.40    Too small, by 12.90.
+    20     0.00 <<< 17.84    Too small, by 14.34.
+    22     0.00 <<< 19.24    Too small, by 15.74.
+    24     0.00 <<< 20.58    Too small, by 17.08.
+    26     0.00 <<< 21.89    Too small, by 18.39.
+    28     0.00 <<< 23.15    Too small, by 19.65.
+    30     0.00 <<< 24.37    Too small, by 20.87.
+    32     0.00 <<< 25.54    Too small, by 22.04.
+    34     0.00 <<< 26.68    Too small, by 23.18.
+    36     0.00 <<< 27.78    Too small, by 24.28.
+    38     0.00 <<< 28.85    Too small, by 25.35.
+    40     0.00 <<< 29.88    Too small, by 26.38.
+    42     0.00 <<< 30.87    Too small, by 27.37.
+    44     0.00 <<< 31.84    Too small, by 28.34.
+    46     0.00 <<< 32.77    Too small, by 29.27.
+    48     0.00 <<< 33.67    Too small, by 30.17.
+    50     0.00 <<< 34.54    Too small, by 31.04.
+    52     0.00 <<< 35.38    Too small, by 31.88.
+    54     0.00 <<< 36.19    Too small, by 32.69.
+    56     0.00 <<< 36.98    Too small, by 33.48.
+    58     0.00 <<< 37.74    Too small, by 34.24.
+    60     0.00 <<< 37.48    Too small, by 33.98.
+    62     0.00 <<< 36.24    Too small, by 32.74.
+    64     0.00 <<< 35.04    Too small, by 31.54.
+    66     0.00 <<< 33.88    Too small, by 30.38.
+    68     0.00 <<< 32.76    Too small, by 29.26.
+    70     0.00 <<< 31.68    Too small, by 28.18.
+    72     0.00 <<< 30.63    Too small, by 27.13.
+    74     0.00 <<< 29.62    Too small, by 26.12.
+    76     0.00 <<< 28.64    Too small, by 25.14.
+    78     0.00 <<< 27.69    Too small, by 24.19.
+    80     0.00 <<< 26.78    Too small, by 23.28.
+    82     0.00 <<< 25.89    Too small, by 22.39.
+    84     0.00 <<< 25.04    Too small, by 21.54.
+    86     0.00 <<< 24.21    Too small, by 20.71.
+    88     0.00 <<< 23.41    Too small, by 19.91.
+    90     0.00 <<< 22.64    Too small, by 19.14.
+    92     0.00 <<< 21.89    Too small, by 18.39.
+    94     0.00 <<< 21.16    Too small, by 17.66.
+    96     0.00 <<< 20.46    Too small, by 16.96.
+    98     0.00 <<< 19.79    Too small, by 16.29.
+   100     0.00 <<< 19.13    Too small, by 15.63.
+   102     0.00 <<< 18.50    Too small, by 15.00.
+   104     0.00 <<< 17.89    Too small, by 14.39.
+   106     0.00 <<< 17.30    Too small, by 13.80.
+   108     0.00 <<< 16.73    Too small, by 13.23.
+   110     0.00 <<< 16.17    Too small, by 12.67.
+   112     0.00 <<< 15.64    Too small, by 12.14.
+   114     0.00 <<< 15.12    Too small, by 11.62.
+   116     0.00 <<< 14.62    Too small, by 11.12.
+   118     0.00 <<< 14.14    Too small, by 10.64.
+   120     0.00 <<< 13.67    Too small, by 10.17.
+   122     0.00 <<< 13.22    Too small, by 9.72.
+   124     0.00 <<< 12.78    Too small, by 9.28.
+   126     0.00 <<< 12.36    Too small, by 8.86.
+   128     0.00 <<< 11.95    Too small, by 8.45.
+   130     0.00 <<< 11.56    Too small, by 8.06.
+   132     0.00 <<< 11.17    Too small, by 7.67.
+   134     0.00 <<< 10.80    Too small, by 7.30.
+   136     0.00 <<< 10.45    Too small, by 6.95.
+   138     0.00 <<< 10.10    Too small, by 6.60.
+   140     0.00 <<< 9.77     Too small, by 6.27.
+   142     0.00 <<< 9.45     Too small, by 5.95.
+   144     0.00 <<< 9.13     Too small, by 5.63.
+   146     0.00 <<< 8.83     Too small, by 5.33.
+   148     0.00 <<< 8.54     Too small, by 5.04.
+   150     0.00 <<< 8.26     Too small, by 4.76.
+   152     0.00 <<< 7.98     Too small, by 4.48.
+   154     0.00 <<< 7.72     Too small, by 4.22.
+   156     0.00 <<< 7.47     Too small, by 3.97.
+   158     0.00 <<< 7.22     Too small, by 3.72.
+   160     0.00 <<< 6.98     Too small, by 3.48.
+   162     0.00 <<< 6.75     Too small, by 3.25.
+   164     0.00 <<< 6.53     Too small, by 3.03.
+   166     0.00 <<< 6.31     Too small, by 2.81.
+   168     0.00 <<< 6.10     Too small, by 2.60.
+   170     0.00 <<< 5.90     Too small, by 2.40.
+   172     0.00 <<< 5.70     Too small, by 2.20.
+   174     0.00 <<< 5.52     Too small, by 2.02.
+   176     0.00 <<< 5.33     Too small, by 1.83.
+   178     0.00 <<< 5.16     Too small, by 1.66.
+
+OUTPUT FROM tests/threads/mlfqs/mlfqs-load-60:
+
+Kernel command line: -q -mlfqs run mlfqs-load-60
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'mlfqs-load-60':
+(mlfqs-load-60) begin
+(mlfqs-load-60) Starting 60 niced load threads...
+(mlfqs-load-60) Starting threads took 0 seconds.
+(mlfqs-load-60) After 0 seconds, load average=0.00.
+(mlfqs-load-60) After 2 seconds, load average=0.00.
+(mlfqs-load-60) After 4 seconds, load average=0.00.
+(mlfqs-load-60) After 6 seconds, load average=0.00.
+(mlfqs-load-60) After 8 seconds, load average=0.00.
+(mlfqs-load-60) After 10 seconds, load average=0.00.
+(mlfqs-load-60) After 12 seconds, load average=0.00.
+(mlfqs-load-60) After 14 seconds, load average=0.00.
+(mlfqs-load-60) After 16 seconds, load average=0.00.
+(mlfqs-load-60) After 18 seconds, load average=0.00.
+(mlfqs-load-60) After 20 seconds, load average=0.00.
+(mlfqs-load-60) After 22 seconds, load average=0.00.
+(mlfqs-load-60) After 24 seconds, load average=0.00.
+(mlfqs-load-60) After 26 seconds, load average=0.00.
+(mlfqs-load-60) After 28 seconds, load average=0.00.
+(mlfqs-load-60) After 30 seconds, load average=0.00.
+(mlfqs-load-60) After 32 seconds, load average=0.00.
+(mlfqs-load-60) After 34 seconds, load average=0.00.
+(mlfqs-load-60) After 36 seconds, load average=0.00.
+(mlfqs-load-60) After 38 seconds, load average=0.00.
+(mlfqs-load-60) After 40 seconds, load average=0.00.
+(mlfqs-load-60) After 42 seconds, load average=0.00.
+(mlfqs-load-60) After 44 seconds, load average=0.00.
+(mlfqs-load-60) After 46 seconds, load average=0.00.
+(mlfqs-load-60) After 48 seconds, load average=0.00.
+(mlfqs-load-60) After 50 seconds, load average=0.00.
+(mlfqs-load-60) After 52 seconds, load average=0.00.
+(mlfqs-load-60) After 54 seconds, load average=0.00.
+(mlfqs-load-60) After 56 seconds, load average=0.00.
+(mlfqs-load-60) After 58 seconds, load average=0.00.
+(mlfqs-load-60) After 60 seconds, load average=0.00.
+(mlfqs-load-60) After 62 seconds, load average=0.00.
+(mlfqs-load-60) After 64 seconds, load average=0.00.
+(mlfqs-load-60) After 66 seconds, load average=0.00.
+(mlfqs-load-60) After 68 seconds, load average=0.00.
+(mlfqs-load-60) After 70 seconds, load average=0.00.
+(mlfqs-load-60) After 72 seconds, load average=0.00.
+(mlfqs-load-60) After 74 seconds, load average=0.00.
+(mlfqs-load-60) After 76 seconds, load average=0.00.
+(mlfqs-load-60) After 78 seconds, load average=0.00.
+(mlfqs-load-60) After 80 seconds, load average=0.00.
+(mlfqs-load-60) After 82 seconds, load average=0.00.
+(mlfqs-load-60) After 84 seconds, load average=0.00.
+(mlfqs-load-60) After 86 seconds, load average=0.00.
+(mlfqs-load-60) After 88 seconds, load average=0.00.
+(mlfqs-load-60) After 90 seconds, load average=0.00.
+(mlfqs-load-60) After 92 seconds, load average=0.00.
+(mlfqs-load-60) After 94 seconds, load average=0.00.
+(mlfqs-load-60) After 96 seconds, load average=0.00.
+(mlfqs-load-60) After 98 seconds, load average=0.00.
+(mlfqs-load-60) After 100 seconds, load average=0.00.
+(mlfqs-load-60) After 102 seconds, load average=0.00.
+(mlfqs-load-60) After 104 seconds, load average=0.00.
+(mlfqs-load-60) After 106 seconds, load average=0.00.
+(mlfqs-load-60) After 108 seconds, load average=0.00.
+(mlfqs-load-60) After 110 seconds, load average=0.00.
+(mlfqs-load-60) After 112 seconds, load average=0.00.
+(mlfqs-load-60) After 114 seconds, load average=0.00.
+(mlfqs-load-60) After 116 seconds, load average=0.00.
+(mlfqs-load-60) After 118 seconds, load average=0.00.
+(mlfqs-load-60) After 120 seconds, load average=0.00.
+(mlfqs-load-60) After 122 seconds, load average=0.00.
+(mlfqs-load-60) After 124 seconds, load average=0.00.
+(mlfqs-load-60) After 126 seconds, load average=0.00.
+(mlfqs-load-60) After 128 seconds, load average=0.00.
+(mlfqs-load-60) After 130 seconds, load average=0.00.
+(mlfqs-load-60) After 132 seconds, load average=0.00.
+(mlfqs-load-60) After 134 seconds, load average=0.00.
+(mlfqs-load-60) After 136 seconds, load average=0.00.
+(mlfqs-load-60) After 138 seconds, load average=0.00.
+(mlfqs-load-60) After 140 seconds, load average=0.00.
+(mlfqs-load-60) After 142 seconds, load average=0.00.
+(mlfqs-load-60) After 144 seconds, load average=0.00.
+(mlfqs-load-60) After 146 seconds, load average=0.00.
+(mlfqs-load-60) After 148 seconds, load average=0.00.
+(mlfqs-load-60) After 150 seconds, load average=0.00.
+(mlfqs-load-60) After 152 seconds, load average=0.00.
+(mlfqs-load-60) After 154 seconds, load average=0.00.
+(mlfqs-load-60) After 156 seconds, load average=0.00.
+(mlfqs-load-60) After 158 seconds, load average=0.00.
+(mlfqs-load-60) After 160 seconds, load average=0.00.
+(mlfqs-load-60) After 162 seconds, load average=0.00.
+(mlfqs-load-60) After 164 seconds, load average=0.00.
+(mlfqs-load-60) After 166 seconds, load average=0.00.
+(mlfqs-load-60) After 168 seconds, load average=0.00.
+(mlfqs-load-60) After 170 seconds, load average=0.00.
+(mlfqs-load-60) After 172 seconds, load average=0.00.
+(mlfqs-load-60) After 174 seconds, load average=0.00.
+(mlfqs-load-60) After 176 seconds, load average=0.00.
+(mlfqs-load-60) After 178 seconds, load average=0.00.
+(mlfqs-load-60) end
+Execution of 'mlfqs-load-60' complete.
+Timer: 18841 ticks
+Thread: 0 idle ticks, 18841 kernel ticks, 0 user ticks
+Console: 5339 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/mlfqs/mlfqs-load-avg FAILURE:
+
+Some load average values were missing or differed from those expected by more than 2.5.
+  time   actual <-> expected explanation
+------ -------- --- -------- ----------------------------------------
+     2     0.00  =  0.05     
+     4     0.00  =  0.16     
+     6     0.00  =  0.34     
+     8     0.00  =  0.58     
+    10     0.00  =  0.87     
+    12     0.00  =  1.22     
+    14     0.00  =  1.63     
+    16     0.00  =  2.09     
+    18     0.00 <<< 2.60     Too small, by 0.10.
+    20     0.00 <<< 3.16     Too small, by 0.66.
+    22     0.00 <<< 3.76     Too small, by 1.26.
+    24     0.00 <<< 4.42     Too small, by 1.92.
+    26     0.00 <<< 5.11     Too small, by 2.61.
+    28     0.00 <<< 5.85     Too small, by 3.35.
+    30     0.00 <<< 6.63     Too small, by 4.13.
+    32     0.00 <<< 7.46     Too small, by 4.96.
+    34     0.00 <<< 8.32     Too small, by 5.82.
+    36     0.00 <<< 9.22     Too small, by 6.72.
+    38     0.00 <<< 10.15    Too small, by 7.65.
+    40     0.00 <<< 11.12    Too small, by 8.62.
+    42     0.00 <<< 12.13    Too small, by 9.63.
+    44     0.00 <<< 13.16    Too small, by 10.66.
+    46     0.00 <<< 14.23    Too small, by 11.73.
+    48     0.00 <<< 15.33    Too small, by 12.83.
+    50     0.00 <<< 16.46    Too small, by 13.96.
+    52     0.00 <<< 17.62    Too small, by 15.12.
+    54     0.00 <<< 18.81    Too small, by 16.31.
+    56     0.00 <<< 20.02    Too small, by 17.52.
+    58     0.00 <<< 21.26    Too small, by 18.76.
+    60     0.00 <<< 22.52    Too small, by 20.02.
+    62     0.00 <<< 23.71    Too small, by 21.21.
+    64     0.00 <<< 24.80    Too small, by 22.30.
+    66     0.00 <<< 25.78    Too small, by 23.28.
+    68     0.00 <<< 26.66    Too small, by 24.16.
+    70     0.00 <<< 27.45    Too small, by 24.95.
+    72     0.00 <<< 28.14    Too small, by 25.64.
+    74     0.00 <<< 28.75    Too small, by 26.25.
+    76     0.00 <<< 29.27    Too small, by 26.77.
+    78     0.00 <<< 29.71    Too small, by 27.21.
+    80     0.00 <<< 30.06    Too small, by 27.56.
+    82     0.00 <<< 30.34    Too small, by 27.84.
+    84     0.00 <<< 30.55    Too small, by 28.05.
+    86     0.00 <<< 30.68    Too small, by 28.18.
+    88     0.00 <<< 30.74    Too small, by 28.24.
+    90     0.00 <<< 30.73    Too small, by 28.23.
+    92     0.00 <<< 30.66    Too small, by 28.16.
+    94     0.00 <<< 30.52    Too small, by 28.02.
+    96     0.00 <<< 30.32    Too small, by 27.82.
+    98     0.00 <<< 30.06    Too small, by 27.56.
+   100     0.00 <<< 29.74    Too small, by 27.24.
+   102     0.00 <<< 29.37    Too small, by 26.87.
+   104     0.00 <<< 28.95    Too small, by 26.45.
+   106     0.00 <<< 28.47    Too small, by 25.97.
+   108     0.00 <<< 27.94    Too small, by 25.44.
+   110     0.00 <<< 27.36    Too small, by 24.86.
+   112     0.00 <<< 26.74    Too small, by 24.24.
+   114     0.00 <<< 26.07    Too small, by 23.57.
+   116     0.00 <<< 25.36    Too small, by 22.86.
+   118     0.00 <<< 24.60    Too small, by 22.10.
+   120     0.00 <<< 23.81    Too small, by 21.31.
+   122     0.00 <<< 23.02    Too small, by 20.52.
+   124     0.00 <<< 22.26    Too small, by 19.76.
+   126     0.00 <<< 21.52    Too small, by 19.02.
+   128     0.00 <<< 20.81    Too small, by 18.31.
+   130     0.00 <<< 20.12    Too small, by 17.62.
+   132     0.00 <<< 19.46    Too small, by 16.96.
+   134     0.00 <<< 18.81    Too small, by 16.31.
+   136     0.00 <<< 18.19    Too small, by 15.69.
+   138     0.00 <<< 17.59    Too small, by 15.09.
+   140     0.00 <<< 17.01    Too small, by 14.51.
+   142     0.00 <<< 16.45    Too small, by 13.95.
+   144     0.00 <<< 15.90    Too small, by 13.40.
+   146     0.00 <<< 15.38    Too small, by 12.88.
+   148     0.00 <<< 14.87    Too small, by 12.37.
+   150     0.00 <<< 14.38    Too small, by 11.88.
+   152     0.00 <<< 13.90    Too small, by 11.40.
+   154     0.00 <<< 13.44    Too small, by 10.94.
+   156     0.00 <<< 13.00    Too small, by 10.50.
+   158     0.00 <<< 12.57    Too small, by 10.07.
+   160     0.00 <<< 12.15    Too small, by 9.65.
+   162     0.00 <<< 11.75    Too small, by 9.25.
+   164     0.00 <<< 11.36    Too small, by 8.86.
+   166     0.00 <<< 10.99    Too small, by 8.49.
+   168     0.00 <<< 10.62    Too small, by 8.12.
+   170     0.00 <<< 10.27    Too small, by 7.77.
+   172     0.00 <<< 9.93     Too small, by 7.43.
+   174     0.00 <<< 9.61     Too small, by 7.11.
+   176     0.00 <<< 9.29     Too small, by 6.79.
+   178     0.00 <<< 8.98     Too small, by 6.48.
+
+OUTPUT FROM tests/threads/mlfqs/mlfqs-load-avg:
+
+Kernel command line: -q -mlfqs run mlfqs-load-avg
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  104,755,200 loops/s.
+Boot complete.
+Executing 'mlfqs-load-avg':
+(mlfqs-load-avg) begin
+(mlfqs-load-avg) Starting 60 load threads...
+(mlfqs-load-avg) Starting threads took 0 seconds.
+(mlfqs-load-avg) After 0 seconds, load average=0.00.
+(mlfqs-load-avg) After 2 seconds, load average=0.00.
+(mlfqs-load-avg) After 4 seconds, load average=0.00.
+(mlfqs-load-avg) After 6 seconds, load average=0.00.
+(mlfqs-load-avg) After 8 seconds, load average=0.00.
+(mlfqs-load-avg) After 10 seconds, load average=0.00.
+(mlfqs-load-avg) After 12 seconds, load average=0.00.
+(mlfqs-load-avg) After 14 seconds, load average=0.00.
+(mlfqs-load-avg) After 16 seconds, load average=0.00.
+(mlfqs-load-avg) After 18 seconds, load average=0.00.
+(mlfqs-load-avg) After 20 seconds, load average=0.00.
+(mlfqs-load-avg) After 22 seconds, load average=0.00.
+(mlfqs-load-avg) After 24 seconds, load average=0.00.
+(mlfqs-load-avg) After 26 seconds, load average=0.00.
+(mlfqs-load-avg) After 28 seconds, load average=0.00.
+(mlfqs-load-avg) After 30 seconds, load average=0.00.
+(mlfqs-load-avg) After 32 seconds, load average=0.00.
+(mlfqs-load-avg) After 34 seconds, load average=0.00.
+(mlfqs-load-avg) After 36 seconds, load average=0.00.
+(mlfqs-load-avg) After 38 seconds, load average=0.00.
+(mlfqs-load-avg) After 40 seconds, load average=0.00.
+(mlfqs-load-avg) After 42 seconds, load average=0.00.
+(mlfqs-load-avg) After 44 seconds, load average=0.00.
+(mlfqs-load-avg) After 46 seconds, load average=0.00.
+(mlfqs-load-avg) After 48 seconds, load average=0.00.
+(mlfqs-load-avg) After 50 seconds, load average=0.00.
+(mlfqs-load-avg) After 52 seconds, load average=0.00.
+(mlfqs-load-avg) After 54 seconds, load average=0.00.
+(mlfqs-load-avg) After 56 seconds, load average=0.00.
+(mlfqs-load-avg) After 58 seconds, load average=0.00.
+(mlfqs-load-avg) After 60 seconds, load average=0.00.
+(mlfqs-load-avg) After 62 seconds, load average=0.00.
+(mlfqs-load-avg) After 64 seconds, load average=0.00.
+(mlfqs-load-avg) After 66 seconds, load average=0.00.
+(mlfqs-load-avg) After 68 seconds, load average=0.00.
+(mlfqs-load-avg) After 70 seconds, load average=0.00.
+(mlfqs-load-avg) After 72 seconds, load average=0.00.
+(mlfqs-load-avg) After 74 seconds, load average=0.00.
+(mlfqs-load-avg) After 76 seconds, load average=0.00.
+(mlfqs-load-avg) After 78 seconds, load average=0.00.
+(mlfqs-load-avg) After 80 seconds, load average=0.00.
+(mlfqs-load-avg) After 82 seconds, load average=0.00.
+(mlfqs-load-avg) After 84 seconds, load average=0.00.
+(mlfqs-load-avg) After 86 seconds, load average=0.00.
+(mlfqs-load-avg) After 88 seconds, load average=0.00.
+(mlfqs-load-avg) After 90 seconds, load average=0.00.
+(mlfqs-load-avg) After 92 seconds, load average=0.00.
+(mlfqs-load-avg) After 94 seconds, load average=0.00.
+(mlfqs-load-avg) After 96 seconds, load average=0.00.
+(mlfqs-load-avg) After 98 seconds, load average=0.00.
+(mlfqs-load-avg) After 100 seconds, load average=0.00.
+(mlfqs-load-avg) After 102 seconds, load average=0.00.
+(mlfqs-load-avg) After 104 seconds, load average=0.00.
+(mlfqs-load-avg) After 106 seconds, load average=0.00.
+(mlfqs-load-avg) After 108 seconds, load average=0.00.
+(mlfqs-load-avg) After 110 seconds, load average=0.00.
+(mlfqs-load-avg) After 112 seconds, load average=0.00.
+(mlfqs-load-avg) After 114 seconds, load average=0.00.
+(mlfqs-load-avg) After 116 seconds, load average=0.00.
+(mlfqs-load-avg) After 118 seconds, load average=0.00.
+(mlfqs-load-avg) After 120 seconds, load average=0.00.
+(mlfqs-load-avg) After 122 seconds, load average=0.00.
+(mlfqs-load-avg) After 124 seconds, load average=0.00.
+(mlfqs-load-avg) After 126 seconds, load average=0.00.
+(mlfqs-load-avg) After 128 seconds, load average=0.00.
+(mlfqs-load-avg) After 130 seconds, load average=0.00.
+(mlfqs-load-avg) After 132 seconds, load average=0.00.
+(mlfqs-load-avg) After 134 seconds, load average=0.00.
+(mlfqs-load-avg) After 136 seconds, load average=0.00.
+(mlfqs-load-avg) After 138 seconds, load average=0.00.
+(mlfqs-load-avg) After 140 seconds, load average=0.00.
+(mlfqs-load-avg) After 142 seconds, load average=0.00.
+(mlfqs-load-avg) After 144 seconds, load average=0.00.
+(mlfqs-load-avg) After 146 seconds, load average=0.00.
+(mlfqs-load-avg) After 148 seconds, load average=0.00.
+(mlfqs-load-avg) After 150 seconds, load average=0.00.
+(mlfqs-load-avg) After 152 seconds, load average=0.00.
+(mlfqs-load-avg) After 154 seconds, load average=0.00.
+(mlfqs-load-avg) After 156 seconds, load average=0.00.
+(mlfqs-load-avg) After 158 seconds, load average=0.00.
+(mlfqs-load-avg) After 160 seconds, load average=0.00.
+(mlfqs-load-avg) After 162 seconds, load average=0.00.
+(mlfqs-load-avg) After 164 seconds, load average=0.00.
+(mlfqs-load-avg) After 166 seconds, load average=0.00.
+(mlfqs-load-avg) After 168 seconds, load average=0.00.
+(mlfqs-load-avg) After 170 seconds, load average=0.00.
+(mlfqs-load-avg) After 172 seconds, load average=0.00.
+(mlfqs-load-avg) After 174 seconds, load average=0.00.
+(mlfqs-load-avg) After 176 seconds, load average=0.00.
+(mlfqs-load-avg) After 178 seconds, load average=0.00.
+(mlfqs-load-avg) end
+Execution of 'mlfqs-load-avg' complete.
+Timer: 18838 ticks
+Thread: 0 idle ticks, 18838 kernel ticks, 0 user ticks
+Console: 5430 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/mlfqs/mlfqs-recent-1 FAILURE:
+
+Some recent_cpu values were missing or differed from those expected by more than 2.5.
+  time   actual <-> expected explanation
+------ -------- --- -------- ----------------------------------------
+     2     0.00 <<< 6.40     Too small, by 3.90.
+     4     0.00 <<< 12.60    Too small, by 10.10.
+     6     0.00 <<< 18.61    Too small, by 16.11.
+     8     0.00 <<< 24.44    Too small, by 21.94.
+    10     0.00 <<< 30.08    Too small, by 27.58.
+    12     0.00 <<< 35.54    Too small, by 33.04.
+    14     0.00 <<< 40.83    Too small, by 38.33.
+    16     0.00 <<< 45.96    Too small, by 43.46.
+    18     0.00 <<< 50.92    Too small, by 48.42.
+    20     0.00 <<< 55.73    Too small, by 53.23.
+    22     0.00 <<< 60.39    Too small, by 57.89.
+    24     0.00 <<< 64.90    Too small, by 62.40.
+    26     0.00 <<< 69.27    Too small, by 66.77.
+    28     0.00 <<< 73.50    Too small, by 71.00.
+    30     0.00 <<< 77.60    Too small, by 75.10.
+    32     0.00 <<< 81.56    Too small, by 79.06.
+    34     0.00 <<< 85.40    Too small, by 82.90.
+    36     0.00 <<< 89.12    Too small, by 86.62.
+    38     0.00 <<< 92.72    Too small, by 90.22.
+    40     0.00 <<< 96.20    Too small, by 93.70.
+    42     0.00 <<< 99.57    Too small, by 97.07.
+    44     0.00 <<< 102.84   Too small, by 100.34.
+    46     0.00 <<< 106.00   Too small, by 103.50.
+    48     0.00 <<< 109.06   Too small, by 106.56.
+    50     0.00 <<< 112.02   Too small, by 109.52.
+    52     0.00 <<< 114.89   Too small, by 112.39.
+    54     0.00 <<< 117.66   Too small, by 115.16.
+    56     0.00 <<< 120.34   Too small, by 117.84.
+    58     0.00 <<< 122.94   Too small, by 120.44.
+    60     0.00 <<< 125.46   Too small, by 122.96.
+    62     0.00 <<< 127.89   Too small, by 125.39.
+    64     0.00 <<< 130.25   Too small, by 127.75.
+    66     0.00 <<< 132.53   Too small, by 130.03.
+    68     0.00 <<< 134.73   Too small, by 132.23.
+    70     0.00 <<< 136.86   Too small, by 134.36.
+    72     0.00 <<< 138.93   Too small, by 136.43.
+    74     0.00 <<< 140.93   Too small, by 138.43.
+    76     0.00 <<< 142.86   Too small, by 140.36.
+    78     0.00 <<< 144.73   Too small, by 142.23.
+    80     0.00 <<< 146.54   Too small, by 144.04.
+    82     0.00 <<< 148.29   Too small, by 145.79.
+    84     0.00 <<< 149.99   Too small, by 147.49.
+    86     0.00 <<< 151.63   Too small, by 149.13.
+    88     0.00 <<< 153.21   Too small, by 150.71.
+    90     0.00 <<< 154.75   Too small, by 152.25.
+    92     0.00 <<< 156.23   Too small, by 153.73.
+    94     0.00 <<< 157.67   Too small, by 155.17.
+    96     0.00 <<< 159.06   Too small, by 156.56.
+    98     0.00 <<< 160.40   Too small, by 157.90.
+   100     0.00 <<< 161.70   Too small, by 159.20.
+   102     0.00 <<< 162.96   Too small, by 160.46.
+   104     0.00 <<< 164.18   Too small, by 161.68.
+   106     0.00 <<< 165.35   Too small, by 162.85.
+   108     0.00 <<< 166.49   Too small, by 163.99.
+   110     0.00 <<< 167.59   Too small, by 165.09.
+   112     0.00 <<< 168.66   Too small, by 166.16.
+   114     0.00 <<< 169.69   Too small, by 167.19.
+   116     0.00 <<< 170.69   Too small, by 168.19.
+   118     0.00 <<< 171.65   Too small, by 169.15.
+   120     0.00 <<< 172.58   Too small, by 170.08.
+   122     0.00 <<< 173.49   Too small, by 170.99.
+   124     0.00 <<< 174.36   Too small, by 171.86.
+   126     0.00 <<< 175.20   Too small, by 172.70.
+   128     0.00 <<< 176.02   Too small, by 173.52.
+   130     0.00 <<< 176.81   Too small, by 174.31.
+   132     0.00 <<< 177.57   Too small, by 175.07.
+   134     0.00 <<< 178.31   Too small, by 175.81.
+   136     0.00 <<< 179.02   Too small, by 176.52.
+   138     0.00 <<< 179.72   Too small, by 177.22.
+   140     0.00 <<< 180.38   Too small, by 177.88.
+   142     0.00 <<< 181.03   Too small, by 178.53.
+   144     0.00 <<< 181.65   Too small, by 179.15.
+   146     0.00 <<< 182.26   Too small, by 179.76.
+   148     0.00 <<< 182.84   Too small, by 180.34.
+   150     0.00 <<< 183.41   Too small, by 180.91.
+   152     0.00 <<< 183.96   Too small, by 181.46.
+   154     0.00 <<< 184.49   Too small, by 181.99.
+   156     0.00 <<< 185.00   Too small, by 182.50.
+   158     0.00 <<< 185.49   Too small, by 182.99.
+   160     0.00 <<< 185.97   Too small, by 183.47.
+   162     0.00 <<< 186.43   Too small, by 183.93.
+   164     0.00 <<< 186.88   Too small, by 184.38.
+   166     0.00 <<< 187.31   Too small, by 184.81.
+   168     0.00 <<< 187.73   Too small, by 185.23.
+   170     0.00 <<< 188.14   Too small, by 185.64.
+   172     0.00 <<< 188.53   Too small, by 186.03.
+   174     0.00 <<< 188.91   Too small, by 186.41.
+   176     0.00 <<< 189.27   Too small, by 186.77.
+   178     0.00 <<< 189.63   Too small, by 187.13.
+
+OUTPUT FROM tests/threads/mlfqs/mlfqs-recent-1:
+
+Kernel command line: -q -mlfqs run mlfqs-recent-1
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'mlfqs-recent-1':
+(mlfqs-recent-1) begin
+(mlfqs-recent-1) Sleeping 10 seconds to allow recent_cpu to decay, please wait...
+(mlfqs-recent-1) After 2 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 4 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 6 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 8 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 10 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 12 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 14 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 16 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 18 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 20 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 22 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 24 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 26 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 28 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 30 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 32 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 34 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 36 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 38 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 40 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 42 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 44 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 46 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 48 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 50 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 52 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 54 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 56 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 58 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 60 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 62 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 64 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 66 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 68 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 70 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 72 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 74 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 76 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 78 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 80 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 82 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 84 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 86 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 88 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 90 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 92 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 94 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 96 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 98 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 100 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 102 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 104 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 106 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 108 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 110 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 112 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 114 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 116 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 118 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 120 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 122 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 124 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 126 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 128 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 130 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 132 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 134 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 136 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 138 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 140 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 142 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 144 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 146 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 148 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 150 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 152 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 154 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 156 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 158 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 160 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 162 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 164 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 166 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 168 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 170 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 172 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 174 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 176 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 178 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) After 180 seconds, recent_cpu is 0.00, load_avg is 0.00.
+(mlfqs-recent-1) end
+Execution of 'mlfqs-recent-1' complete.
+Timer: 19001 ticks
+Thread: 0 idle ticks, 19001 kernel ticks, 0 user ticks
+Console: 7129 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/mlfqs/mlfqs-nice-2 FAILURE:
+
+Some tick counts were missing or differed from those expected by more than 50.
+thread   actual <-> expected explanation
+------ -------- --- -------- ----------------------------------------
+     0     1500 <<< 1904     Too small, by 354.
+     1     1500 >>> 1096     Too big, by 354.
+
+OUTPUT FROM tests/threads/mlfqs/mlfqs-nice-2:
+
+Kernel command line: -q -mlfqs run mlfqs-nice-2
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'mlfqs-nice-2':
+(mlfqs-nice-2) begin
+(mlfqs-nice-2) Starting 2 threads...
+(mlfqs-nice-2) Starting threads took 0 ticks.
+(mlfqs-nice-2) Sleeping 40 seconds to let threads run, please wait...
+(mlfqs-nice-2) Thread 0 received 1500 ticks.
+(mlfqs-nice-2) Thread 1 received 1500 ticks.
+(mlfqs-nice-2) end
+Execution of 'mlfqs-nice-2' complete.
+Timer: 4042 ticks
+Thread: 0 idle ticks, 4042 kernel ticks, 0 user ticks
+Console: 671 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/mlfqs/mlfqs-nice-10 FAILURE:
+
+Some tick counts were missing or differed from those expected by more than 25.
+thread   actual <-> expected explanation
+------ -------- --- -------- ----------------------------------------
+     0      301 <<< 672      Too small, by 346.
+     1      301 <<< 588      Too small, by 262.
+     2      301 <<< 492      Too small, by 166.
+     3      300 <<< 408      Too small, by 83.
+     4      300  =  316      
+     5      301 >>> 232      Too big, by 44.
+     6      300 >>> 152      Too big, by 123.
+     7      301 >>> 92       Too big, by 184.
+     8      300 >>> 40       Too big, by 235.
+     9      301 >>> 8        Too big, by 268.
+
+OUTPUT FROM tests/threads/mlfqs/mlfqs-nice-10:
+
+Kernel command line: -q -mlfqs run mlfqs-nice-10
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  209,510,400 loops/s.
+Boot complete.
+Executing 'mlfqs-nice-10':
+(mlfqs-nice-10) begin
+(mlfqs-nice-10) Starting 10 threads...
+(mlfqs-nice-10) Starting threads took 1 ticks.
+(mlfqs-nice-10) Sleeping 40 seconds to let threads run, please wait...
+(mlfqs-nice-10) Thread 0 received 301 ticks.
+(mlfqs-nice-10) Thread 1 received 301 ticks.
+(mlfqs-nice-10) Thread 2 received 301 ticks.
+(mlfqs-nice-10) Thread 3 received 300 ticks.
+(mlfqs-nice-10) Thread 4 received 300 ticks.
+(mlfqs-nice-10) Thread 5 received 301 ticks.
+(mlfqs-nice-10) Thread 6 received 300 ticks.
+(mlfqs-nice-10) Thread 7 received 301 ticks.
+(mlfqs-nice-10) Thread 8 received 300 ticks.
+(mlfqs-nice-10) Thread 9 received 301 ticks.
+(mlfqs-nice-10) end
+Execution of 'mlfqs-nice-10' complete.
+Timer: 4041 ticks
+Thread: 0 idle ticks, 4042 kernel ticks, 0 user ticks
+Console: 1040 characters output
+Keyboard: 0 keys pressed
+Powering off...
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+DETAILS OF tests/threads/mlfqs/mlfqs-block FAILURE:
+
+Test output failed to match any acceptable form.
+
+Acceptable output:
+  (mlfqs-block) begin
+  (mlfqs-block) Main thread acquiring lock.
+  (mlfqs-block) Main thread creating block thread, sleeping 25 seconds...
+  (mlfqs-block) Block thread spinning for 20 seconds...
+  (mlfqs-block) Block thread acquiring lock...
+  (mlfqs-block) Main thread spinning for 5 seconds...
+  (mlfqs-block) Main thread releasing lock.
+  (mlfqs-block) ...got it.
+  (mlfqs-block) Block thread should have already acquired lock.
+  (mlfqs-block) end
+Differences in `diff -u' format:
+  (mlfqs-block) begin
+  (mlfqs-block) Main thread acquiring lock.
+  (mlfqs-block) Main thread creating block thread, sleeping 25 seconds...
+  (mlfqs-block) Block thread spinning for 20 seconds...
+  (mlfqs-block) Block thread acquiring lock...
+  (mlfqs-block) Main thread spinning for 5 seconds...
+  (mlfqs-block) Main thread releasing lock.
+- (mlfqs-block) ...got it.
+  (mlfqs-block) Block thread should have already acquired lock.
+  (mlfqs-block) end
+
+OUTPUT FROM tests/threads/mlfqs/mlfqs-block:
+
+Kernel command line: -q -mlfqs run mlfqs-block
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+Boot complete.
+Executing 'mlfqs-block':
+(mlfqs-block) begin
+(mlfqs-block) Main thread acquiring lock.
+(mlfqs-block) Main thread creating block thread, sleeping 25 seconds...
+(mlfqs-block) Block thread spinning for 20 seconds...
+(mlfqs-block) Block thread acquiring lock...
+(mlfqs-block) Main thread spinning for 5 seconds...
+(mlfqs-block) Main thread releasing lock.
+(mlfqs-block) Block thread should have already acquired lock.
+(mlfqs-block) end
+Execution of 'mlfqs-block' complete.
+Timer: 3042 ticks
+Thread: 0 idle ticks, 3042 kernel ticks, 0 user ticks
+Console: 792 characters output
+Keyboard: 0 keys pressed
+Powering off...

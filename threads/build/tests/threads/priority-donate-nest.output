@@ -1,0 +1,27 @@
+Kernel command line: -q run priority-donate-nest
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  150,528,000 loops/s.
+Boot complete.
+Executing 'priority-donate-nest':
+(priority-donate-nest) begin
+(priority-donate-nest) Low thread should have priority 32.  Actual priority: 31.
+Interrupt 0x0e (#PF Page-Fault Exception) at rip=8004207c9a
+ cr2=ffffffffffffffc0 error=               0
+rax ffffffffffffffa8 rbx 0000000000000000 rcx 0000008004235058 rdx 0000000000000021
+rsp 0000008004235f18 rbp 0000008004235f30 rsi 0000000000000000 rdi 0000008004235058
+rip 0000008004207c9a r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
+r11 0000000000000000 r12 0000000000000000 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000283
+es: 0010 ds: 0010 cs: 0008 ss: 0010
+Kernel PANIC at ../../threads/interrupt.c:361 in intr_handler(): Unexpected interrupt
+Call stack: 0x80042136fc 0x8004208be7 0x8004208f99 0x8004214a78 0x800420a08a 0x80042187ad 0x80042074d7.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 43 ticks
+Thread: 0 idle ticks, 43 kernel ticks, 0 user ticks
+Console: 1

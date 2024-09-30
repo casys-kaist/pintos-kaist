@@ -1,0 +1,23 @@
+Kernel command line: -q run priority-donate-multiple2
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  104,755,200 loops/s.
+Boot complete.
+Executing 'priority-donate-multiple2':
+(priority-donate-multiple2) begin
+(priority-donate-multiple2) Main thread should have priority 34.  Actual priority: 31.
+(priority-donate-multiple2) Thread c finished.
+(priority-donate-multiple2) Main thread should have priority 36.  Actual priority: 31.
+(priority-donate-multiple2) Main thread should have priority 36.  Actual priority: 31.
+(priority-donate-multiple2) Threads b, a, c should have just finished, in that order.
+(priority-donate-multiple2) Main thread should have priority 31.  Actual priority: 31.
+(priority-donate-multiple2) end
+Execution of 'priority-donate-multiple2' complete.
+Timer: 40 ticks
+Thread: 0 idle ticks, 40 kernel ticks, 0 user ticks
+Console: 963 characters output
+Keyboard: 0 keys pressed
+Powering off...

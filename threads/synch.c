@@ -116,7 +116,8 @@ sema_up (struct semaphore *sema) {
 					struct thread, elem));
 	}
 	sema->value++;
-	thread_yield(); // ?? 
+	// TODO wake up the highest priority thread
+
 	intr_set_level (old_level);
 }
 
@@ -319,6 +320,7 @@ cond_signal (struct condition *cond, struct lock *lock UNUSED) {
 		sema_up (&list_entry (list_pop_front (&cond->waiters),
 					struct semaphore_elem, elem)->semaphore);
 	}
+
 }
 
 /* Wakes up all threads, if any, waiting on COND (protected by

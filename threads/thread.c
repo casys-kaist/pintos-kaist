@@ -247,6 +247,7 @@ thread_create (const char *name, int priority,
 	// unique.k 08291155
 	// when thread is created, timeToWakeUp is set to 0
 	t->timeToWakeUp = 0;
+	
 
 	/* Add to run queue. */
 	thread_unblock (t);
@@ -297,6 +298,7 @@ thread_unblock (struct thread *t) {
 
 	t->status = THREAD_READY;
 	intr_set_level (old_level);
+
 }
 
 /* Returns the name of the running thread. */
@@ -396,7 +398,9 @@ thread_sleep (int64_t tickWakeUp) {
 /* Sets the current thread's priority to NEW_PRIORITY. */
 void
 thread_set_priority (int new_priority) {
-	thread_current ()->priority = new_priority;
+	struct thread *curr = thread_current();
+	curr->priority = new_priority;
+	
 
 	check_priority ();
 }
@@ -404,8 +408,7 @@ thread_set_priority (int new_priority) {
 /* Returns the current thread's priority. */
 int
 thread_get_priority (void) {
-	
-
+	// check_priority (); // 필요하려나?
 	return thread_current ()->priority;
 }
 
@@ -416,7 +419,13 @@ thread_set_nice (int nice UNUSED) {
 	struct thread *t = thread_current();
 	enum intr_level old_level = intr_disable();
 	t->nice = nice;
+	// check_priority();
+	if (!list_empty(&ready_list) && t->priority < list_entry(list_front(&ready_list), struct thread, elem)->priority) {
+		thread_yield();
+	}
+
 	intr_set_level(old_level);
+
 
 	
 }
@@ -714,4 +723,17 @@ bool cmp_priority (const struct list_elem *a, const struct list_elem *b, void *a
 bool cmp_donate_priority (const struct list_elem *l, const struct list_elem *s, void *aux UNUSED){
 	return list_entry (l, struct thread, donation_elem)->priority
 		 > list_entry (s, struct thread, donation_elem)->priority;
+}
+
+bool cmp_sem_priority (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED){
+	// struct semaphore_elem *sa = list_entry(a, struct semaphore_elem, elem);
+	// struct semaphore_elem *sb = list_entry(b, struct semaphore_elem, elem);
+	
+	// struct list_elem *sa_e = list_begin(&(sa->semaphore.waiters));
+	// struct list_elem *sb_e = list_begin(&(sb->semaphore.waiters));
+ 
+	// struct thread *sa_t = list_entry(sa_e, struct thread, elem);
+	// struct thread *sb_t = list_entry(sb_e, struct thread, elem);
+ 
+	// return (sa_t->priority) > (sb_t->priority);
 }

@@ -28,6 +28,10 @@
    that are ready to run but not actually running. */
 static struct list ready_list;
 
+/* List of processes in THREAD_BLOCKED state, that is, processes
+   that are blocked from yielding (it means waiting). */
+static struct list blocked_list;
+
 /* Idle thread. */
 static struct thread *idle_thread;
 
@@ -109,6 +113,7 @@ thread_init (void) {
 	lock_init (&tid_lock);
 	list_init (&ready_list);
 	list_init (&destruction_req);
+	list_init (&blocked_list);
 
 	/* Set up a thread structure for the running thread. */
 	initial_thread = running_thread ();
@@ -450,6 +455,52 @@ do_iret (struct intr_frame *tf) {
 			"addq $32, %%rsp\n"
 			"iretq"
 			: : "g" ((uint64_t) tf) : "memory");
+}
+
+/* Make thread to wait until sleeping time ends 
+   Refer from 'thread_yield' */
+void
+thread_sleep_until (int64_t sleep_time_until) {
+	enum intr_level old_level;
+	old_level = intr_disable ();
+
+	struct thread *curr = thread_current ();
+	if (curr != idle_thread) {
+		curr->wakeup_time = sleep_time_until;
+		list_insert_ordered (&blocked_list, &curr->elem, sort_by_less_sleep_time, NULL);
+		thread_block ();
+	}
+	intr_set_level (old_level);
+}
+
+/* Refer from 'list_less_func' */
+bool
+sort_by_less_sleep_time (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED) {
+	struct thread *thread_a = list_entry (a, struct thread, elem);
+	struct thread *thread_b = list_entry (b, struct thread, elem);
+	return thread_a->wakeup_time < thread_b->wakeup_time;
+}
+
+/* Check whether there is any thread that waits enough.
+   If there is, remove it from blocked_list and unblocked (set as ready). */
+void
+thread_check_wakeup_time (int64_t ticks) {
+	enum intr_level old_level;
+	old_level = intr_disable ();
+
+	struct list_elem *blocked_elem = list_begin (&blocked_list);
+		while (blocked_elem != list_end (&blocked_list)) {
+			struct thread *blocked_thread = list_entry(blocked_elem, struct thread, elem);
+
+			if (ticks >= blocked_thread->wakeup_time) {
+				blocked_elem = list_remove (blocked_elem);
+				thread_unblock (blocked_thread);
+			}
+			else
+				break;
+		}
+
+	intr_set_level (old_level);
 }
 
 /* Switching the thread by activating the new thread's page

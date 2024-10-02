@@ -148,6 +148,14 @@ int thread_get_load_avg (void);
 
 void do_iret (struct intr_frame *tf);
 
+void thread_sleep_until (int64_t sleep_time_until);
+bool sort_by_less_sleep_time (
+	const struct list_elem *a, 
+	const struct list_elem *b, 
+	void *aux
+);
+void thread_check_wakeup_time (int64_t ticks);
+
 void priority_preemption (void);
 bool sort_by_priority(
 	const struct list_elem *a, 

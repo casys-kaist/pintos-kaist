@@ -806,9 +806,18 @@ int divide_xn (int x, int n) {
 void
 mlfqs_calculate_priority (struct thread *t) {
 	if (t != idle_thread) {
-		t->priority = float_to_int_round_zero (
+		int result = float_to_int_round_zero (
 			add_xn (divide_xn (t->recent_cpu, -4), PRI_MAX - t->nice * 2)
 		);
+		if (result < 0) {
+			t->priority = 0;
+		}
+		else if (result > 63) {
+			t->priority = 63;
+		}
+		else {
+			t->priority = result;
+		}		
 	}
 }
 
@@ -836,10 +845,16 @@ mlfqs_update_load_avg (void) {
 		ready_threads = list_size (&ready_list) + 1;
 	}
 
-	load_avg = add_xy (
+	int result = add_xy (
 		multiple_xy (divide_xy (int_to_float (59), int_to_float (60)), load_avg), 
 		multiple_xn (divide_xy (int_to_float (1), int_to_float (60)), ready_threads)
 	);
+	if (result < 0) {
+		load_avg = 0;
+	}
+	else {
+		load_avg = result;
+	}
 }
 
 void

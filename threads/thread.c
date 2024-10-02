@@ -211,7 +211,7 @@ thread_create (const char *name, int priority,
 
 	/* Add to run queue. */
 	thread_unblock (t);
-	priority_preemption();
+	priority_preemption ();
 	return tid;
 }
 
@@ -245,8 +245,7 @@ thread_unblock (struct thread *t) {
 
 	old_level = intr_disable ();
 	ASSERT (t->status == THREAD_BLOCKED);
-	//list_push_back (&ready_list, &t->elem);
-	list_insert_ordered(&ready_list, &t->elem, sort_by_priority, NULL);
+	list_insert_ordered (&ready_list, &t->elem, sort_by_priority, NULL);
 	t->status = THREAD_READY;
 	intr_set_level (old_level);
 }
@@ -309,8 +308,7 @@ thread_yield (void) {
 
 	old_level = intr_disable ();
 	if (curr != idle_thread)
-		//list_push_back (&ready_list, &curr->elem);
-		list_insert_ordered(&ready_list, &curr->elem, sort_by_priority, NULL);
+		list_insert_ordered (&ready_list, &curr->elem, sort_by_priority, NULL);
 	do_schedule (THREAD_READY);
 	intr_set_level (old_level);
 }
@@ -318,10 +316,9 @@ thread_yield (void) {
 /* Sets the current thread's priority to NEW_PRIORITY. */
 void
 thread_set_priority (int new_priority) {
-	//thread_current ()->priority = new_priority;
 	thread_current ()->init_priority=new_priority;
-	refresh_priority();
-	priority_preemption();
+	refresh_priority ();
+	priority_preemption ();
 }
 
 /* Returns the current thread's priority. */
@@ -465,18 +462,19 @@ do_iret (struct intr_frame *tf) {
 			"iretq"
 			: : "g" ((uint64_t) tf) : "memory");
 }
+
 void
 priority_preemption (void){
-	if (!list_empty(&ready_list)) {
-		struct thread *top = list_begin(&ready_list);
-		if (sort_by_priority(top, &thread_current()->elem, NULL))
+	if (!list_empty (&ready_list)) {
+		struct thread *top = list_begin (&ready_list);
+		if (sort_by_priority (top, &thread_current ()->elem, NULL))
 		{
-			thread_yield();
+			thread_yield ();
 		}
 	}
 }
 
-/* refer from 'list_less_func*/
+/* Refer from 'list_less_func*/
 bool
 sort_by_priority (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED) {
 	struct thread *thread_a = list_entry (a, struct thread, elem)->priority;
@@ -606,11 +604,11 @@ thread_launch (struct thread *th) {
 static void
 do_schedule(int status) {
 	ASSERT (intr_get_level () == INTR_OFF);
-	ASSERT (thread_current()->status == THREAD_RUNNING);
+	ASSERT (thread_current ()->status == THREAD_RUNNING);
 	while (!list_empty (&destruction_req)) {
 		struct thread *victim =
 			list_entry (list_pop_front (&destruction_req), struct thread, elem);
-		palloc_free_page(victim);
+		palloc_free_page (victim);
 	}
 	thread_current ()->status = status;
 	schedule ();
@@ -676,7 +674,7 @@ sort_by_donation_priority (const struct list_elem *a, const struct list_elem *b,
 
 void
 donate_priority (void) {
-	struct thread *current = thread_current();
+	struct thread *current = thread_current ();
 	for (int i=0;i<8;i++){
 		if(current->wait_on_lock==NULL)
 			break;
@@ -688,23 +686,23 @@ donate_priority (void) {
 
 void
 remove_with_lock (struct lock *lock) {
-	struct thread *current = thread_current();
+	struct thread *current = thread_current ();
 	struct list_elem *e;
 	
-    for (e=list_begin(&current->donations); e!=list_end(&current->donations); e=list_next(e)) {
+    for (e=list_begin (&current->donations); e!=list_end (&current->donations); e=list_next (e)) {
 		struct thread *removal=list_entry(e, struct thread, donation_elem);
 		if(removal->wait_on_lock==lock)
-			list_remove(&removal->donation_elem);
+			list_remove (&removal->donation_elem);
 	}
 }
 void
 refresh_priority (void) {
-	struct thread *current = thread_current();
+	struct thread *current = thread_current ();
 	current->priority = current->init_priority;
-	if (!list_empty(&current->donations))
+	if (!list_empty (&current->donations))
 	{
-		list_sort(&current->donations, sort_by_donation_priority, 0);
-		struct thread *biggest_priority = list_entry(list_front(&current->donations), struct thread, donation_elem);
+		list_sort (&current->donations, sort_by_donation_priority, 0);
+		struct thread *biggest_priority = list_entry(list_front (&current->donations), struct thread, donation_elem);
 
 		if (current->priority < biggest_priority->priority)
 			current->priority = biggest_priority->priority;

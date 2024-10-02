@@ -92,9 +92,12 @@ struct thread {
 	char name[16];                      /* Name (for debugging purposes). */
 	int priority;                       /* Priority. */
 	int64_t wakeup_time;				/* Time to wake up (end waiting). */
+	int nice;							/* Niceness. */
+	int recent_cpu;						/* Recent CPU time. */
 
 	/* Shared between thread.c and synch.c. */
 	struct list_elem elem;              /* List element. */
+	struct list_elem mlfqs_elem;		/* List element for MLFQS. */
 
 #ifdef USERPROG
 	/* Owned by userprog/process.c. */
@@ -149,6 +152,7 @@ int thread_get_load_avg (void);
 
 void do_iret (struct intr_frame *tf);
 
+/* Functions for Alarm Clock */
 void thread_sleep_until (int64_t sleep_time_until);
 bool sort_by_less_sleep_time (
 	const struct list_elem *a, 
@@ -157,6 +161,7 @@ bool sort_by_less_sleep_time (
 );
 void thread_check_wakeup_time (int64_t ticks);
 
+/* Functions for Priority Scheduling */
 void priority_preemption (void);
 bool sort_by_priority(
 	const struct list_elem *a, 
@@ -172,4 +177,30 @@ void donate_priority (void);
 void remove_with_lock (struct lock *);
 void refresh_priority (void);
 
+/* Functions for Fixed-Point Real Arithmetic */
+#define F (1 << 14)
+#define NICE_DEFAULT 0
+#define RECENT_CPU_DEFAULT 0
+#define LOAD_AVG_DEFAULT 0
+
+int int_to_float (int n);
+int float_to_int_round_zero (int x);
+int float_to_int_round_near (int x);
+int add_xy (int x, int y);
+int add_xn (int x, int n);
+int subtract_xy (int x, int y);
+int subtract_xn (int x, int n);
+int multiple_xy (int x, int y);
+int multiple_xn (int x, int n);
+int divide_xy (int x, int y) ;
+int divide_xn (int x, int n);
+
+/* Functions for MLFQS */
+void mlfqs_calculate_priority (struct thread *t);
+void mlfqs_calculate_recent_cpu (struct thread *t);
+void mlfqs_update_load_avg (void);
+
+void mlfqs_increment_recent_cpu (void);
+void mlfqs_recalculate_priority (void);
+void mlfqs_recalculate_recent_cpu (void);
 #endif /* threads/thread.h */

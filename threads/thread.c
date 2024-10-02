@@ -316,7 +316,7 @@ thread_yield (void) {
 /* Sets the current thread's priority to NEW_PRIORITY. */
 void
 thread_set_priority (int new_priority) {
-	thread_current ()->init_priority=new_priority;
+	thread_current ()->init_priority = new_priority;
 	refresh_priority ();
 	priority_preemption ();
 }
@@ -419,7 +419,7 @@ init_thread (struct thread *t, const char *name, int priority) {
 
 	t->init_priority = priority;
 	t->wait_on_lock = NULL;
-	list_init(&t->donations);
+	list_init (&t->donations);
 }
 
 /* Chooses and returns the next thread to be scheduled.  Should
@@ -467,8 +467,7 @@ void
 priority_preemption (void){
 	if (!list_empty (&ready_list)) {
 		struct thread *top = list_begin (&ready_list);
-		if (sort_by_priority (top, &thread_current ()->elem, NULL))
-		{
+		if (sort_by_priority (top, &thread_current ()->elem, NULL)) {
 			thread_yield ();
 		}
 	}
@@ -664,7 +663,8 @@ allocate_tid (void) {
 
 	return tid;
 }
-/* refer from 'list_less_func*/
+
+/* Refer from 'list_less_func*/
 bool
 sort_by_donation_priority (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED) {
 	struct thread *thread_a = list_entry (a, struct thread, donation_elem)->priority;
@@ -695,6 +695,7 @@ remove_with_lock (struct lock *lock) {
 			list_remove (&removal->donation_elem);
 	}
 }
+
 void
 refresh_priority (void) {
 	struct thread *current = thread_current ();

@@ -7,7 +7,7 @@ alarm-negative priority-change priority-donate-one			\
 priority-donate-multiple priority-donate-multiple2			\
 priority-donate-nest priority-donate-sema priority-donate-lower		\
 priority-fifo priority-preempt priority-sema priority-condvar		\
-priority-donate-chain hello)
+priority-donate-chain)
 
 # Sources for tests.
 tests/threads_SRC  = tests/threads/tests.c
@@ -34,4 +34,3 @@ tests/threads_SRC += tests/threads/mlfqs/mlfqs-load-avg.c
 tests/threads_SRC += tests/threads/mlfqs/mlfqs-recent-1.c
 tests/threads_SRC += tests/threads/mlfqs/mlfqs-fair.c
 tests/threads_SRC += tests/threads/mlfqs/mlfqs-block.c
-tests/threads_SRC += tests/threads/hello.c

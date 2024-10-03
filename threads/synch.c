@@ -200,14 +200,22 @@ lock_acquire (struct lock *lock) {
 
 	struct thread *cur = thread_current();
 
+   // mlfqs scheduler이면 바로
+   if (thread_mlfqs) {
+      sema_down(&lock->semaphore);
+      lock->holder = cur;
+      return;
+   }
+
     if (lock->holder != NULL) {
-        // 대기 중인 스레드 리스트에서 가장 높은 우선순위 스레드 선택
+
         if (lock->holder->priority < cur->priority) {
-            thread_donate_priority(lock->holder, cur->priority);  // donation 발생
+            
+            donate_priority(lock->holder, cur->priority);  // donation
         }
 
-        cur->lock_waiting = lock;  // 현재 스레드가 대기 중인 락 기록
-        sema_down(&lock->semaphore);  // 락을 기다리며 블록 상태로 전환
+        cur->lock_waiting = lock; 
+        sema_down(&lock->semaphore);  
         cur->lock_waiting = NULL;  // 대기 상태 해제
     } else {
         sema_down(&lock->semaphore);  // 락을 소유 중인 스레드가 없으면 바로 획득
@@ -216,7 +224,7 @@ lock_acquire (struct lock *lock) {
     lock->holder = cur;  // 락을 소유한 스레드로 현재 스레드 설정
     list_push_back(&cur->lock_list, &lock->elem);  // 현재 스레드의 락 리스트에 추가 ㄴㄴ
     // lock_list에 priority 순으로 추가
-    list_sort(&cur->lock_list, (list_less_func *) &cmp_priority, NULL); // sorting  해놔서 앞에꺼 꺼내쓰게
+    list_sort(&cur->lock_list, (list_less_func *) &cmp_priority, NULL); // sorting  해놔서 앞에꺼 바로바로 꺼내쓰게
 
 }
 
@@ -252,23 +260,30 @@ lock_release (struct lock *lock) {
 
 
    struct thread *cur = thread_current();
+   // mlfqs scheduler이면 바로
+   if (thread_mlfqs) {
+      lock->holder = NULL;
+      sema_up(&lock->semaphore);
+      return;
+   }
+
+
    list_remove(&lock->elem);  // 락 리스트에서 제거
    // compare_and_yield();
    
 
    // 대기 중인 스레드가 있을 경우 donation 복원
-   //  multi 왜 안되는지 모르겠음...
+   //  multi 왜 안되는지 모르겠음... acquire가 문젠가
    int max_priority;
    if (!list_empty(&cur->lock_list)) {
-      list_sort(&cur->lock_list, (list_less_func *) &cmp_priority, NULL);
+      list_sort(&cur->lock_list, (list_less_func *) &cmp_priority, NULL); // 일단 정렬 한 번 더..
  
       max_priority = list_entry(list_front(&cur->lock_list), struct lock, elem)->holder->priority; 
       cur->priority = max_priority;
-   
 
    } 
    else if (cur->priority != cur->original_priority) {
-      cur->priority = cur->original_priority;
+      cur->priority = cur->original_priority; // 지워졌을 때 원래 priority로
 
    }
 
@@ -277,7 +292,7 @@ lock_release (struct lock *lock) {
 
 
 	sema_up (&lock->semaphore);
-   compare_and_yield();
+   compare_and_yield(); 
 
 }
 
@@ -397,14 +412,14 @@ sema_compare_priority (const struct list_elem *l, const struct list_elem *s, voi
 		 > list_entry (list_begin (waiter_s_sema), struct thread, elem)->priority;
 }
 
-void thread_donate_priority(struct thread *t, int new_priority) {
+void donate_priority(struct thread *t, int new_priority) {
     // t가 donation된 우선순위보다 낮으면 donation
     if (t->priority < new_priority) {
         t->priority = new_priority;
 
         // donation 받은 thread가 다른 lock을 기다리는건 재귀로 처리
         if (t->lock_waiting != NULL) {
-            thread_donate_priority(t->lock_waiting->holder, new_priority);
+            donate_priority(t->lock_waiting->holder, new_priority);
         }
     }
 }

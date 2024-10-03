@@ -126,7 +126,11 @@ thread_init (void) {
 	init_thread (initial_thread, "main", PRI_DEFAULT);
 	initial_thread->status = THREAD_RUNNING;
 	initial_thread->tid = allocate_tid ();
-	list_init(&initial_thread->donation_list);
+
+	// init lock related things
+	list_init(&initial_thread->lock_list);
+	initial_thread->lock_waiting = NULL;
+	
 	
 }
 
@@ -219,6 +223,7 @@ tid_t
 thread_create (const char *name, int priority,
 		thread_func *function, void *aux) {
 	struct thread *t;
+	struct thread *curr = thread_current();
 	tid_t tid;
 
 	ASSERT (function != NULL);
@@ -252,13 +257,25 @@ thread_create (const char *name, int priority,
 	/* Add to run queue. */
 	thread_unblock (t);
 
+	// init priority
+	t->original_priority = priority;
+	t->priority = priority;
+	list_init(&t->lock_list);
 
-	struct thread *curr = thread_current();
-	if (cmp_priority(&t->elem, &curr->elem, NULL)) {
+
+	//running thread 와 ready_list 의 가장 앞의 thread 의 priority 를 비교하여 필요시 thraed_yield() 를 호출한다.
+	if (!list_empty(&ready_list) && curr->priority < list_entry(list_front(&ready_list), struct thread, elem)->priority) {
 		thread_yield();
+	}
+
+	// t와 curr의 priority를 비교하여 yield
+	if (t->priority > curr->priority) {
+		// enum intr_level old_level = intr_disable();  // interrupt를 disable
+		thread_yield();
+		// intr_set_level(old_level); // interrupt를 enable
 		
 	}
-	
+	// thread_yield(); //?
 
 	return tid;
 }
@@ -340,10 +357,12 @@ thread_exit (void) {
 #ifdef USERPROG
 	process_exit ();
 #endif
+	/* 추가됨 */
 
 	/* Just set our status to dying and schedule another process.
 	   We will be destroyed during the call to schedule_tail(). */
 	intr_disable ();
+	
 	do_schedule (THREAD_DYING);
 	NOT_REACHED ();
 }
@@ -398,11 +417,27 @@ thread_sleep (int64_t tickWakeUp) {
 /* Sets the current thread's priority to NEW_PRIORITY. */
 void
 thread_set_priority (int new_priority) {
-	struct thread *curr = thread_current();
-	curr->priority = new_priority;
+	struct thread *cur= thread_current();
+	// curr->priority = new_priority;
+	// curr->original_priority = new_priority;
+	
+\
+	if (cur->priority != cur->original_priority) {
+        // 현재 스레드가 우선순위 donation을 받은 상태라면,
+        // 원래 우선순위만 변경하고 donation이 끝나면 복원되도록 함
+        cur->original_priority = new_priority;
+    } else {
+        // donation을 없으면 그냥.
+        cur->priority = new_priority;
+        cur->original_priority = new_priority;
+    }
+
+    // 현재 스레드가 CPU를 양보할 필요가 있는지 확인
+    thread_yield();
+
+	
 	
 
-	check_priority ();
 }
 
 /* Returns the current thread's priority. */
@@ -410,6 +445,7 @@ int
 thread_get_priority (void) {
 	// check_priority (); // 필요하려나?
 	return thread_current ()->priority;
+
 }
 
 /* Sets the current thread's nice value to NICE. */
@@ -518,6 +554,9 @@ init_thread (struct thread *t, const char *name, int priority) {
 	t->timeToWakeUp = 0;
 	t->nice = 0;
 	t->lock_waiting = NULL;
+
+	t->original_priority = priority;
+	list_init(&t->lock_list);
 }
 
 /* Chooses and returns the next thread to be scheduled.  Should
@@ -699,7 +738,7 @@ allocate_tid (void) {
 	return tid;
 }
 
-
+// Helper function
 void check_priority (void){
 	if (list_empty(&ready_list)) {
 		return;
@@ -720,20 +759,25 @@ bool cmp_priority (const struct list_elem *a, const struct list_elem *b, void *a
 	return ta->priority > tb->priority;
 }
 
-bool cmp_donate_priority (const struct list_elem *l, const struct list_elem *s, void *aux UNUSED){
-	return list_entry (l, struct thread, donation_elem)->priority
-		 > list_entry (s, struct thread, donation_elem)->priority;
+
+void compare_and_yield (void) {
+	struct thread *curr = thread_current();
+	if (!list_empty(&ready_list) && curr->priority < list_entry(list_front(&ready_list), struct thread, elem)->priority) {
+		thread_yield();
+	}
 }
 
-bool cmp_sem_priority (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED){
-	// struct semaphore_elem *sa = list_entry(a, struct semaphore_elem, elem);
-	// struct semaphore_elem *sb = list_entry(b, struct semaphore_elem, elem);
-	
-	// struct list_elem *sa_e = list_begin(&(sa->semaphore.waiters));
-	// struct list_elem *sb_e = list_begin(&(sb->semaphore.waiters));
- 
-	// struct thread *sa_t = list_entry(sa_e, struct thread, elem);
-	// struct thread *sb_t = list_entry(sb_e, struct thread, elem);
- 
-	// return (sa_t->priority) > (sb_t->priority);
+void
+donate_priority (void)
+{
+  int depth;
+  struct thread *cur = thread_current ();
+
+  for (depth = 0; depth < 8; depth++){
+    if (!cur->lock_waiting) break;
+      struct thread *holder = cur->lock_waiting ->holder;
+      holder->priority = cur->priority;
+      cur = holder;
+  }
 }
+

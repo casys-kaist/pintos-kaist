@@ -96,12 +96,12 @@ struct thread {
 	int nice;
 	struct lock *lock_waiting;
 
-	struct list donation_list;
-	struct list_elem donation_elem;
-
 	/* Shared between thread.c and synch.c. */
 	struct list_elem elem;              /* List element. */
 	int recent_cpu;
+	
+	struct list lock_list;
+	int original_priority;
 
 #ifdef USERPROG
 	/* Owned by userprog/process.c. */
@@ -156,7 +156,8 @@ int thread_get_recent_cpu (void);
 int thread_get_load_avg (void);
 void check_priority (void);
 bool cmp_priority (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
-bool cmp_donate_priority (const struct list_elem *l, const struct list_elem *s, void *aux UNUSED);
+void compare_and_yield (void);
+void donate_priority (void);
 
 
 void do_iret (struct intr_frame *tf);

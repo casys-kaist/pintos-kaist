@@ -793,10 +793,13 @@ void mlfqs_priority (struct thread *t) {
 // 	t->recent_cpu = add_fp_int(mul_fp(coef, t->recent_cpu), t->nice);
 // }
 
+
+// load_avg = (59/60) * load_avg + (1/60) * ready_threads
 void mlfqs_load_avg (void) {
 	int ready_threads = list_size(&ready_list);
 	if (thread_current() != idle_thread) ready_threads++;
-	load_avg = add_fp(mul_fp(div_fp_int(n2fp(59), n2fp(60)), load_avg), div_fp_int(ready_threads, 60));
+	load_avg = add_fp(mul_fp(div_fp(n2fp(59), n2fp(60)), load_avg), mul_fp(div_fp(n2fp(1), n2fp(60)), n2fp(ready_threads)));
+
 }
 
 void mlfqs_increment (void) {

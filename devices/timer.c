@@ -146,7 +146,7 @@ timer_interrupt (struct intr_frame *args UNUSED) {
 		}
 		if (ticks % TIMER_FREQ == 0) {
 			// TODO recalculate load_avg and recent_cpu
-			// mlfqs_load_avg();
+			mlfqs_load_avg();
 			// mlfqs_increment(); // ㄴㄴ
 			;
 		}

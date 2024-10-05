@@ -137,19 +137,22 @@ timer_interrupt (struct intr_frame *args UNUSED) {
 		// recent cpu 계산
 		// idel_thread, 각종 list 때문에 일단 thread.c에서 처리
 		struct thread *cur = thread_current();
-		mlfqs_increment();
+		// mlfqs_increment();
+		cur->recent_cpu = add_fp_int(cur->recent_cpu, 1);
 		// 4 tick 마다
+
+		if (ticks % TIMER_FREQ == 0) {
+		
+			mlfqs_load_avg();
+			// TODO recalculate all recent_cpu		 
+			mlfqs_recent_cpu_recalculate();
+		}
+
 		if (ticks % 4 == 0){
 			// TODO recalculate all  priority
 			mlfqs_priority_recalculate();
+		}
 
-		}
-		if (ticks % TIMER_FREQ == 0) {
-			// TODO recalculate load_avg and recent_cpu
-			mlfqs_load_avg();
-			// mlfqs_increment(); // ㄴㄴ
-			;
-		}
 
 		
 	}

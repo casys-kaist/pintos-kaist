@@ -481,7 +481,7 @@ int
 thread_get_load_avg (void) {
 	/* TODO: Your implementation goes here */
 	enum intr_level old_level = intr_disable ();
-	int thread_load_avg = x2int_nearest(load_avg * 100);
+	int thread_load_avg = x2int_nearest(load_avg * 100); // Returns 100 times of load_avg
 	intr_set_level (old_level);
 	return thread_load_avg;
 }
@@ -754,7 +754,7 @@ allocate_tid (void) {
 
 // Helper function
 
-bool cmp_priority (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED) {
+bool cmp_priority (const struct list_elem *a, const struct list_elem *b) {
 	struct thread *ta = list_entry(a, struct thread, elem);
 	struct thread *tb = list_entry(b, struct thread, elem);
 	return ta->priority > tb->priority;
@@ -787,44 +787,71 @@ void compare_and_yield (void) {
 
 
 /* mlfqs things */
-void mlfqs_priority (struct thread *t) {
-	if (t == idle_thread) return;
-	t->priority = PRI_MAX - x2int_nearest(div_fp_int(t->recent_cpu, 4)) - (t->nice * 2);
-	if (t->priority > PRI_MAX) t->priority = PRI_MAX;
-	if (t->priority < PRI_MIN) t->priority = PRI_MIN;
+
+void mlfqs_recent_cpu(struct thread *t) {
+	
+	int temp1 = mul_int_fp(load_avg, 2);
+    
+    // temp2 = (2 * load_avg) / (2 * load_avg + 1)
+    int temp2 = div_fp(temp1, add_fp_int(temp1, 1));  // add_fp_int로 고정소수점과 정수 더하기
+    
+    // recent_cpu = temp2 * recent_cpu + nice
+    t->recent_cpu = add_fp_int(mul_fp(temp2, t->recent_cpu), t->nice);
 }
 
-// void mlfqs_recent_cpu (struct thread *t) {
-// 	if (t == idle_thread) return;
-// 	int load_avg_x2 = mul_int_fp(load_avg, 2);
-// 	int coef = div_fp(load_avg_x2, load_avg_x2 + f);
-// 	t->recent_cpu = add_fp_int(mul_fp(coef, t->recent_cpu), t->nice);
-// }
-
-
-// load_avg = (59/60) * load_avg + (1/60) * ready_threads
+// load_avg = (59/60) * load_avg + (1/60) * #ready_threads
 void mlfqs_load_avg (void) {
 	int ready_threads = list_size(&ready_list);
 	if (thread_current() != idle_thread) ready_threads++;
-	load_avg = add_fp(mul_fp(div_fp(n2fp(59), n2fp(60)), load_avg), mul_fp(div_fp(n2fp(1), n2fp(60)), n2fp(ready_threads)));
+	int temp1 = mul_fp(div_fp(n2fp(59), n2fp(60)), load_avg);
+	load_avg = add_fp(temp1, mul_int_fp(ready_threads, div_fp(n2fp(1), n2fp(60))));
 
-}
-
-void mlfqs_increment (void) {
-	struct thread *t = thread_current();
-	if (t == idle_thread) return;
-	t->recent_cpu = add_fp_int(t->recent_cpu, 1);
 }
 
 void mlfqs_priority_recalculate (void) {
 	struct list_elem *e;
+	struct thread *cur = thread_current();
+	cur->priority = PRI_MAX - x2int_nearest(div_fp_int(cur->recent_cpu, 4)) - (cur->nice * 2);
+
 	for (e = list_begin(&ready_list); e != list_end(&ready_list); e = list_next(e)) {
 		struct thread *t = list_entry(e, struct thread, elem);
-		mlfqs_priority(t);
+		if (t == idle_thread) return;
+		// PRI_MAX - {(recent_cpu / 4) + (nice * 2)}
+		int temp = add_fp_int(div_fp_int(t->recent_cpu, 4), t->nice * 2); 
+		t->priority = PRI_MAX - x2int_nearest(temp);
+		// max min check
+		if (t->priority > PRI_MAX) t->priority = PRI_MAX;
+		if (t->priority < PRI_MIN) t->priority = PRI_MIN;
 	}
 	for (e = list_begin(&sleep_list); e != list_end(&sleep_list); e = list_next(e)) {
 		struct thread *t = list_entry(e, struct thread, elem);
-		mlfqs_priority(t);
+		if (t == idle_thread) return;
+		// PRI_MAX - {(recent_cpu / 4) - (nice * 2)}
+		int temp = add_fp_int(div_fp_int(t->recent_cpu, 4), t->nice * 2); 
+		t->priority = PRI_MAX - x2int_nearest(temp);
+		// max min check
+		if (t->priority > PRI_MAX) t->priority = PRI_MAX;
+		if (t->priority < PRI_MIN) t->priority = PRI_MIN;
 	}
 }
+
+void mlfqs_recent_cpu_recalculate(void) {
+	struct thread *cur = thread_current();
+	mlfqs_recent_cpu(cur);
+
+	struct list_elem *e;
+	for (e = list_begin(&sleep_list); e != list_end(&sleep_list); e = list_next(e)) {
+		struct thread *t = list_entry(e, struct thread, elem);
+		mlfqs_recent_cpu(t);
+	}
+
+	for (e = list_begin(&ready_list); e != list_end(&ready_list); e = list_next(e)) {
+		struct thread *t = list_entry(e, struct thread, elem);
+		mlfqs_recent_cpu(t);
+	}
+	
+}
+
+
+
 

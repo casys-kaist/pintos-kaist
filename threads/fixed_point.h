@@ -17,11 +17,11 @@ int div_fp(int x, int y);
 int div_fp_int(int x, int n);
 
 
-int n2fp(int n) {
+int n2fp(int n) { 
     return n * f;
 }
 
-int x2int_zero(int x) {
+int x2int_zero(int x) { 
     return x / f;
 }
 
@@ -41,7 +41,7 @@ int subtract_fp(int x, int y) {
     return x - y;
 }
 
-int add_fp_int(int x, int n) {
+int add_fp_int(int x, int n) { 
     return x + n * f;
 }
 
@@ -61,6 +61,6 @@ int div_fp(int x, int y) {
     return (int)(((int64_t) x) * f / y);
 }
 
-int div_fp_int(int x, int n) {
+int div_fp_int(int x, int n) { 
     return x / n;
 }

@@ -4,7 +4,7 @@ Kernel command line: -q run priority-donate-chain
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
+Calibrating timer...  155,648,000 loops/s.
 Boot complete.
 Executing 'priority-donate-chain':
 (priority-donate-chain) begin
@@ -47,8 +47,8 @@ Executing 'priority-donate-chain':
 (priority-donate-chain) main finishing with priority 0.
 (priority-donate-chain) end
 Execution of 'priority-donate-chain' complete.
-Timer: 46 ticks
-Thread: 0 idle ticks, 46 kernel ticks, 0 user ticks
+Timer: 51 ticks
+Thread: 0 idle ticks, 51 kernel ticks, 0 user ticks
 Console: 2676 characters output
 Keyboard: 0 keys pressed
 Powering off...

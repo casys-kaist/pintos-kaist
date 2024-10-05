@@ -252,7 +252,7 @@ thread_create (const char *name, int priority,
 
 	// unique.k 08291155
 	// when thread is created, timeToWakeUp is set to 0
-	t->timeToWakeUp = 0;
+	
 	
 	/* Add to run queue. */
 	thread_unblock (t);
@@ -418,6 +418,7 @@ thread_set_priority (int new_priority) {
 		return; // mlfqs scheduler에서는 priority를 직접 설정할 수 없다.
 	}
 
+	enum intr_level old_level = intr_disable();
 	if (cur->priority != cur->original_priority) {
         // 현재 스레드가 우선순위 donation을 받은 상태라면,
         // 원래 우선순위만 변경하고 donation이 끝나면 복원되도록 함
@@ -429,13 +430,10 @@ thread_set_priority (int new_priority) {
         cur->original_priority = new_priority;
 		sort_all(cur);
     }
+	intr_set_level(old_level);
 
     // 현재 스레드가 CPU를 양보할 필요가 있는지 확인
-    thread_yield();
-
-	
-	
-
+    compare_and_yield();
 }
 
 /* Returns the current thread's priority. */

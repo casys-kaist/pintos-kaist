@@ -206,20 +206,24 @@ lock_acquire (struct lock *lock) {
    }
 
     if (lock->holder != NULL) {
-        if (lock->holder->priority < cur->priority) {
-            donate_priority(lock->holder, cur->priority);  // donation
-        }
-        cur->lock_waiting = lock; 
-        sema_down(&lock->semaphore);  
-        cur->lock_waiting = NULL;  // 대기 상태 해제
+      enum intr_level old_level = intr_disable();
+      if (lock->holder->priority < cur->priority) {
+         donate_priority(lock->holder, cur->priority, true);  // donation
+      }
+      cur->lock_waiting = lock; 
+      sema_down(&lock->semaphore);  
+      cur->lock_waiting = NULL;  // 대기 상태 해제
+      intr_set_level(old_level);
     } else {
         sema_down(&lock->semaphore);  // 락을 소유 중인 스레드가 없으면 바로 획득
     }
 
+   enum intr_level old_level = intr_disable();
     lock->holder = cur;  // 락을 소유한 스레드로 현재 스레드 설정
     list_push_back(&cur->lock_list, &lock->elem);  // 현재 스레드의 락 리스트에 추가 ㄴㄴ
     // lock_list에 priority 순으로 추가
     list_sort(&cur->lock_list, (list_less_func *) &cmp_priority_lock, NULL); // sorting  해놔서 앞에꺼 바로바로 꺼내쓰게
+    intr_set_level(old_level);
 
 }
 
@@ -237,8 +241,16 @@ lock_try_acquire (struct lock *lock) {
 	ASSERT (!lock_held_by_current_thread (lock));
 
 	success = sema_try_down (&lock->semaphore);
-	if (success)
-		lock->holder = thread_current ();
+	if (success){
+      enum intr_level old_level = intr_disable();
+      struct thread* cur = thread_current();
+      lock->holder = cur;  // 락을 소유한 스레드로 현재 스레드 설정
+      list_push_back(&cur->lock_list, &lock->elem);  // 현재 스레드의 락 리스트에 추가 ㄴㄴ
+      // lock_list에 priority 순으로 추가
+      list_sort(&cur->lock_list, (list_less_func *) &cmp_priority_lock, NULL); // sorting  해놔서 앞에꺼 바로바로 꺼내쓰게
+      intr_set_level(old_level);
+   }
+		
 	return success;
 }
 
@@ -262,6 +274,7 @@ lock_release (struct lock *lock) {
       return;
    }
 
+   enum intr_level old_level = intr_disable();
    list_remove(&lock->elem);  // 락 리스트에서 제거
 
    // 대기 중인 스레드가 있을 경우 donation 복원
@@ -284,6 +297,7 @@ lock_release (struct lock *lock) {
    }
 
    lock->holder = NULL;
+   intr_set_level(old_level);
 	sema_up (&lock->semaphore);
    //compare_and_yield(); 
 
@@ -405,15 +419,15 @@ sema_compare_priority (const struct list_elem *l, const struct list_elem *s, voi
 		 > list_entry (list_begin (waiter_s_sema), struct thread, elem)->priority;
 }
 
-void donate_priority(struct thread *t, int new_priority) {
+void donate_priority(struct thread *t, int new_priority, bool sort) {
     // t가 donation된 우선순위보다 낮으면 donation
     if (t->priority < new_priority) {
         t->priority = new_priority;
         // donation 받은 thread가 다른 lock을 기다리는건 재귀로 처리
         if (t->lock_waiting != NULL) {
-            donate_priority(t->lock_waiting->holder, new_priority);
+            donate_priority(t->lock_waiting->holder, new_priority, false);
         }
-        sort_all(t);
+        if (sort) { sort_all(t); }
     }
 }
 

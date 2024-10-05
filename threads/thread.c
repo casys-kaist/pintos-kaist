@@ -130,11 +130,6 @@ thread_init (void) {
 	initial_thread->status = THREAD_RUNNING;
 	initial_thread->tid = allocate_tid ();
 
-	// init lock related things
-	list_init(&initial_thread->lock_list);
-	initial_thread->lock_waiting = NULL;
-	
-	
 }
 
 /* Starts preemptive thread scheduling by enabling interrupts.
@@ -259,15 +254,8 @@ thread_create (const char *name, int priority,
 	// when thread is created, timeToWakeUp is set to 0
 	t->timeToWakeUp = 0;
 	
-
 	/* Add to run queue. */
 	thread_unblock (t);
-
-	// init priority
-	t->original_priority = priority;
-	t->priority = priority;
-	list_init(&t->lock_list);
-
 
 	//running thread 와 ready_list 의 가장 앞의 thread 의 priority 를 비교하여 필요시 thraed_yield() 를 호출한다.
 	if (!list_empty(&ready_list) && curr->priority < list_entry(list_front(&ready_list), struct thread, elem)->priority) {
@@ -434,10 +422,12 @@ thread_set_priority (int new_priority) {
         // 현재 스레드가 우선순위 donation을 받은 상태라면,
         // 원래 우선순위만 변경하고 donation이 끝나면 복원되도록 함
         cur->original_priority = new_priority;
+		sort_all(cur);
     } else {
         // donation을 없으면 그냥.
         cur->priority = new_priority;
         cur->original_priority = new_priority;
+		sort_all(cur);
     }
 
     // 현재 스레드가 CPU를 양보할 필요가 있는지 확인
@@ -578,6 +568,7 @@ init_thread (struct thread *t, const char *name, int priority) {
  	t->recent_cpu = 0; // default is 0?
 
 	t->original_priority = priority;
+	t->priority = priority;
 	list_init(&t->lock_list);
 }
 
@@ -767,6 +758,22 @@ bool cmp_priority (const struct list_elem *a, const struct list_elem *b, void *a
 	struct thread *tb = list_entry(b, struct thread, elem);
 	return ta->priority > tb->priority;
 }
+
+
+bool cmp_priority_lock (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED) {
+	struct lock *la = list_entry(a, struct lock, elem);
+	struct lock *lb = list_entry(b, struct lock, elem);
+	ASSERT(la->holder == lb->holder);
+	int pa, pb;
+	if (!list_empty(&la->semaphore.waiters)) {
+		pa = list_entry(list_begin(&la->semaphore.waiters), struct thread, elem);
+	} else { pa = PRI_MIN; }
+	if (!list_empty(&la->semaphore.waiters)) {
+		pb = list_entry(list_begin(&la->semaphore.waiters), struct thread, elem);
+	} else { pb = PRI_MIN; }
+	
+	return pa > pb;
+}	
 
 
 void compare_and_yield (void) {

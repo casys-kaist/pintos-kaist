@@ -44,7 +44,6 @@ kernel.bin: kernel.o
 threads/loader.o: threads/loader.S kernel.bin
 	$(CC) -c $< -o $@ $(ASFLAGS) $(CPPFLAGS) $(DEFINES) -DKERNEL_LOAD_PAGES=`perl -e 'print +(-s "kernel.bin") / 4096;'`
 
-
 loader.bin: threads/loader.o
 	$(LD) $(LDFLAGS) -N -e start -Ttext 0x7c00 --oformat binary -o $@ $<
 

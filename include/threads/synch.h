@@ -44,6 +44,8 @@ void cond_broadcast (struct condition *, struct lock *);
 /* helper */
 // void update_thread_priority(struct thread *t) ;
 bool sema_compare_priority (const struct list_elem *l, const struct list_elem *s, void *aux);
+void donate_priority(struct thread *t, int new_priority);
+void sort_all(struct thread *t);
 
 /* Optimization barrier.
  *

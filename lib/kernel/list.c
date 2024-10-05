@@ -61,6 +61,10 @@ list_init (struct list *list) {
 	list->head.next = &list->tail;
 	list->tail.prev = &list->head;
 	list->tail.next = NULL;
+
+	// unique.k 10051637
+	list->tail.list_containing = list;
+	list->head.list_containing = list;
 }
 
 /* Returns the beginning of LIST.  */
@@ -162,6 +166,9 @@ list_insert (struct list_elem *before, struct list_elem *elem) {
 	elem->next = before;
 	before->prev->next = elem;
 	before->prev = elem;
+
+	// unique.k 10051638
+	elem->list_containing = before->list_containing;
 }
 
 /* Removes elements FIRST though LAST (exclusive) from their
@@ -187,6 +194,12 @@ list_splice (struct list_elem *before,
 	last->next = before;
 	before->prev->next = first;
 	before->prev = last;
+
+	// unique.k 10051643
+	struct list_elem *e;
+	for (e = first; e != before; e = e->next) {
+		e->list_containing = before->list_containing;
+	}
 }
 
 /* Inserts ELEM at the beginning of LIST, so that it becomes the
@@ -242,6 +255,9 @@ list_remove (struct list_elem *elem) {
 	ASSERT (is_interior (elem));
 	elem->prev->next = elem->next;
 	elem->next->prev = elem->prev;
+
+	// unique.k 10051651
+	elem->list_containing = NULL;
 	return elem->next;
 }
 
@@ -410,6 +426,12 @@ list_sort (struct list *list, list_less_func *less, void *aux) {
 	while (output_run_cnt > 1);
 
 	ASSERT (is_sorted (list_begin (list), list_end (list), less, aux));
+
+	// unique.k 10051647
+	struct list_elem* e;
+	for (e = &list->head; e != &list->tail; e = e->next) {
+		e->list_containing = list;
+	}
 }
 
 /* Inserts ELEM in the proper position in LIST, which must be

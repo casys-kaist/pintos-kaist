@@ -1,0 +1,16 @@
+warning: TCG doesn't support requested feature: CPUID.01H:ECX.vmx [bit 5]
+qemu-system-x86_64: terminating on signal 2
+Traceback (most recent call last):
+  File "/root/pintos/utils/pintos", line 225, in <module>
+    guestfns=[f[0].split(':') for f in args.GUESTFNS]).run()
+  File "/root/pintos/utils/pintos", line 166, in run
+    subprocess.run(cmd, **args)
+  File "/usr/lib/python3.5/subprocess.py", line 695, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/usr/lib/python3.5/subprocess.py", line 1072, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+  File "/usr/lib/python3.5/subprocess.py", line 1741, in _communicate
+    self.wait(timeout=self._remaining_time(endtime))
+  File "/usr/lib/python3.5/subprocess.py", line 1652, in wait
+    time.sleep(delay)
+KeyboardInterrupt

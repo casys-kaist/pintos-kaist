@@ -158,6 +158,7 @@ int thread_get_recent_cpu (void);
 int thread_get_load_avg (void);
 
 bool cmp_priority (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
+bool cmp_priority_lock (const struct list_elem *a, const struct list_elem *b, void *aux UNUSED);
 void compare_and_yield (void);
 
 void mlfqs_priority (struct thread *t);

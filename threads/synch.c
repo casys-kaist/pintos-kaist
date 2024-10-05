@@ -118,10 +118,10 @@ sema_up (struct semaphore *sema) {
       }
 	}
 	sema->value++;
-
    compare_and_yield();
-
 	intr_set_level (old_level);
+   
+   
 }
 
 static void sema_test_helper (void *sema_);
@@ -208,12 +208,9 @@ lock_acquire (struct lock *lock) {
    }
 
     if (lock->holder != NULL) {
-
         if (lock->holder->priority < cur->priority) {
-            
             donate_priority(lock->holder, cur->priority);  // donation
         }
-
         cur->lock_waiting = lock; 
         sema_down(&lock->semaphore);  
         cur->lock_waiting = NULL;  // 대기 상태 해제
@@ -224,7 +221,7 @@ lock_acquire (struct lock *lock) {
     lock->holder = cur;  // 락을 소유한 스레드로 현재 스레드 설정
     list_push_back(&cur->lock_list, &lock->elem);  // 현재 스레드의 락 리스트에 추가 ㄴㄴ
     // lock_list에 priority 순으로 추가
-    list_sort(&cur->lock_list, (list_less_func *) &cmp_priority, NULL); // sorting  해놔서 앞에꺼 바로바로 꺼내쓰게
+    list_sort(&cur->lock_list, (list_less_func *) &cmp_priority_lock, NULL); // sorting  해놔서 앞에꺼 바로바로 꺼내쓰게
 
 }
 
@@ -276,23 +273,18 @@ lock_release (struct lock *lock) {
    //  multi 왜 안되는지 모르겠음... acquire가 문젠가
    int max_priority;
    if (!list_empty(&cur->lock_list)) {
-      list_sort(&cur->lock_list, (list_less_func *) &cmp_priority, NULL); // 일단 정렬 한 번 더..
- 
+      list_sort(&cur->lock_list, (list_less_func *) &cmp_priority_lock, NULL); // 일단 정렬 한 번 더..
       max_priority = list_entry(list_front(&cur->lock_list), struct lock, elem)->holder->priority; 
       cur->priority = max_priority;
-
-   } 
-   else if (cur->priority != cur->original_priority) {
+      sort_all(cur);
+   } else if (cur->priority != cur->original_priority) {
       cur->priority = cur->original_priority; // 지워졌을 때 원래 priority로
-
+      sort_all(cur);
    }
 
-  
    lock->holder = NULL;
-
-
 	sema_up (&lock->semaphore);
-   compare_and_yield(); 
+   //compare_and_yield(); 
 
 }
 
@@ -416,10 +408,31 @@ void donate_priority(struct thread *t, int new_priority) {
     // t가 donation된 우선순위보다 낮으면 donation
     if (t->priority < new_priority) {
         t->priority = new_priority;
-
         // donation 받은 thread가 다른 lock을 기다리는건 재귀로 처리
         if (t->lock_waiting != NULL) {
             donate_priority(t->lock_waiting->holder, new_priority);
         }
+        sort_all(t);
     }
+}
+
+void sort_all(struct thread *t) {
+
+   // t의 priority가 바뀌었을 때, 이와 관련된 모든 sort를 책임지는 함수
+
+   // 1. t가 갖고 있는 lock들의 list를 sort
+   list_sort(&t->lock_list, (list_less_func *) &cmp_priority_lock, NULL);
+   
+   // 2. t->elem가 list의 element이면, 그 list를 sort
+   if (t->elem.list_containing != NULL) {
+      list_sort(t->elem.list_containing, (list_less_func *) &cmp_priority, NULL);
+   }
+   
+   // 3. t가 lock에 의해 막혀 있다면, 그 lock의 holder도 priority가 바뀔 수 있음
+   if (t->lock_waiting != NULL) {
+      ASSERT(t->lock_waiting->holder != NULL);
+      sort_all(t->lock_waiting->holder);
+   }
+   
+   
 }

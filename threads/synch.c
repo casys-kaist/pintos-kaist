@@ -180,8 +180,6 @@ lock_init (struct lock *lock) {
 
 	lock->holder = NULL;
 	sema_init (&lock->semaphore, 1);
-
-
 }
 
 /* Acquires LOCK, sleeping until it becomes available if
@@ -264,18 +262,21 @@ lock_release (struct lock *lock) {
       return;
    }
 
-
    list_remove(&lock->elem);  // 락 리스트에서 제거
-   // compare_and_yield();
-   
 
    // 대기 중인 스레드가 있을 경우 donation 복원
    //  multi 왜 안되는지 모르겠음... acquire가 문젠가
-   int max_priority;
    if (!list_empty(&cur->lock_list)) {
       list_sort(&cur->lock_list, (list_less_func *) &cmp_priority_lock, NULL); // 일단 정렬 한 번 더..
-      max_priority = list_entry(list_front(&cur->lock_list), struct lock, elem)->holder->priority; 
-      cur->priority = max_priority;
+
+      int max_priority;
+      struct lock *la = list_entry(list_begin(&cur->lock_list), struct lock, elem);
+	   if (!list_empty(&la->semaphore.waiters)) {
+		   max_priority = list_entry(list_begin(&la->semaphore.waiters), struct thread, elem)->priority;
+	   } else { max_priority = PRI_MIN; }
+
+      if (max_priority > cur->original_priority) { cur->priority = max_priority; } 
+      else { cur->priority = cur->original_priority; }
       sort_all(cur);
    } else if (cur->priority != cur->original_priority) {
       cur->priority = cur->original_priority; // 지워졌을 때 원래 priority로

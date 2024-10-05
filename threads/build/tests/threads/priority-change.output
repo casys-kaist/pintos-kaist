@@ -4,7 +4,7 @@ Kernel command line: -q run priority-change
 Pintos booting with: 
 	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
 	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
-Calibrating timer...  157,081,600 loops/s.
+Calibrating timer...  104,755,200 loops/s.
 Boot complete.
 Executing 'priority-change':
 (priority-change) begin
@@ -15,8 +15,8 @@ Executing 'priority-change':
 (priority-change) Thread 2 should have just exited.
 (priority-change) end
 Execution of 'priority-change' complete.
-Timer: 42 ticks
-Thread: 0 idle ticks, 42 kernel ticks, 0 user ticks
+Timer: 39 ticks
+Thread: 0 idle ticks, 39 kernel ticks, 0 user ticks
 Console: 689 characters output
 Keyboard: 0 keys pressed
 Powering off...

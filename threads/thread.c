@@ -417,7 +417,7 @@ thread_set_priority (int new_priority) {
 	if (thread_mlfqs) {
 		return; // mlfqs scheduler에서는 priority를 직접 설정할 수 없다.
 	}
-\
+
 	if (cur->priority != cur->original_priority) {
         // 현재 스레드가 우선순위 donation을 받은 상태라면,
         // 원래 우선순위만 변경하고 donation이 끝나면 복원되도록 함
@@ -581,8 +581,11 @@ static struct thread *
 next_thread_to_run (void) {
 	if (list_empty (&ready_list))
 		return idle_thread;
-	else
+	else {
+		list_sort(&ready_list, (list_less_func *) cmp_priority, NULL);
 		return list_entry (list_pop_front (&ready_list), struct thread, elem);
+	}
+		
 }
 
 /* Use iretq to launch the thread */
@@ -766,10 +769,10 @@ bool cmp_priority_lock (const struct list_elem *a, const struct list_elem *b, vo
 	ASSERT(la->holder == lb->holder);
 	int pa, pb;
 	if (!list_empty(&la->semaphore.waiters)) {
-		pa = list_entry(list_begin(&la->semaphore.waiters), struct thread, elem);
+		pa = list_entry(list_begin(&la->semaphore.waiters), struct thread, elem)->priority;
 	} else { pa = PRI_MIN; }
 	if (!list_empty(&la->semaphore.waiters)) {
-		pb = list_entry(list_begin(&la->semaphore.waiters), struct thread, elem);
+		pb = list_entry(list_begin(&la->semaphore.waiters), struct thread, elem)->priority;
 	} else { pb = PRI_MIN; }
 	
 	return pa > pb;

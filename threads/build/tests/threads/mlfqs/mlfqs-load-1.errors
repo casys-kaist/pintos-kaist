@@ -1,5 +1,4 @@
 warning: TCG doesn't support requested feature: CPUID.01H:ECX.vmx [bit 5]
-qemu-system-x86_64: terminating on signal 2
 Traceback (most recent call last):
   File "/root/pintos/utils/pintos", line 225, in <module>
     guestfns=[f[0].split(':') for f in args.GUESTFNS]).run()

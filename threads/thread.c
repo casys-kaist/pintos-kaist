@@ -812,6 +812,7 @@ void mlfqs_priority_recalculate (void) {
 	struct list_elem *e;
 	struct thread *cur = thread_current();
 	cur->priority = PRI_MAX - x2int_nearest(div_fp_int(cur->recent_cpu, 4)) - (cur->nice * 2);
+	sort_all(cur);
 
 	for (e = list_begin(&ready_list); e != list_end(&ready_list); e = list_next(e)) {
 		struct thread *t = list_entry(e, struct thread, elem);
@@ -822,6 +823,7 @@ void mlfqs_priority_recalculate (void) {
 		// max min check
 		if (t->priority > PRI_MAX) t->priority = PRI_MAX;
 		if (t->priority < PRI_MIN) t->priority = PRI_MIN;
+		sort_all(t);
 	}
 	for (e = list_begin(&sleep_list); e != list_end(&sleep_list); e = list_next(e)) {
 		struct thread *t = list_entry(e, struct thread, elem);
@@ -832,6 +834,7 @@ void mlfqs_priority_recalculate (void) {
 		// max min check
 		if (t->priority > PRI_MAX) t->priority = PRI_MAX;
 		if (t->priority < PRI_MIN) t->priority = PRI_MIN;
+		sort_all(t);
 	}
 }
 

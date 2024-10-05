@@ -440,6 +440,7 @@ void sort_all(struct thread *t) {
    }
    
    // 3. t가 lock에 의해 막혀 있다면, 그 lock의 holder도 priority가 바뀔 수 있음
+   if (thread_mlfqs) { return; } 
    if (t->lock_waiting != NULL) {
       ASSERT(t->lock_waiting->holder != NULL);
       sort_all(t->lock_waiting->holder);

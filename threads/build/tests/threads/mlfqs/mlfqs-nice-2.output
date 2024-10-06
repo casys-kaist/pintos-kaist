@@ -11,8 +11,8 @@ Executing 'mlfqs-nice-2':
 (mlfqs-nice-2) Starting 2 threads...
 (mlfqs-nice-2) Starting threads took 0 ticks.
 (mlfqs-nice-2) Sleeping 40 seconds to let threads run, please wait...
-(mlfqs-nice-2) Thread 0 received 1924 ticks.
-(mlfqs-nice-2) Thread 1 received 1077 ticks.
+(mlfqs-nice-2) Thread 0 received 1925 ticks.
+(mlfqs-nice-2) Thread 1 received 1076 ticks.
 (mlfqs-nice-2) end
 Execution of 'mlfqs-nice-2' complete.
 Timer: 4042 ticks

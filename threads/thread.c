@@ -562,8 +562,13 @@ init_thread (struct thread *t, const char *name, int priority) {
 	t->timeToWakeUp = 0;
 	t->lock_waiting = NULL;
 
-	t->nice = 0; // default is 0
- 	t->recent_cpu = 0; // default is 0?
+	if (running_thread() != initial_thread) {
+		t->nice = thread_current()->nice;
+		t->recent_cpu = thread_current()->recent_cpu;
+	} else {
+		t->nice = 0; // default is 0
+ 		t->recent_cpu = 0; // default is 0?
+	}
 
 	t->original_priority = priority;
 	t->priority = priority;

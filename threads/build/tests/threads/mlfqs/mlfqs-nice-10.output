@@ -12,11 +12,11 @@ Executing 'mlfqs-nice-10':
 (mlfqs-nice-10) Starting threads took 1 ticks.
 (mlfqs-nice-10) Sleeping 40 seconds to let threads run, please wait...
 (mlfqs-nice-10) Thread 0 received 688 ticks.
-(mlfqs-nice-10) Thread 1 received 592 ticks.
+(mlfqs-nice-10) Thread 1 received 593 ticks.
 (mlfqs-nice-10) Thread 2 received 497 ticks.
-(mlfqs-nice-10) Thread 3 received 401 ticks.
-(mlfqs-nice-10) Thread 4 received 308 ticks.
-(mlfqs-nice-10) Thread 5 received 229 ticks.
+(mlfqs-nice-10) Thread 3 received 400 ticks.
+(mlfqs-nice-10) Thread 4 received 309 ticks.
+(mlfqs-nice-10) Thread 5 received 228 ticks.
 (mlfqs-nice-10) Thread 6 received 153 ticks.
 (mlfqs-nice-10) Thread 7 received 89 ticks.
 (mlfqs-nice-10) Thread 8 received 40 ticks.

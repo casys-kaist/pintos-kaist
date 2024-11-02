@@ -222,6 +222,22 @@ thread_create (const char *name, int priority,
 	t->tf.cs = SEL_KCSEG;
 	t->tf.eflags = FLAG_IF;
 
+	t->exit_status=0;
+	t->fd_table = palloc_get_multiple (PAL_ZERO, FD_PAGE_CNT);
+	if (t->fd_table == NULL) {
+		return TID_ERROR;
+	}
+
+	t->fd_idx = 2;
+	t->fd_table[0] = 0;  /* stdin */
+	t->fd_table[1] = 1;  /* stdout */
+	t->running_file = NULL;
+	list_init (&t->child_list);
+	sema_init (&t->fork_sema, 0);
+	sema_init (&t->exit_sema, 0);
+	sema_init (&t->wait_sema, 0);
+	list_push_back (&thread_current ()->child_list, &t->child_elem);
+
 	/* Add to run queue. */
 	thread_unblock (t);
 	priority_preemption ();
@@ -512,7 +528,12 @@ priority_preemption (void){
 	if (!list_empty (&ready_list)) {
 		struct thread *top = list_begin (&ready_list);
 		if (sort_by_priority (top, &thread_current ()->elem, NULL)) {
-			thread_yield ();
+			if (intr_context ()) {
+				intr_yield_on_return ();
+			}
+			else {
+				thread_yield ();
+			}
 		}
 	}
 }

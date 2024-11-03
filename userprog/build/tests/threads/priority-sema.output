@@ -1,0 +1,43 @@
+Kernel command line: -q -threads-tests -f run priority-sema
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+Formatting file system...done.
+Boot complete.
+Executing 'priority-sema':
+(priority-sema) begin
+(priority-sema) Thread priority 30 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 29 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 28 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 27 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 26 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 25 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 24 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 23 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 22 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) Thread priority 21 woke up.
+(priority-sema) Back in main thread.
+(priority-sema) end
+Execution of 'priority-sema' complete.
+Timer: 78 ticks
+Thread: 31 idle ticks, 47 kernel ticks, 0 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 9 reads, 18 writes
+Console: 1498 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

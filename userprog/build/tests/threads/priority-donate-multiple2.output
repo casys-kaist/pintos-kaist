@@ -1,0 +1,33 @@
+Kernel command line: -q -threads-tests -f run priority-donate-multiple2
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+Formatting file system...done.
+Boot complete.
+Executing 'priority-donate-multiple2':
+(priority-donate-multiple2) begin
+(priority-donate-multiple2) Main thread should have priority 34.  Actual priority: 34.
+(priority-donate-multiple2) Main thread should have priority 36.  Actual priority: 36.
+(priority-donate-multiple2) Main thread should have priority 36.  Actual priority: 36.
+(priority-donate-multiple2) Thread b acquired lock b.
+(priority-donate-multiple2) Thread b finished.
+(priority-donate-multiple2) Thread a acquired lock a.
+(priority-donate-multiple2) Thread a finished.
+(priority-donate-multiple2) Thread c finished.
+(priority-donate-multiple2) Threads b, a, c should have just finished, in that order.
+(priority-donate-multiple2) Main thread should have priority 31.  Actual priority: 31.
+(priority-donate-multiple2) end
+Execution of 'priority-donate-multiple2' complete.
+Timer: 77 ticks
+Thread: 30 idle ticks, 47 kernel ticks, 0 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 9 reads, 18 writes
+Console: 1431 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

@@ -1,0 +1,2 @@
+FAIL
+run: crashed child should return -1.: FAILED

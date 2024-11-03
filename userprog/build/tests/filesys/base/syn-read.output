@@ -1,0 +1,62 @@
+Kernel command line: -q -f put syn-read put child-syn-read run syn-read
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 225 sector (112 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'syn-read' into the file system...
+Putting 'child-syn-read' into the file system...
+Executing 'syn-read':
+(syn-read) begin
+(syn-read) create "data"
+(syn-read) open "data"
+(syn-read) write "data"
+(syn-read) close "data"
+(syn-read) exec child 1 of 10: "child-syn-read 0"
+(syn-read) exec child 2 of 10: "child-syn-read 1"
+(syn-read) exec child 3 of 10: "child-syn-read 2"
+(syn-read) exec child 4 of 10: "child-syn-read 3"
+(syn-read) exec child 5 of 10: "child-syn-read 4"
+(syn-read) exec child 6 of 10: "child-syn-read 5"
+(syn-read) exec child 7 of 10: "child-syn-read 6"
+(syn-read) exec child 8 of 10: "child-syn-read 7"
+(syn-read) exec child 9 of 10: "child-syn-read 8"
+(syn-read) exec child 10 of 10: "child-syn-read 9"
+child-syn-read: exit(0)
+(syn-read) wait for child 1 of 10 returned 0 (expected 0)
+child-syn-read: exit(8)
+child-syn-read: exit(9)
+child-syn-read: exit(2)
+child-syn-read: exit(3)
+child-syn-read: exit(5)
+child-syn-read: exit(1)
+(syn-read) wait for child 2 of 10 returned 1 (expected 1)
+(syn-read) wait for child 3 of 10 returned 2 (expected 2)
+(syn-read) wait for child 4 of 10 returned 3 (expected 3)
+child-syn-read: exit(6)
+child-syn-read: exit(7)
+child-syn-read: exit(4)
+(syn-read) wait for child 5 of 10 returned 4 (expected 4)
+(syn-read) wait for child 6 of 10 returned 5 (expected 5)
+(syn-read) wait for child 7 of 10 returned 6 (expected 6)
+(syn-read) wait for child 8 of 10 returned 7 (expected 7)
+(syn-read) wait for child 9 of 10 returned 8 (expected 8)
+(syn-read) wait for child 10 of 10 returned 9 (expected 9)
+(syn-read) end
+syn-read: exit(0)
+Execution of 'syn-read' complete.
+Timer: 317 ticks
+Thread: 105 idle ticks, 53 kernel ticks, 159 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 10969 reads, 504 writes
+hd1:0: 225 reads, 0 writes
+Console: 2326 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

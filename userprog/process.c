@@ -49,8 +49,11 @@ process_create_initd (const char *file_name) {
 	if (fn_copy == NULL)
 		return TID_ERROR;
 	strlcpy (fn_copy, file_name, PGSIZE);
+
+	/* Extract thread name from file_name */
 	char *save_ptr;
 	strtok_r (file_name, " ", &save_ptr);
+
 	/* Create a new thread to execute FILE_NAME. */
 	tid = thread_create (file_name, PRI_DEFAULT, initd, fn_copy);
 	if (tid == TID_ERROR)
@@ -112,22 +115,26 @@ duplicate_pte (uint64_t *pte, void *va, void *aux) {
 	if (is_kernel_vaddr (va)) {
 		return true;
 	}
+
 	/* 2. Resolve VA from the parent's page map level 4. */
 	parent_page = pml4_get_page (parent->pml4, va);
 	if (parent_page == NULL) {
 		return false;
 	}
+
 	/* 3. TODO: Allocate new PAL_USER page for the child and set result to
 	 *    TODO: NEWPAGE. */
 	newpage = palloc_get_page (PAL_USER);
 	if (newpage == NULL) {
 		return false;
 	}
+
 	/* 4. TODO: Duplicate parent's page to the new page and
 	 *    TODO: check whether parent's page is writable or not (set WRITABLE
 	 *    TODO: according to the result). */
 	memcpy (newpage, parent_page, PGSIZE);
 	writable = is_writable (pte);
+
 	/* 5. Add new page to child's page table at address VA with WRITABLE
 	 *    permission. */
 	if (!pml4_set_page (current->pml4, va, newpage, writable)) {
@@ -142,6 +149,12 @@ duplicate_pte (uint64_t *pte, void *va, void *aux) {
  * Hint) parent->tf does not hold the userland context of the process.
  *       That is, you are required to pass second argument of process_fork to
  *       this function. */
+
+struct dup2_dict{
+	uintptr_t key;
+	uintptr_t value;
+};
+
 static void
 __do_fork (void *aux) {
 	struct intr_frame if_;
@@ -150,13 +163,16 @@ __do_fork (void *aux) {
 	/* TODO: somehow pass the parent_if. (i.e. process_fork()'s if_) */
 	struct intr_frame *parent_if = &parent->parent_if;
 	bool succ = true;
-
+	int dup_idx = 0;
+	const int dict_len = 10;
+	struct dup2_dict dup2_file_dict[dict_len];
+	
 	/* 1. Read the cpu context to local stack. */
 	memcpy (&if_, parent_if, sizeof (struct intr_frame));
 	if_.R.rax = 0;
 
 	/* 2. Duplicate PT */
-	current->pml4 = pml4_create();
+	current->pml4 = pml4_create ();
 	if (current->pml4 == NULL)
 		goto error;
 
@@ -175,17 +191,48 @@ __do_fork (void *aux) {
 	 * TODO:       in include/filesys/file.h. Note that parent should not return
 	 * TODO:       from the fork() until this function successfully duplicates
 	 * TODO:       the resources of parent.*/
+
 	if (parent->fd_idx >= FD_LIMIT) {
 		goto error;
 	}
 
-	for (int i = 2; i < parent->fd_idx; i++) {
-		if (parent->fd_table[i] == NULL) {
+	for (int i = 0; i < FD_LIMIT; i++) {
+		struct file *parent_file = parent->fd_table[i];
+		if (parent_file == NULL) {
 			continue;
 		}
-		current->fd_table[i] = file_duplicate (parent->fd_table[i]);
-	}
 
+		/* Check whether it is a copy of parent */
+		bool is_copy = false;
+
+		if (dup2_file_dict[dup_idx].key == parent_file){
+			current->fd_table[i] = dup2_file_dict[dup_idx].value;
+			is_copy = true;
+			break;
+		}
+
+		if (is_copy) {
+			continue;
+		}
+
+		struct file *current_file;
+
+		if (parent_file > 2) {
+			current_file = file_duplicate (parent_file);
+		}
+		else {
+			current_file = parent_file;
+		}
+
+		current->fd_table[i] = current_file;
+
+		if (dup_idx < dict_len) {
+			dup2_file_dict[dup_idx].key = parent_file;
+			dup2_file_dict[dup_idx].value = current_file;
+			dup_idx++;
+		}
+	}
+	
 	current->fd_idx = parent->fd_idx;
 
 	sema_up (&current->fork_sema);
@@ -195,7 +242,9 @@ __do_fork (void *aux) {
 	if (succ)
 		do_iret (&if_);
 error:
-	thread_exit ();
+	current->exit_status = TID_ERROR;
+	sema_up (&current->fork_sema);
+	exit(TID_ERROR);
 }
 
 /* Switch the current execution context to the f_name.
@@ -215,6 +264,8 @@ process_exec (void *f_name) {
 
 	/* We first kill the current context */
 	process_cleanup ();
+
+	/* Parse argument strings */
 	char *argv[128];
 	char *arg, *save_ptr;
 	int argc = 0;
@@ -225,8 +276,12 @@ process_exec (void *f_name) {
 		arg = strtok_r (NULL, " ", &save_ptr);
 		argc++;
 	}
+
 	/* And then load the binary */
 	success = load (file_name, &_if);
+
+	/* Push arguments to stack */
+	push_arguments (argv, argc, &_if);
 
 	/* If load failed, quit. */
 	palloc_free_page (file_name);
@@ -253,6 +308,7 @@ process_wait (tid_t child_tid UNUSED) {
 	/* XXX: Hint) The pintos exit if process_wait (initd), we recommend you
 	 * XXX:       to add infinite loop here before
 	 * XXX:       implementing the process_wait. */
+	/* while statement for testing */
 	struct thread *child = get_child (child_tid);
 
 	if (child == NULL) {
@@ -322,6 +378,60 @@ process_activate (struct thread *next) {
 
 	/* Set thread's kernel stack for use in processing interrupts. */
 	tss_update (next);
+}
+
+/* Push arguments to stack during Argument Passing */
+void
+push_arguments (char **argv, int argc, struct intr_frame *if_) {
+	char *word_addr[argc];
+
+	/* Push the words at the top of the stack */
+	for (int i = argc - 1; i >= 0; i--) {
+		if_->rsp -= strlen (argv[i]) + 1;
+		word_addr[i] = if_->rsp;
+		memcpy (if_->rsp, argv[i], strlen (argv[i]) + 1);
+	}
+
+	/* Round the stack pointer down to a multiple of 8 */
+	while (if_->rsp % 8) {
+		if_->rsp -= 1;
+		*(uint8_t *)(if_->rsp) = 0;
+	}
+
+	/* Push null pointer sentinel */
+	if_->rsp -= 8;
+	memset (if_->rsp, 0, sizeof (char *));
+
+	/* Push addresses of each string */
+	for (int i = argc - 1; i >= 0; i--) {
+		if_->rsp -= 8;
+		memcpy (if_->rsp, &word_addr[i], sizeof (char *));
+	}
+
+	/* Push return address */
+	if_->rsp = if_->rsp - 8;
+	memset (if_->rsp, 0, sizeof (void *));
+
+	if_->R.rsi = if_->rsp + 8;
+	if_->R.rdi = argc;
+}
+
+/* Return child of current thread with input ID */
+struct thread
+*get_child (int child_tid) {
+	struct thread *curr = thread_current ();
+	struct thread *t;
+	struct list *children = &curr->child_list;
+
+	for (struct list_elem *e = list_begin (children); e != list_end (children); e = list_next (e)) {
+		t = list_entry (e, struct thread, child_elem);
+
+		if (child_tid == t->tid) {
+			return t;
+		}
+	}
+
+	return NULL;
 }
 
 /* We load ELF binaries.  The following definitions are taken

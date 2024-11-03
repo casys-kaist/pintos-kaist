@@ -1,0 +1,62 @@
+Kernel command line: -q -f put rox-multichild put child-rox run rox-multichild
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 220 sector (110 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'rox-multichild' into the file system...
+Putting 'child-rox' into the file system...
+Executing 'rox-multichild':
+(rox-multichild) begin
+(rox-multichild) open "child-rox"
+(rox-multichild) read "child-rox"
+(rox-multichild) write "child-rox"
+(rox-multichild) exec "child-rox 5"
+(child-rox) begin
+(child-rox) try to write "child-rox"
+(child-rox) exec "child-rox 4"
+(child-rox) begin
+(child-rox) try to write "child-rox"
+(child-rox) exec "child-rox 3"
+(child-rox) begin
+(child-rox) try to write "child-rox"
+(child-rox) exec "child-rox 2"
+(child-rox) begin
+(child-rox) try to write "child-rox"
+(child-rox) exec "child-rox 1"
+(child-rox) begin
+(child-rox) try to write "child-rox"
+(child-rox) try to write "child-rox"
+(child-rox) end
+child-rox: exit(12)
+(child-rox) try to write "child-rox"
+(child-rox) end
+child-rox: exit(12)
+(child-rox) try to write "child-rox"
+(child-rox) end
+child-rox: exit(12)
+(child-rox) try to write "child-rox"
+(child-rox) end
+child-rox: exit(12)
+(child-rox) try to write "child-rox"
+(child-rox) end
+child-rox: exit(12)
+(rox-multichild) write "child-rox"
+(rox-multichild) end
+rox-multichild: exit(0)
+Execution of 'rox-multichild' complete.
+Timer: 107 ticks
+Thread: 37 idle ticks, 52 kernel ticks, 18 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 420 reads, 480 writes
+hd1:0: 220 reads, 0 writes
+Console: 1880 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

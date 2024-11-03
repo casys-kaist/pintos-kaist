@@ -1,0 +1,51 @@
+Kernel command line: -q -f put fork-recursive run fork-recursive
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 104 sector (52 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'fork-recursive' into the file system...
+Executing 'fork-recursive':
+(fork-recursive) begin
+(fork-recursive) child run
+(fork-recursive) child run
+(fork-recursive) child run
+(fork-recursive) child run
+(fork-recursive) child run
+(fork-recursive) child run
+(fork-recursive) child run
+(fork-recursive) child run
+child: exit(10)
+(fork-recursive) Parent: child exit status is 10
+child: exit(10)
+(fork-recursive) Parent: child exit status is 10
+child: exit(9)
+(fork-recursive) Parent: child exit status is 9
+child: exit(8)
+(fork-recursive) Parent: child exit status is 8
+child: exit(7)
+(fork-recursive) Parent: child exit status is 7
+child: exit(6)
+(fork-recursive) Parent: child exit status is 6
+child: exit(5)
+(fork-recursive) Parent: child exit status is 5
+child: exit(4)
+(fork-recursive) Parent: child exit status is 4
+(fork-recursive) end
+fork-recursive: exit(0)
+Execution of 'fork-recursive' complete.
+Timer: 90 ticks
+Thread: 33 idle ticks, 47 kernel ticks, 10 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 87 reads, 236 writes
+hd1:0: 104 reads, 0 writes
+Console: 1605 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

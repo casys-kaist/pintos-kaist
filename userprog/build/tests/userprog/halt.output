@@ -1,0 +1,24 @@
+Kernel command line: -q -f put halt run halt
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  104,755,200 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 102 sector (51 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'halt' into the file system...
+Executing 'halt':
+(halt) begin
+Timer: 74 ticks
+Thread: 30 idle ticks, 43 kernel ticks, 1 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 80 reads, 232 writes
+hd1:0: 102 reads, 0 writes
+Console: 745 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

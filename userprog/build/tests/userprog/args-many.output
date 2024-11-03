@@ -1,0 +1,52 @@
+Kernel command line: -q -f put args-many run 'args-many a b c d e f g h i j k l m n o p q r s t u v'
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 102 sector (51 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'args-many' into the file system...
+Executing 'args-many a b c d e f g h i j k l m n o p q r s t u v':
+(args) begin
+(args) argc = 23
+(args) argv[0] = 'args-many'
+(args) argv[1] = 'a'
+(args) argv[2] = 'b'
+(args) argv[3] = 'c'
+(args) argv[4] = 'd'
+(args) argv[5] = 'e'
+(args) argv[6] = 'f'
+(args) argv[7] = 'g'
+(args) argv[8] = 'h'
+(args) argv[9] = 'i'
+(args) argv[10] = 'j'
+(args) argv[11] = 'k'
+(args) argv[12] = 'l'
+(args) argv[13] = 'm'
+(args) argv[14] = 'n'
+(args) argv[15] = 'o'
+(args) argv[16] = 'p'
+(args) argv[17] = 'q'
+(args) argv[18] = 'r'
+(args) argv[19] = 's'
+(args) argv[20] = 't'
+(args) argv[21] = 'u'
+(args) argv[22] = 'v'
+(args) argv[23] = null
+(args) end
+args-many: exit(0)
+Execution of 'args-many' complete.
+Timer: 84 ticks
+Thread: 34 idle ticks, 47 kernel ticks, 3 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 80 reads, 232 writes
+hd1:0: 102 reads, 0 writes
+Console: 1464 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

@@ -1,0 +1,32 @@
+Kernel command line: -q -f put exec-boundary put child-simple run exec-boundary
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 207 sector (103 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'exec-boundary' into the file system...
+Putting 'child-simple' into the file system...
+Executing 'exec-boundary':
+(exec-boundary) begin
+(child-simple) run
+child-simple: exit(81)
+(exec-boundary) fork
+(exec-boundary) wait
+(exec-boundary) end
+exec-boundary: exit(0)
+Execution of 'exec-boundary' complete.
+Timer: 88 ticks
+Thread: 38 idle ticks, 48 kernel ticks, 2 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 159 reads, 452 writes
+hd1:0: 207 reads, 0 writes
+Console: 1022 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

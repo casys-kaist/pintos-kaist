@@ -1,0 +1,45 @@
+Kernel command line: -q -f put multi-oom run multi-oom
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 108 sector (54 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'multi-oom' into the file system...
+Executing 'multi-oom':
+(multi-oom) begin
+Page fault at 0x8004000000: rights violation error writing page in user context.
+child_6_X: dying due to interrupt 0x0e (#PF Page-Fault Exception).
+Interrupt 0x0e (#PF Page-Fault Exception) at rip=400238
+ cr2=0000008004000000 error=               7
+rax 0000008004000000 rbx 0000000000000000 rcx b8628877a8ddd9e6 rdx 0000000000000018
+rsp 000000004747fed0 rbp 000000004747fee0 rsi 0000000000605634 rdi 00000000006056f8
+rip 0000000000400238 r8 0000000000000000  r9 0000000000000000 r10 0000000000000000
+r11 0000000000000216 r12 0000000000000000 r13 0000000000000000 r14 0000000000000000
+r15 0000000000000000 rflags 00000216
+es: 001b ds: 001b cs: 0023 ss: 001b
+(multi-oom) crashed child should return -1.: FAILED
+child_5_O: exit(1)
+child_4_O: exit(1)
+child_3_O: exit(1)
+child_2_O: exit(1)
+child_1_O: exit(1)
+child_0_O: exit(1)
+(multi-oom) Spawned at least 10 children.
+(multi-oom) Spawned at least 10 children.: FAILED
+multi-oom: exit(1)
+Execution of 'multi-oom' complete.
+Timer: 107 ticks
+Thread: 35 idle ticks, 50 kernel ticks, 22 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 572 reads, 244 writes
+hd1:0: 108 reads, 0 writes
+Console: 1742 characters output
+Keyboard: 0 keys pressed
+Exception: 1 page faults
+Powering off...

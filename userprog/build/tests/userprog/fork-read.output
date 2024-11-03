@@ -1,0 +1,34 @@
+Kernel command line: -q -f put fork-read put sample.txt run fork-read
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+hd1:0: detected 111 sector (55 kB) disk, model "QEMU HARDDISK", serial "QM00003"
+Formatting file system...done.
+Boot complete.
+Putting 'fork-read' into the file system...
+Putting 'sample.txt' into the file system...
+Executing 'fork-read':
+(fork-read) begin
+(fork-read) open "sample.txt"
+(fork-read) child run
+(fork-read) Child: pintos is funny!
+(fork-read) end
+child: exit(0)
+(fork-read) Parent success
+(fork-read) end
+fork-read: exit(0)
+Execution of 'fork-read' complete.
+Timer: 85 ticks
+Thread: 33 idle ticks, 48 kernel ticks, 4 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 118 reads, 260 writes
+hd1:0: 111 reads, 0 writes
+Console: 1047 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

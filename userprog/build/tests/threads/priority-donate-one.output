@@ -1,0 +1,31 @@
+Kernel command line: -q -threads-tests -f run priority-donate-one
+0 ~ 9fc00 1
+100000 ~ 13e0000 1
+Pintos booting with: 
+	base_mem: 0x0 ~ 0x9fc00 (Usable: 639 kB)
+	ext_mem: 0x100000 ~ 0x13e0000 (Usable: 19,328 kB)
+Calibrating timer...  157,081,600 loops/s.
+hd0:0: detected 321 sector (160 kB) disk, model "QEMU HARDDISK", serial "QM00001"
+hd0:1: detected 20,160 sector (9 MB) disk, model "QEMU HARDDISK", serial "QM00002"
+Formatting file system...done.
+Boot complete.
+Executing 'priority-donate-one':
+(priority-donate-one) begin
+(priority-donate-one) This thread should have priority 32.  Actual priority: 32.
+(priority-donate-one) This thread should have priority 33.  Actual priority: 33.
+(priority-donate-one) acquire2: got the lock
+(priority-donate-one) acquire2: done
+(priority-donate-one) acquire1: got the lock
+(priority-donate-one) acquire1: done
+(priority-donate-one) acquire2, acquire1 must already have finished, in that order.
+(priority-donate-one) This should be the last line before finishing this test.
+(priority-donate-one) end
+Execution of 'priority-donate-one' complete.
+Timer: 76 ticks
+Thread: 30 idle ticks, 46 kernel ticks, 0 user ticks
+hd0:0: 0 reads, 0 writes
+hd0:1: 9 reads, 18 writes
+Console: 1207 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

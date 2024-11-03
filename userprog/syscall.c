@@ -7,7 +7,6 @@
 #include "userprog/gdt.h"
 #include "threads/flags.h"
 #include "intrinsic.h"
-
 #include "filesys/filesys.h"
 #include "filesys/file.h"
 #include <list.h>
@@ -18,30 +17,6 @@
 void syscall_entry (void);
 void syscall_handler (struct intr_frame *);
 
-void check_address (const uint64_t *addr);
-
-void halt (void);
-void exit (int status);
-tid_t fork (const char *thread_name);
-int exec (const char *cmd_line);
-int wait (tid_t pid);
-bool create (const char *file, unsigned initial_size);
-bool remove (const char *file);
-int open (const char *file);
-int filesize (int fd);
-int read (int fd, void *buffer, unsigned size);
-int write (int fd, const void *buffer, unsigned size);
-void seek (int fd, unsigned position);
-unsigned tell (int fd);
-void close (int fd);
-
-
-int put_file (struct file *file);
-static struct file *find_with_limits (int fd);
-
-int dup2(int oldfd, int newfd);
-const int STDIN=1;
-const int STDOUT=2;
 /* System call.
  *
  * Previously system call services was handled by the interrupt handler
@@ -66,6 +41,7 @@ syscall_init (void) {
 	 * mode stack. Therefore, we masked the FLAG_FL. */
 	write_msr(MSR_SYSCALL_MASK,
 			FLAG_IF | FLAG_TF | FLAG_DF | FLAG_IOPL | FLAG_AC | FLAG_NT);
+	lock_init(&filesys_lock);
 }
 
 /* The main system call interface */
@@ -79,7 +55,7 @@ syscall_handler (struct intr_frame *f UNUSED) {
 			exit (f->R.rdi);
 			break;
 		case SYS_FORK:
-			f->R.rax = fork (f->R.rdi);
+			f->R.rax = fork (f->R.rdi, f);
 			break;
 		case SYS_EXEC:
 			f->R.rax = exec (f->R.rdi);
@@ -119,10 +95,8 @@ syscall_handler (struct intr_frame *f UNUSED) {
 		default:
 			exit(-1);
 	}
-	printf ("system call!\n");
-	thread_exit ();
 }
-
+/* Check user address validty */
 void
 check_address (const uint64_t *addr) {
 	if (addr == NULL || is_kernel_vaddr (addr) || pml4_get_page (thread_current()->pml4, addr) == NULL) {
@@ -130,11 +104,13 @@ check_address (const uint64_t *addr) {
 	}
 }
 
+/*Turn off the PintOS*/
 void
 halt (void) {
 	power_off ();
 }
 
+/*Terminate Proess*/
 void
 exit (int status) {
 	struct thread *curr = thread_current ();
@@ -144,13 +120,15 @@ exit (int status) {
 	thread_exit ();
 }
 
+/*Copy the Process*/
 tid_t
-fork (const char *thread_name) {
+fork (const char *thread_name, struct intr_frame *f) {
 	check_address (thread_name);
 
-	return process_fork (thread_name, NULL);
+	return process_fork (thread_name, f);
 }
 
+/*Context change in cmd*/
 int
 exec (const char *cmd_line) {
 	check_address (cmd_line);
@@ -166,13 +144,18 @@ exec (const char *cmd_line) {
 	if (process_exec (cmd_copy) == -1) {
 		return -1;
 	}
+
+	NOT_REACHED ();
+	return 0;
 }
 
+/*Wait for child process*/
 int
 wait (tid_t pid) {
 	return process_wait (pid);
 }
 
+/*Create file*/
 bool
 create (const char *file, unsigned initial_size) {
 	check_address (file);
@@ -180,49 +163,26 @@ create (const char *file, unsigned initial_size) {
 	return filesys_create (file, initial_size);
 }
 
+/*Remove file*/
 bool
 remove (const char *file) {
 	check_address (file);
 
 	return filesys_remove (file);
 }
-
-int
-put_file (struct file *file) {
-	struct thread *curr = thread_current ();
-	struct file **fdt = curr->fd_table;
-	
-	while (curr->fd_idx < FD_LIMIT && fdt[curr->fd_idx]) {
-		curr->fd_idx++;
-	}
-
-	if (curr->fd_idx >= FD_LIMIT) {
-		return -1;
-	}
-
-	fdt[curr->fd_idx] = file;
-	return curr->fd_idx;
-}
-
-static struct file
-*find_with_limits (int fd) {
-	struct thread *curr = thread_current ();
-	if (fd >= 0 && fd < FD_LIMIT) {
-		return curr->fd_table[fd];
-	}
-	else {
-		return NULL;
-	}
-}
-
-
+/* Open file (return fd) by file name */
 int
 open (const char* file) {
 	check_address (file);
+
 	struct file *opened_file = filesys_open (file);
 
 	if (opened_file == NULL) {
 		return -1;
+	}
+
+	if(!strcmp(thread_name(), file)){
+		file_deny_write(opened_file);
 	}
 	
 	int fd = put_file (opened_file);
@@ -233,6 +193,7 @@ open (const char* file) {
 	return fd;
 }
 
+/* Return byte size of file by fd */
 int
 filesize (int fd) {
 	struct file *current_file = find_with_limits (fd);
@@ -242,6 +203,7 @@ filesize (int fd) {
 	return file_length (current_file);
 }
 
+/* Read file with a certain length and save it in buffer */
 int
 read (int fd, void *buffer, unsigned length) {
 	check_address (buffer);
@@ -256,7 +218,7 @@ read (int fd, void *buffer, unsigned length) {
 	if (current_file == STDIN) {
 		if (curr->stdin_count == 0) {
 			NOT_REACHED ();
-			curr->fd_table[fd] = NULL;
+			delete_file (fd);
 			return -1;
 		}
 		else {
@@ -264,7 +226,7 @@ read (int fd, void *buffer, unsigned length) {
 			unsigned char *buf = buffer;
 			for(i = 0; i < length; i++) {
 				char c = input_getc ();
-				*buf++=c;
+				*buf++ = c;
 				if (c == '\0') {
 					break;
 				}
@@ -272,7 +234,7 @@ read (int fd, void *buffer, unsigned length) {
 			return i;
 		}
 	}
-	else if (current_file == 2) {
+	else if (current_file == STDOUT) {
 		return -1;
 	}
 	else {
@@ -283,21 +245,21 @@ read (int fd, void *buffer, unsigned length) {
 	}
 }
 
+/* Write file with a certain length from buffer */
 int
 write (int fd, const void *buffer, unsigned length) {
 	check_address (buffer);
+	struct thread *curr = thread_current ();
 	struct file *current_file = find_with_limits (fd);
 
 	if (current_file == NULL) {
 		return -1;
 	}
 
-	struct thread *curr = thread_current ();
-
-	if (current_file == 2) {
-		if (curr->stdin_count == 0) {
+	if (current_file == STDOUT) {
+		if (curr->stdout_count == 0) {
 			NOT_REACHED ();
-			curr->fd_table[fd] = NULL;
+			delete_file(fd);
 			return -1;
 		}
 		else {
@@ -305,7 +267,7 @@ write (int fd, const void *buffer, unsigned length) {
 			return length;
 		}
 	}
-	else if (current_file == 1) {
+	else if (current_file == STDIN) {
 		return -1;
 	}
 	else {
@@ -316,6 +278,7 @@ write (int fd, const void *buffer, unsigned length) {
 	}
 }
 
+/* Change next position of read/write */
 void
 seek (int fd, unsigned position){
 	struct file *current_file = find_with_limits (fd);
@@ -325,34 +288,37 @@ seek (int fd, unsigned position){
 	file_seek (current_file, position);
 }
 
+/* Return next position of read/write */
 unsigned
 tell (int fd) {
 	struct file *current_file = find_with_limits (fd);
 	check_address (current_file);
 
-	if (current_file <= 2){
+	if (current_file <= 2) {
 		return;
 	}
 
 	return file_tell (current_file);
 }
 
+/* Close file by fd */
 void
 close (int fd) {
 	struct thread *curr = thread_current ();
 	struct file *current_file = curr->fd_table[fd];
+
 	if (current_file == NULL) {
 		return;
 	}
 
-	if (fd == 0 || current_file == 1) {
+	if (fd == 0 || current_file == STDIN) {
 		curr->stdin_count--;
 	}
-	else if (fd == 1 || current_file == 2) {
+	else if (fd == 1 || current_file == STDOUT) {
 		curr->stdout_count--;
 	}
 
-	curr->fd_table[fd] = NULL;
+	delete_file (fd);
 
 	if (fd <= 1 || current_file <= 2) {
 		return;
@@ -366,6 +332,7 @@ close (int fd) {
 	}
 }
 
+/* Copy from old fd to new fd */
 int
 dup2 (int oldfd, int newfd) {
 	struct file *current_file = find_with_limits (oldfd);
@@ -376,9 +343,8 @@ dup2 (int oldfd, int newfd) {
 	if (oldfd == newfd) {
 		return newfd;
 	}
-
-	struct thread *curr = thread_current();
-	struct file **current_fd_table = curr->fd_table;
+	
+	struct thread *curr = thread_current ();
 	
 	if (current_file == STDIN) {
 		curr->stdin_count++;
@@ -391,6 +357,45 @@ dup2 (int oldfd, int newfd) {
 	}
 	
 	close (newfd);
-	current_fd_table[newfd] = current_file;
+	curr->fd_table[newfd] = current_file;
 	return newfd;
+}
+
+
+/* Put file into file descriptor table */
+int
+put_file (struct file *file) {
+	struct thread *curr = thread_current ();
+	struct file **fdt = curr->fd_table;
+	
+	while (curr->fd_idx < FD_LIMIT && fdt[curr->fd_idx]) {
+		curr->fd_idx++;
+	}
+
+	if (curr->fd_idx >= FD_LIMIT) {
+		curr->fd_idx = FD_LIMIT;
+		return -1;
+	}
+
+	fdt[curr->fd_idx] = file;
+	return curr->fd_idx;
+}
+
+/* Get file by fd */
+static struct file
+*find_with_limits (int fd) {
+	struct thread *curr = thread_current ();
+	if (fd >= 0 && fd < FD_LIMIT) {
+		return curr->fd_table[fd];
+	}
+	else {
+		return NULL;
+	}
+}
+/* Delete file by fd */
+void delete_file (int fd) {
+	if (fd < 0 || fd > FD_LIMIT) {
+		return NULL;
+	}
+	thread_current ()->fd_table[fd] = NULL;
 }

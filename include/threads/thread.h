@@ -10,7 +10,6 @@
 #include "vm/vm.h"
 #endif
 
-
 /* States in a thread's life cycle. */
 enum thread_status {
 	THREAD_RUNNING,     /* Running thread. */
@@ -29,7 +28,7 @@ typedef int tid_t;
 #define PRI_DEFAULT 31                  /* Default priority. */
 #define PRI_MAX 63                      /* Highest priority. */
 /* File descriptor. */
-#define FD_PAGE_CNT 3                  /* Page Count for FDT (multi-oom) */
+#define FD_PAGE_CNT 3                  /* Page Count for FDT */
 #define FD_LIMIT FD_PAGE_CNT*(1 << 9)  /* File descriptor index limit */
 /* A kernel thread or user process.
  *
@@ -105,6 +104,16 @@ struct thread {
 #ifdef USERPROG
 	/* Owned by userprog/process.c. */
 	uint64_t *pml4;                     /* Page map level 4 */
+
+	int exit_status;                    /* Exit status for exit and wait */
+	int fd_idx;                         /* File descriptor index */
+	struct file **fd_table;             /* File descriptor table */
+	struct intr_frame parent_if;        /* Parent interrupt frame */
+	struct list child_list;             /* List of children */
+	struct list_elem child_elem;        /* List element for children */
+	struct semaphore fork_sema;         /* Semaphore for fork */
+	struct semaphore exit_sema;         /* Semaphore for exit */
+	struct semaphore wait_sema;         /* Semaphore for wait */
 #endif
 #ifdef VM
 	/* Table for whole virtual memory owned by thread. */
@@ -119,19 +128,6 @@ struct thread {
 	struct lock *wait_on_lock;
 	struct list donations;
 	struct list_elem donation_elem;
-
-	int exit_status;                    /* Exit status for exit and wait */
-	struct intr_frame parent_if;        /* Parent interrupt frame */
-	struct list child_list;             /* List of children */
-	struct list_elem child_elem;        /* List element for children */
-	struct semaphore fork_sema;         /* Semaphore for fork */
-	struct semaphore exit_sema;         /* Semaphore for exit */
-	struct semaphore wait_sema;         /* Semaphore for wait */
-	int fd_idx;                         /* File descriptor index */
-	struct file **fd_table;             /* File descriptor table */
-	struct file *running_file;          /* Present running file of thread */
-	int stdin_count;
-	int stdout_count;
 };
 
 /* If false (default), use round-robin scheduler.

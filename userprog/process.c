@@ -149,12 +149,6 @@ duplicate_pte (uint64_t *pte, void *va, void *aux) {
  * Hint) parent->tf does not hold the userland context of the process.
  *       That is, you are required to pass second argument of process_fork to
  *       this function. */
-
-struct dup2_dict{
-	uintptr_t key;
-	uintptr_t value;
-};
-
 static void
 __do_fork (void *aux) {
 	struct intr_frame if_;
@@ -193,17 +187,15 @@ __do_fork (void *aux) {
 		goto error;
 	}
 
-	struct file *file;
-
 	for (int fd = 0; fd < FD_LIMIT; fd++) {
-		file = parent->fd_table[fd];
-		if (file == NULL)
+		struct file *current_file = parent->fd_table[fd];
+		if (current_file == NULL)
 			continue;
 
-		if (file > 2)
-			current->fd_table[fd] = file_duplicate (file);
+		if (current_file > 2)
+			current->fd_table[fd] = file_duplicate (current_file);
 		else
-			current->fd_table[fd] = file;
+			current->fd_table[fd] = current_file;
 	}
 
 	current->fd_idx = parent->fd_idx;
@@ -309,7 +301,6 @@ process_exit (void) {
 	}
 
 	palloc_free_multiple (curr->fd_table, FD_PAGE_CNT);
-	file_close (curr->running_file);
 	process_cleanup ();
 	sema_up (&curr->wait_sema);
 	sema_down (&curr->exit_sema);

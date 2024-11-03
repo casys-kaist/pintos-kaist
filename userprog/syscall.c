@@ -99,18 +99,18 @@ syscall_handler (struct intr_frame *f UNUSED) {
 /* Check user address validty */
 void
 check_address (const uint64_t *addr) {
-	if (addr == NULL || !(is_user_vaddr (addr)) || pml4_get_page (thread_current()->pml4, addr) == NULL) {
+	if (addr == NULL || !(is_user_vaddr (addr)) || pml4_get_page (thread_current ()->pml4, addr) == NULL) {
 		exit(-1);
 	}
 }
 
-/*Turn off the PintOS*/
+/* Turn off the PintOS */
 void
 halt (void) {
 	power_off ();
 }
 
-/*Terminate Proess*/
+/* Terminate the proess */
 void
 exit (int status) {
 	struct thread *curr = thread_current ();
@@ -120,7 +120,7 @@ exit (int status) {
 	thread_exit ();
 }
 
-/*Copy the Process*/
+/* Copy the process */
 tid_t
 fork (const char *thread_name, struct intr_frame *f) {
 	check_address (thread_name);
@@ -128,7 +128,7 @@ fork (const char *thread_name, struct intr_frame *f) {
 	return process_fork (thread_name, f);
 }
 
-/*Context change in cmd*/
+/* Context change by cmd */
 int
 exec (const char *cmd_line) {
 	check_address (cmd_line);
@@ -149,13 +149,13 @@ exec (const char *cmd_line) {
 	return 0;
 }
 
-/*Wait for child process*/
+/* Wait for child process */
 int
 wait (tid_t pid) {
 	return process_wait (pid);
 }
 
-/*Create file*/
+/* Create file */
 bool
 create (const char *file, unsigned initial_size) {
 	check_address (file);
@@ -163,13 +163,14 @@ create (const char *file, unsigned initial_size) {
 	return filesys_create (file, initial_size);
 }
 
-/*Remove file*/
+/* Remove file */
 bool
 remove (const char *file) {
 	check_address (file);
 
 	return filesys_remove (file);
 }
+
 /* Open file (return fd) by file name */
 int
 open (const char* file) {
@@ -181,8 +182,9 @@ open (const char* file) {
 		return -1;
 	}
 
-	if(!strcmp(thread_name(), file)){
-		file_deny_write(opened_file);
+	/* Deny write on executables */
+	if (!strcmp (thread_name (), file)) {
+		file_deny_write (opened_file);
 	}
 	
 	int fd = put_file (opened_file);
@@ -196,7 +198,7 @@ open (const char* file) {
 /* Return byte size of file by fd */
 int
 filesize (int fd) {
-	struct file *current_file = find_with_limits (fd);
+	struct file *current_file = find_file (fd);
 	if (current_file == NULL) {
 		return -1;
 	}
@@ -209,13 +211,12 @@ read (int fd, void *buffer, unsigned length) {
 	check_address (buffer);
 
 	struct thread *curr = thread_current ();
-	struct file *current_file = find_with_limits (fd);
-	
+	struct file *current_file = find_file (fd);
+
 	if (current_file == NULL) {
 		return -1;
 	}
-
-	if (current_file == STDIN) {
+	else if (current_file == STDIN) {
 		int i;
 		unsigned char *buf = buffer;
 		for(i = 0; i < length; i++) {
@@ -243,18 +244,17 @@ int
 write (int fd, const void *buffer, unsigned length) {
 	check_address (buffer);
 	struct thread *curr = thread_current ();
-	struct file *current_file = find_with_limits (fd);
+	struct file *current_file = find_file (fd);
 
 	if (current_file == NULL) {
 		return -1;
 	}
-
-	if (current_file == STDOUT) {
-		putbuf (buffer, length);
-		return length;
-	}
 	else if (current_file == STDIN) {
 		return -1;
+	}
+	else if (current_file == STDOUT) {
+		putbuf (buffer, length);
+		return length;
 	}
 	else {
 		lock_acquire (&filesys_lock);
@@ -267,18 +267,19 @@ write (int fd, const void *buffer, unsigned length) {
 /* Change next position of read/write */
 void
 seek (int fd, unsigned position){
-	struct file *current_file = find_with_limits (fd);
+	struct file *current_file = find_file (fd);
+
 	if (current_file <= 2) {
 		return;
 	}
+
 	file_seek (current_file, position);
 }
 
 /* Return next position of read/write */
 unsigned
 tell (int fd) {
-	struct file *current_file = find_with_limits (fd);
-	//check_address (current_file);
+	struct file *current_file = find_file (fd);
 
 	if (current_file <= 2) {
 		return;
@@ -291,7 +292,7 @@ tell (int fd) {
 void
 close (int fd) {
 	struct thread *curr = thread_current ();
-	struct file *current_file = find_with_limits (fd);
+	struct file *current_file = find_file (fd);
 
 	if (current_file == NULL) {
 		return;
@@ -314,10 +315,7 @@ close (int fd) {
 /* Copy from old fd to new fd */
 int
 dup2 (int oldfd, int newfd) {
-	if (oldfd < 0 || newfd < 0)
-		return -1;
-
-	struct file *old_file = find_with_limits (oldfd);
+	struct file *old_file = find_file (oldfd);
 	if (old_file == NULL) {
 		return -1;
 	}
@@ -325,21 +323,20 @@ dup2 (int oldfd, int newfd) {
 	if (oldfd == newfd) {
 		return newfd;
 	}
-	
-	struct file *new_file = find_with_limits (newfd);
+
+	struct file *new_file = find_file (newfd);
 
 	if (old_file == new_file) {
 		return newfd;
 	}
 
 	close (newfd);
-	
+
 	struct thread *curr = thread_current ();
 	struct file **fdt = curr->fd_table;
 
 	if (newfd < 0 || newfd >= FD_LIMIT)
 		return -1;
-
 
 	if (old_file > 2) {
 		old_file->dup_count++;
@@ -348,7 +345,6 @@ dup2 (int oldfd, int newfd) {
 	fdt[newfd] = old_file;
 	return newfd;
 }
-
 
 /* Put file into file descriptor table */
 int
@@ -371,15 +367,16 @@ put_file (struct file *file) {
 
 /* Get file by fd */
 static struct file
-*find_with_limits (int fd) {
+*find_file (int fd) {
 	struct thread *curr = thread_current ();
-	if (fd >= 0 && fd < FD_LIMIT) {
-		return curr->fd_table[fd];
-	}
-	else {
+	if (fd < 0 || fd >= FD_LIMIT) {
 		return NULL;
 	}
+	else {
+		return curr->fd_table[fd];
+	}
 }
+
 /* Delete file by fd */
 void delete_file (int fd) {
 	if (fd < 0 || fd >= FD_LIMIT) {

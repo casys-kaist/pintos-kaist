@@ -16,10 +16,6 @@ int exec (const char *cmd_line);
 int wait (tid_t pid);
 bool create (const char *file, unsigned initial_size);
 bool remove (const char *file);
-
-int put_file (struct file *file);
-static struct file *find_with_limits (int fd);
-void delete_file (int fd);
 int open (const char *file);
 int filesize (int fd);
 int read (int fd, void *buffer, unsigned size);
@@ -28,5 +24,9 @@ void seek (int fd, unsigned position);
 unsigned tell (int fd);
 void close (int fd);
 int dup2 (int oldfd, int newfd);
+
+int put_file (struct file *file);
+static struct file *find_file (int fd);
+void delete_file (int fd);
 
 #endif /* userprog/syscall.h */

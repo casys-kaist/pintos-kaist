@@ -1,2 +1,0 @@
-warning: TCG doesn't support requested feature: CPUID.01H:ECX.vmx [bit 5]
-main-loop: WARNING: I/O thread spun for 1000 iterations

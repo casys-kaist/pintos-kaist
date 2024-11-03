@@ -1,1 +1,0 @@
-warning: TCG doesn't support requested feature: CPUID.01H:ECX.vmx [bit 5]

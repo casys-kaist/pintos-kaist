@@ -163,10 +163,7 @@ __do_fork (void *aux) {
 	/* TODO: somehow pass the parent_if. (i.e. process_fork()'s if_) */
 	struct intr_frame *parent_if = &parent->parent_if;
 	bool succ = true;
-	int dup_idx = 0;
-	const int dict_len = 10;
-	struct dup2_dict dup2_file_dict[dict_len];
-	
+
 	/* 1. Read the cpu context to local stack. */
 	memcpy (&if_, parent_if, sizeof (struct intr_frame));
 	if_.R.rax = 0;
@@ -195,44 +192,54 @@ __do_fork (void *aux) {
 	if (parent->fd_idx >= FD_LIMIT) {
 		goto error;
 	}
+	{
+		int dup_idx = 0;
+		const int dict_len = 128;
+		struct file *keys[dict_len];
+		struct file *vals[dict_len];
 
-	for (int i = 0; i < FD_LIMIT; i++) {
-		struct file *parent_file = parent->fd_table[i];
-		if (parent_file == NULL) {
-			continue;
-		}
+		for (int i = 0; i < FD_LIMIT; i++) {
+			struct file *parent_file = parent->fd_table[i];
+			if (parent_file == NULL) {
+				continue;
+			}
 
-		/* Check whether it is a copy of parent */
-		bool is_copy = false;
+			/* Check whether it is a copy of parent */
+			bool is_copy = false;
 
-		if (dup2_file_dict[dup_idx].key == parent_file){
-			current->fd_table[i] = dup2_file_dict[dup_idx].value;
-			is_copy = true;
-			break;
-		}
+			for (int j = 0; j <= dup_idx; j++) {
+				if (keys[j] == parent_file) {
+					current->fd_table[i] = vals[j];
+					is_copy = true;
+					break;
+				}
+			}
 
-		if (is_copy) {
-			continue;
-		}
+			if (is_copy) {
+				continue;
+			}
 
-		struct file *current_file;
+			struct file *current_file;
 
-		if (parent_file > 2) {
-			current_file = file_duplicate (parent_file);
-		}
-		else {
-			current_file = parent_file;
-		}
+			if (parent_file > 2) {
+				lock_acquire (&filesys_lock);
+				current_file = file_duplicate (parent_file);
+				lock_release (&filesys_lock);
+			}
+			else {
+				current_file = parent_file;
+			}
 
-		current->fd_table[i] = current_file;
+			current->fd_table[i] = current_file;
 
-		if (dup_idx < dict_len) {
-			dup2_file_dict[dup_idx].key = parent_file;
-			dup2_file_dict[dup_idx].value = current_file;
-			dup_idx++;
+			if (dup_idx < dict_len) {
+				keys[dup_idx] = parent_file;
+				vals[dup_idx] = current_file;
+				dup_idx++;
+			}
 		}
 	}
-	
+
 	current->fd_idx = parent->fd_idx;
 
 	sema_up (&current->fork_sema);
@@ -242,7 +249,6 @@ __do_fork (void *aux) {
 	if (succ)
 		do_iret (&if_);
 error:
-	current->exit_status = TID_ERROR;
 	sema_up (&current->fork_sema);
 	exit(TID_ERROR);
 }

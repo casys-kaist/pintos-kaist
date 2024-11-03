@@ -257,7 +257,8 @@ error:
  * Returns -1 on fail. */
 int
 process_exec (void *f_name) {
-	char *file_name = f_name;
+	char *file_name = (char *)palloc_get_page(PAL_ZERO);
+	strlcpy(file_name, (char *)f_name, strlen(f_name)+1);
 	bool success;
 
 	/* We cannot use the intr_frame in the thread structure.

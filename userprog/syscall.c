@@ -136,13 +136,13 @@ exec (const char *cmd_line) {
 	char *cmd_copy = palloc_get_page (PAL_ZERO);
 
 	if (cmd_copy == NULL) {
-		return -1;
+		exit(-1);
 	}
 
 	strlcpy (cmd_copy, cmd_line, strlen (cmd_line) + 1);
 
 	if (process_exec (cmd_copy) == -1) {
-		return -1;
+		exit(-1);
 	}
 
 	NOT_REACHED ();
@@ -345,6 +345,7 @@ dup2 (int oldfd, int newfd) {
 	}
 	
 	struct thread *curr = thread_current ();
+	struct file **fdt = curr->fd_table;
 	
 	if (current_file == STDIN) {
 		curr->stdin_count++;
@@ -357,7 +358,7 @@ dup2 (int oldfd, int newfd) {
 	}
 	
 	close (newfd);
-	curr->fd_table[newfd] = current_file;
+	fdt[newfd] = current_file;
 	return newfd;
 }
 

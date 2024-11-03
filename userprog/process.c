@@ -192,52 +192,18 @@ __do_fork (void *aux) {
 	if (parent->fd_idx >= FD_LIMIT) {
 		goto error;
 	}
-	{
-		int dup_idx = 0;
-		const int dict_len = 128;
-		struct file *keys[dict_len];
-		struct file *vals[dict_len];
 
-		for (int i = 0; i < FD_LIMIT; i++) {
-			struct file *parent_file = parent->fd_table[i];
-			if (parent_file == NULL) {
-				continue;
-			}
+	struct file *file;
 
-			/* Check whether it is a copy of parent */
-			bool is_copy = false;
+	for (int fd = 0; fd < FD_LIMIT; fd++) {
+		file = parent->fd_table[fd];
+		if (file == NULL)
+			continue;
 
-			for (int j = 0; j <= dup_idx; j++) {
-				if (keys[j] == parent_file) {
-					current->fd_table[i] = vals[j];
-					is_copy = true;
-					break;
-				}
-			}
-
-			if (is_copy) {
-				continue;
-			}
-
-			struct file *current_file;
-
-			if (parent_file > 2) {
-				lock_acquire (&filesys_lock);
-				current_file = file_duplicate (parent_file);
-				lock_release (&filesys_lock);
-			}
-			else {
-				current_file = parent_file;
-			}
-
-			current->fd_table[i] = current_file;
-
-			if (dup_idx < dict_len) {
-				keys[dup_idx] = parent_file;
-				vals[dup_idx] = current_file;
-				dup_idx++;
-			}
-		}
+		if (file > 2)
+			current->fd_table[fd] = file_duplicate (file);
+		else
+			current->fd_table[fd] = file;
 	}
 
 	current->fd_idx = parent->fd_idx;

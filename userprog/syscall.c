@@ -216,23 +216,16 @@ read (int fd, void *buffer, unsigned length) {
 	}
 
 	if (current_file == STDIN) {
-		if (curr->stdin_count == 0) {
-			NOT_REACHED ();
-			delete_file (fd);
-			return -1;
-		}
-		else {
-			int i;
-			unsigned char *buf = buffer;
-			for(i = 0; i < length; i++) {
-				char c = input_getc ();
-				*buf++ = c;
-				if (c == '\0') {
-					break;
-				}
+		int i;
+		unsigned char *buf = buffer;
+		for(i = 0; i < length; i++) {
+			char c = input_getc ();
+			*buf++ = c;
+			if (c == '\0') {
+				break;
 			}
-			return i;
 		}
+		return i;
 	}
 	else if (current_file == STDOUT) {
 		return -1;
@@ -257,15 +250,8 @@ write (int fd, const void *buffer, unsigned length) {
 	}
 
 	if (current_file == STDOUT) {
-		if (curr->stdout_count == 0) {
-			NOT_REACHED ();
-			delete_file(fd);
-			return -1;
-		}
-		else {
-			putbuf (buffer, length);
-			return length;
-		}
+		putbuf (buffer, length);
+		return length;
 	}
 	else if (current_file == STDIN) {
 		return -1;
@@ -292,7 +278,7 @@ seek (int fd, unsigned position){
 unsigned
 tell (int fd) {
 	struct file *current_file = find_with_limits (fd);
-	check_address (current_file);
+	//check_address (current_file);
 
 	if (current_file <= 2) {
 		return;
@@ -311,16 +297,9 @@ close (int fd) {
 		return;
 	}
 
-	if (fd == 0 || current_file == STDIN) {
-		curr->stdin_count--;
-	}
-	else if (fd == 1 || current_file == STDOUT) {
-		curr->stdout_count--;
-	}
-
 	delete_file (fd);
 
-	if (fd <= 1 || current_file <= 2) {
+	if (current_file <= 2) {
 		return;
 	}
 
@@ -335,8 +314,11 @@ close (int fd) {
 /* Copy from old fd to new fd */
 int
 dup2 (int oldfd, int newfd) {
-	struct file *current_file = find_with_limits (oldfd);
-	if (current_file == NULL) {
+	if (oldfd < 0 || newfd < 0)
+		return -1;
+
+	struct file *old_file = find_with_limits (oldfd);
+	if (old_file == NULL) {
 		return -1;
 	}
 
@@ -344,21 +326,26 @@ dup2 (int oldfd, int newfd) {
 		return newfd;
 	}
 	
+	struct file *new_file = find_with_limits (newfd);
+
+	if (old_file == new_file) {
+		return newfd;
+	}
+
+	close (newfd);
+	
 	struct thread *curr = thread_current ();
 	struct file **fdt = curr->fd_table;
-	
-	if (current_file == STDIN) {
-		curr->stdin_count++;
+
+	if (newfd < 0 || newfd >= FD_LIMIT)
+		return -1;
+
+
+	if (old_file > 2) {
+		old_file->dup_count++;
 	}
-	else if (current_file == STDOUT) {
-		curr->stdout_count++;
-	}
-	else {
-		current_file->dup_count++;
-	}
-	
-	close (newfd);
-	fdt[newfd] = current_file;
+
+	fdt[newfd] = old_file;
 	return newfd;
 }
 
@@ -395,7 +382,7 @@ static struct file
 }
 /* Delete file by fd */
 void delete_file (int fd) {
-	if (fd < 0 || fd > FD_LIMIT) {
+	if (fd < 0 || fd >= FD_LIMIT) {
 		return NULL;
 	}
 	thread_current ()->fd_table[fd] = NULL;

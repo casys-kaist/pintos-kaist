@@ -305,7 +305,7 @@ tell (int fd) {
 void
 close (int fd) {
 	struct thread *curr = thread_current ();
-	struct file *current_file = curr->fd_table[fd];
+	struct file *current_file = find_with_limits (fd);
 
 	if (current_file == NULL) {
 		return;
